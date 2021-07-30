@@ -1,0 +1,31 @@
+{
+  "name": "catalogues-library",
+  "version": "1.0.0",
+  "description": "A library for searching library catalogues\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[DJavaScript library for searching library catalogues",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LibrariesHacked/catalogues-library.git"
+  },
+  "author": "Libraries Hacked",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LibrariesHacked/catalogues-library/issues"
+  },
+  "homepage": "https://github.com/LibrariesHacked/catalogues-library#readme",
+  "dependencies": {
+    "@types/tough-cookie": "^4.0.1",
+    "async": "^3.2.0",
+    "axios": "^0.21.1",
+    "axios-cookiejar-support": "^1.0.1",
+    "cheerio": "^1.0.0-rc.10",
+    "tough-cookie": "^4.0.0",
+    "xml2js": "^0.4.23"
+  },
+  "engines": {
+    "node": "14-lts"
+  }
+}
