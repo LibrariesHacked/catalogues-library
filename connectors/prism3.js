@@ -49,9 +49,25 @@ exports.searchByISBN = async function (isbn, service) {
   try {
     const searchRequest = await axios.get(service.Url + 'items.json?query=' + isbn, { headers: HEADER, timeout: 30000 })
     if (searchRequest.data.length === 0) return common.endResponse(responseHoldings)
-    const itemUrl = Object.keys(searchRequest.data)[2]
-    const itemRequest = await axios.get(itemUrl, { headers: HEADER, timeout: 30000 })
-    $ = cheerio.load(itemRequest.data)
+
+    let itemUrl = ''
+    Object.keys(searchRequest.data).forEach(key => {
+      const keyData = searchRequest.data[key]
+      if (searchRequest.data[key]['http://purl.org/dc/elements/1.1/format']) {
+        let eBook = false;
+        searchRequest.data[key]['http://purl.org/dc/elements/1.1/format'].forEach(format => {
+          if (format.value === 'eBook') eBook = true;
+        });
+        if (!eBook) itemUrl = key
+      }
+    })
+
+    if (itemUrl !== '') {
+      const itemRequest = await axios.get(itemUrl, { headers: HEADER, timeout: 30000 })
+      $ = cheerio.load(itemRequest.data)
+    } else {
+      return common.endResponse(responseHoldings)
+    }
   } catch (e) {
     return common.endResponse(responseHoldings)
   }
@@ -59,7 +75,7 @@ exports.searchByISBN = async function (isbn, service) {
   $('#availability').find('ul.options li').each((idx, li) => {
     var libr = { library: $(li).find('h3 span span').text().trim(), available: 0, unavailable: 0 }
     $(li).find('div.jsHidden table tbody tr').each((i, tr) => {
-      service.Available.indexOf($(tr).find('td.item-status span').text().trim()) > -1 ? libr.available++ : libr.unavailable++
+      ($(tr).find("link[itemprop = 'availability']").attr('href') == 'http://schema.org/InStock') ? libr.available++ : libr.unavailable++
     })
     responseHoldings.availability.push(libr)
   })
