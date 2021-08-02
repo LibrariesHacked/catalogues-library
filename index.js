@@ -1,5 +1,5 @@
 const async = require('async')
-const data = require('./data/data')
+const data = require('./data/data.json')
 const libThing = require('./connectors/librarything')
 const openLibrary = require('./connectors/openlibrary')
 
