@@ -1,6 +1,6 @@
 {
   "name": "catalogues-library",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A library for searching library catalogues",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "axios-cookiejar-support": "^1.0.1",
     "buffer": "^6.0.3",
     "cheerio": "^1.0.0-rc.10",
+    "https": "^1.0.0",
     "https-browserify": "^1.0.0",
     "tough-cookie": "^4.0.0",
     "util": "^0.12.4",
