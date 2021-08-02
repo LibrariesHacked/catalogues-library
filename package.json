@@ -1,9 +1,11 @@
 {
   "name": "catalogues-library",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A library for searching library catalogues",
   "main": "index.js",
   "scripts": {
+    "dev": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production",
     "test": "jest"
   },
   "repository": {
@@ -30,6 +32,8 @@
     "node": "14.x"
   },
   "devDependencies": {
-    "jest": "^27.0.6"
+    "jest": "^27.0.6",
+    "webpack": "^5.48.0",
+    "webpack-cli": "^4.0.0"
   }
 }

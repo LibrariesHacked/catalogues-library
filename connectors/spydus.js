@@ -1,7 +1,7 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const common = require('../connectors/common')
 const https = require('https')
+const common = require('../connectors/common')
 
 console.log('spydus connector loading...')
 
