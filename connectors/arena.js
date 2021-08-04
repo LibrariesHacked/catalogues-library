@@ -6,7 +6,7 @@ const querystring = require('querystring')
 const axios = require('axios').default
 const axiosCookieJarSupport = require('axios-cookiejar-support').default
 const tough = require('tough-cookie')
-axiosCookieJarSupport(axios)
+axiosCookieJarSupport.default(axios)
 const cookieJar = new tough.CookieJar()
 axios.defaults.jar = cookieJar
 axios.defaults.withCredentials = true
