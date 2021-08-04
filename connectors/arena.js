@@ -4,7 +4,7 @@ const cheerio = require('cheerio')
 const querystring = require('querystring')
 
 const axios = require('axios').default
-const axiosCookieJarSupport = require('axios-cookiejar-support').default
+const axiosCookieJarSupport = require('axios-cookiejar-support')
 const tough = require('tough-cookie')
 axiosCookieJarSupport.default(axios)
 const cookieJar = new tough.CookieJar()
