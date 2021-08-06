@@ -1,13 +1,6 @@
 const xml2js = require('xml2js')
 const common = require('../connectors/common')
-
-const axios = require('axios').default
-const axiosCookieJarSupport = require('axios-cookiejar-support').default
-const tough = require('tough-cookie')
-axiosCookieJarSupport(axios)
-const cookieJar = new tough.CookieJar()
-axios.defaults.jar = cookieJar
-axios.defaults.withCredentials = true
+const request = require('superagent')
 
 console.log('iguana connector loading...')
 
@@ -31,11 +24,12 @@ exports.getService = (service) => {
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   let sid = null
   try {
-    const homePageRequest = await axios.get(service.Url + HOME)
+    const homePageRequest = await agent.get(service.Url + HOME)
     const sessionCookie = homePageRequest.headers['set-cookie'][0]
     sid = sessionCookie.substring(43, 53)
   } catch (e) {
@@ -45,16 +39,16 @@ exports.getLibraries = async function (service) {
   const body = ITEM_SEARCH.replace('[ISBN]', 'harry').replace('Index=Isbn', 'Index=Keywords').replace('[DB]', service.Database).replace('[TID]', 'Iguana_Brief').replace(/\[SID\]/g, sid)
 
   const searchUrl = service.Url + 'Proxy.SearchRequest.cls'
-  const searchPageRequest = await axios.post(searchUrl, body, { headers: { ...HEADER, Referer: service.Url + HOME }, timeout: 30000 })
-  const searchJs = await xml2js.parseStringPromise(searchPageRequest.data)
+  const searchPageRequest = await agent.post(searchUrl).send(body).set({ ...HEADER, Referer: service.Url + HOME }).timeout(20000)
+  const searchJs = await xml2js.parseStringPromise(searchPageRequest.text)
 
   if (service.Faceted) {
     const resultId = searchJs.searchRetrieveResponse.resultSetId[0]
 
     let facets = null
     try {
-      const facetRequest = await axios.post(service.Url + 'Proxy.SearchRequest.cls', FACET_SEARCH.replace('[RESULTID]', resultId).replace(/\[SID\]/g, sid), { jar: true, headers: { ...HEADER, Referer: service.Url + HOME }, timeout: 30000 })
-      const facetJs = await xml2js.parseStringPromise(facetRequest.data)
+      const facetRequest = await agent.post(service.Url + 'Proxy.SearchRequest.cls').send(FACET_SEARCH.replace('[RESULTID]', resultId).replace(/\[SID\]/g, sid)).set({ ...HEADER, Referer: service.Url + HOME }).timeout(20000)
+      const facetJs = await xml2js.parseStringPromise(facetRequest.text)
       facets = facetJs.VubisFacetedSearchResponse.Facets[0].Facet
     } catch (e) {
       return common.endResponse(responseLibraries)
@@ -89,16 +83,17 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
   let searchJs = null
   try {
-    const homePageRequest = await axios.get(service.Url + HOME)
+    const homePageRequest = await agent.get(service.Url + HOME)
     const sessionCookie = homePageRequest.headers['set-cookie'][0]
     const iguanaCookieIndex = sessionCookie.indexOf('iguana-=')
     const sid = sessionCookie.substring(iguanaCookieIndex + 20, iguanaCookieIndex + 30)
-    const searchPageRequest = await axios.post(service.Url + 'Proxy.SearchRequest.cls', ITEM_SEARCH.replace('[ISBN]', isbn).replace('[DB]', service.Database).replace('[TID]', 'Iguana_Brief').replace(/\[SID\]/g, sid), { headers: { ...HEADER, Referer: service.Url + HOME }, timeout: 60000 })
-    searchJs = await xml2js.parseStringPromise(searchPageRequest.data)
+    const searchPageRequest = await agent.post(service.Url + 'Proxy.SearchRequest.cls').set({ ...HEADER, Referer: service.Url + HOME }).send(ITEM_SEARCH.replace('[ISBN]', isbn).replace('[DB]', service.Database).replace('[TID]', 'Iguana_Brief').replace(/\[SID\]/g, sid)).timeout(20000)
+    searchJs = await xml2js.parseStringPromise(searchPageRequest.text)
   } catch (e) {
     return common.endResponse(responseHoldings)
   }
