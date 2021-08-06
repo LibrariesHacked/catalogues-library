@@ -1,11 +1,4 @@
-const axios = require('axios').default
-const axiosCookieJarSupport = require('axios-cookiejar-support').default
-const tough = require('tough-cookie')
-axiosCookieJarSupport(axios)
-const cookieJar = new tough.CookieJar()
-axios.defaults.jar = cookieJar
-axios.defaults.withCredentials = true
-
+const request = require('superagent')
 const cheerio = require('cheerio')
 const querystring = require('querystring')
 const common = require('../connectors/common')
@@ -23,14 +16,15 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   let $ = null
   try {
-    await axios.get(service.Url, { timeout: 20000, jar: true })
-    await axios.post(service.Url + 'pgLogin.aspx?CheckJavascript=1', {}, { jar: true, timeout: 20000 })
-    const libraries = await axios.get(service.Url + service.Libraries, { timeout: 20000, jar: true })
-    $ = cheerio.load(libraries.data)
+    await agent.get(service.Url).timeout(20000)
+    await agent.post(service.Url + 'pgLogin.aspx?CheckJavascript=1').timeout(20000)
+    const libraries = await agent.get(service.Url + service.Libraries).timeout(20000)
+    $ = cheerio.load(libraries.text)
   } catch (e) {
     return common.endResponse(responseLibraries)
   }
@@ -45,6 +39,7 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
   var headers = {
@@ -53,10 +48,10 @@ exports.searchByISBN = async function (isbn, service) {
 
   let $ = null
   try {
-    await axios.get(service.Url, { timeout: 20000, jar: true })
-    await axios.post(service.Url + 'pgLogin.aspx?CheckJavascript=1', {}, { jar: true, timeout: 20000 })
-    const cataloguePage = await axios.post(service.Url + 'pgCatKeywordSearch.aspx', {}, { jar: true, timeout: 20000 })
-    $ = cheerio.load(cataloguePage.data)
+    await agent.get(service.Url).timeout(20000)
+    await agent.post(service.Url + 'pgLogin.aspx?CheckJavascript=1').timeout(20000)
+    const cataloguePage = await agent.post(service.Url + 'pgCatKeywordSearch.aspx').timeout(20000)
+    $ = cheerio.load(cataloguePage.text)
   } catch (e) {
     return common.endResponse(responseHoldings)
   }
@@ -72,9 +67,9 @@ exports.searchByISBN = async function (isbn, service) {
 
   let resultPageUrl = null
   try {
-    const resultPage = await axios.post(service.Url + 'pgCatKeywordSearch.aspx', querystring.stringify(aspNetForm), { gzip: true, jar: true, headers: headers, timeout: 20000 })
-    $ = cheerio.load(resultPage.data)
-    resultPageUrl = resultPage.config.url
+    const resultPage = await agent.post(service.Url + 'pgCatKeywordSearch.aspx').send(querystring.stringify(aspNetForm)).set(headers).timeout(20000)
+    $ = cheerio.load(resultPage.text)
+    resultPageUrl = resultPage.redirects[0]
   } catch (e) {
     return common.endResponse(responseHoldings)
   }
@@ -92,9 +87,9 @@ exports.searchByISBN = async function (isbn, service) {
 
   let itemPageUrl = null
   try {
-    const itemPage = await axios.post(resultPageUrl, querystring.stringify(aspNetForm), { gzip: true, jar: true, headers: headers, timeout: 20000 })
-    $ = cheerio.load(itemPage.data)
-    itemPageUrl = itemPage.config.url
+    const itemPage = await agent.post(resultPageUrl).send(querystring.stringify(aspNetForm)).set(headers).timeout(20000)
+    $ = cheerio.load(itemPage.text)
+    itemPageUrl = itemPage.redirects.length > 0 ? itemPage.redirects[0] : resultPageUrl
   } catch (e) {
     return common.endResponse(responseHoldings)
   }
@@ -112,8 +107,8 @@ exports.searchByISBN = async function (isbn, service) {
   }
 
   try {
-    const availabilityPage = await axios.post(itemPageUrl, querystring.stringify(aspNetForm), { gzip: true, jar: true, headers: headers, timeout: 20000 })
-    $ = cheerio.load(availabilityPage.data)
+    const availabilityPage = await agent.post(itemPageUrl).send(querystring.stringify(aspNetForm)).set(headers).timeout(20000)
+    $ = cheerio.load(availabilityPage.text)
   } catch (e) {
     return common.endResponse(responseHoldings)
   }

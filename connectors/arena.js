@@ -57,7 +57,7 @@ exports.getLibraries = async function (service) {
   const url = service.Url + service.AdvancedUrl + (service.portlets ? LIBRARIES_URL_PORTLETS : LIBRARIES_URL_PORTLET)
   let js = null
   try {
-    const responseHeaderRequest = await agent.post(url, querystring.stringify({ 'organisationHierarchyPanel:organisationContainer:organisationChoice': service.OrganisationId })).set(headers)
+    const responseHeaderRequest = await agent.post(url).send(querystring.stringify({ 'organisationHierarchyPanel:organisationContainer:organisationChoice': service.OrganisationId })).set(headers)
     js = await xml2js.parseStringPromise(responseHeaderRequest.text)
   } catch (e) {
     common.endResponse(responseLibraries)
