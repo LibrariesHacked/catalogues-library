@@ -1,15 +1,8 @@
-
+const async = require('async')
 const xml2js = require('xml2js')
 const cheerio = require('cheerio')
 const querystring = require('querystring')
-
-const axios = require('axios').default
-const axiosCookieJarSupport = require('axios-cookiejar-support').default;
-const tough = require('tough-cookie')
-axiosCookieJarSupport(axios)
-const cookieJar = new tough.CookieJar()
-axios.defaults.jar = cookieJar
-axios.defaults.withCredentials = true
+const request = require('superagent')
 
 const common = require('../connectors/common')
 
@@ -37,6 +30,7 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
   if (responseLibraries.libraries.length > 0) return common.endResponse(responseLibraries)
 
@@ -44,13 +38,13 @@ exports.getLibraries = async function (service) {
   let advancedSearchResponse = null
   try {
     // The AdvancedUrl tends to either be advanced-search or extended-search
-    advancedSearchResponse = await axios.get(service.Url + service.AdvancedUrl)
+    advancedSearchResponse = await agent.get(service.Url + service.AdvancedUrl)
   } catch (e) {
     common.endResponse(responseLibraries)
   }
 
   // The advanced search page may have libraries listed on it
-  let $ = cheerio.load(advancedSearchResponse.data)
+  let $ = cheerio.load(advancedSearchResponse.text)
   if ($('.arena-extended-search-branch-choice option').length > 1) {
     $('.arena-extended-search-branch-choice option').each(function () {
       if (common.isLibrary($(this).text())) responseLibraries.libraries.push($(this).text())
@@ -63,8 +57,8 @@ exports.getLibraries = async function (service) {
   const url = service.Url + service.AdvancedUrl + (service.portlets ? LIBRARIES_URL_PORTLETS : LIBRARIES_URL_PORTLET)
   let js = null
   try {
-    const responseHeaderRequest = await axios.post(url, querystring.stringify({ 'organisationHierarchyPanel:organisationContainer:organisationChoice': service.OrganisationId }), { headers: headers })
-    js = await xml2js.parseStringPromise(responseHeaderRequest.data)
+    const responseHeaderRequest = await agent.post(url, querystring.stringify({ 'organisationHierarchyPanel:organisationContainer:organisationChoice': service.OrganisationId })).set(headers)
+    js = await xml2js.parseStringPromise(responseHeaderRequest.text)
   } catch (e) {
     common.endResponse(responseLibraries)
   }
@@ -85,6 +79,7 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
   let bookQuery = (service.SearchType !== 'Keyword' ? service.ISBNAlias + '_index:' + isbn : isbn)
@@ -95,16 +90,16 @@ exports.searchByISBN = async function (isbn, service) {
 
   let searchResponse = null
   try {
-    searchResponse = await axios.get(responseHoldings.url, { timeout: 20000, jar: true, rejectUnauthorized: true })
+    searchResponse = await agent.get(responseHoldings.url).timeout(20000)
   } catch (e) {
     return common.endResponse(responseHoldings)
   }
 
   // No item found
-  if (!searchResponse || !searchResponse.data || (searchResponse.data && searchResponse.data.lastIndexOf('search_item_id') === -1)) return common.endResponse(responseHoldings)
+  if (!searchResponse || !searchResponse.text || (searchResponse.text && searchResponse.text.lastIndexOf('search_item_id') === -1)) return common.endResponse(responseHoldings)
 
   // Call to the item page
-  const pageText = searchResponse.data.replace(/\\x3d/g, '=').replace(/\\x26/g, '&')
+  const pageText = searchResponse.text.replace(/\\x3d/g, '=').replace(/\\x26/g, '&')
   let itemId = pageText.substring(pageText.lastIndexOf('search_item_id=') + 15)
   itemId = itemId.substring(0, itemId.indexOf('&'))
 
@@ -113,8 +108,8 @@ exports.searchByISBN = async function (isbn, service) {
 
   let $ = null
   try {
-    const itemPageResponse = await axios.get(itemUrl, { rejectUnauthorized: true, timeout: 20000, headers: { Connection: 'keep-alive' }, jar: true })
-    $ = cheerio.load(itemPageResponse.data)
+    const itemPageResponse = await agent.get(itemUrl).set({ Connection: 'keep-alive' }).timeout(20000)
+    $ = cheerio.load(itemPageResponse.text)
   } catch (e) {
     return common.endResponse(responseHoldings)
   }
@@ -134,8 +129,8 @@ exports.searchByISBN = async function (isbn, service) {
   const holdingsPanelUrl = service.Url + (service.Portlets ? HOLDINGS_URL_PORTLETS : HOLDINGS_URL_PORTLET)
 
   try {
-    var holdingsPanelPortletResponse = await axios.get(holdingsPanelUrl, { rejectUnauthorized: true, headers: holdingsPanelHeader, timeout: 20000, jar: true })
-    var js = await xml2js.parseStringPromise(holdingsPanelPortletResponse.data)
+    var holdingsPanelPortletResponse = await agent.get(holdingsPanelUrl).set(holdingsPanelHeader).timeout(20000)
+    var js = await xml2js.parseStringPromise(holdingsPanelPortletResponse.text)
     if (!js['ajax-response'] || !js['ajax-response'].component) return common.endResponse(responseHoldings)
     $ = cheerio.load(js['ajax-response'].component[0]._)
   } catch (e) {
@@ -162,8 +157,8 @@ exports.searchByISBN = async function (isbn, service) {
   var holdingsUrl = service.Url + (service.Portlets ? HOLDINGSDETAIL_URL_PORTLETS : HOLDINGSDETAIL_URL_PORTLET).replace('[RESOURCEID]', resourceId)
 
   try {
-    var holdingsResponse = await axios.get(holdingsUrl, { rejectUnauthorized: true, headers: holdingsHeaders, timeout: 20000, jar: true })
-    var holdingsJs = await xml2js.parseStringPromise(holdingsResponse.data)
+    var holdingsResponse = await agent.get(holdingsUrl).set(holdingsHeaders).timeout(20000)
+    var holdingsJs = await xml2js.parseStringPromise(holdingsResponse.text)
     $ = cheerio.load(holdingsJs['ajax-response'].component[0]._)
   } catch (e) {
     return common.endResponse(responseHoldings)
@@ -178,18 +173,18 @@ exports.searchByISBN = async function (isbn, service) {
     resourceId = '/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel:content:holdingsView:' + (currentOrg + 1) + ':childContainer:childView:' + i + ':holdingPanel:holdingContainer:togglableLink::IBehaviorListener:0:'
     const libUrl = service.Url + (service.Portlets ? HOLDINGSDETAIL_URL_PORTLETS : HOLDINGSDETAIL_URL_PORTLET).replace('[RESOURCEID]', resourceId)
     var headers = { Accept: 'text/xml', 'Wicket-Ajax': true }
-    availabilityRequests.push(axios.get(libUrl, { rejectUnauthorized: true, headers: headers, timeout: 20000, jar: true }))
+    availabilityRequests.push(agent.get(libUrl).set(headers).timeout(20000))
   })
 
   let responses = null
   try {
-    responses = await axios.all(availabilityRequests)
+    responses = await async.parallel(availabilityRequests)
   } catch (e) {
     return common.endResponse(responseHoldings)
   }
 
   responses.forEach(async (response) => {
-    var availabilityJs = await xml2js.parseStringPromise(response.data)
+    var availabilityJs = await xml2js.parseStringPromise(response.text)
     if (availabilityJs && availabilityJs['ajax-response']) {
       try {
         $ = cheerio.load(availabilityJs['ajax-response'].component[0]._)
