@@ -1,4 +1,4 @@
-const axios = require('axios').default
+const request = require('superagent')
 const cheerio = require('cheerio')
 const common = require('../connectors/common')
 
@@ -20,12 +20,13 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   let $ = null
   try {
-    const advancedPage = await axios.get(service.Url + 'search/advanced', { timeout: 30000 })
-    $ = cheerio.load(advancedPage.data)
+    const advancedPage = await agent.get(service.Url + 'search/advanced').timeout(30000)
+    $ = cheerio.load(advancedPage.text)
   } catch (e) {
     return common.endResponse(responseLibraries)
   }
@@ -43,6 +44,7 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = service.Url + SEARCH_URL + isbn
   let itemPage = ''
@@ -53,12 +55,12 @@ exports.searchByISBN = async function (isbn, service) {
   let deepLinkPageUrl = null
   try {
     // We could also use RSS https://wales.ent.sirsidynix.net.uk/client/rss/hitlist/ynysmon_en/qu=9780747538493
-    const deepLinkPageRequest = await axios.get(responseHoldings.url, { headers: HEADER, timeout: 30000 })
-    itemId = deepLinkPageRequest.config.url.substring(deepLinkPageRequest.config.url.lastIndexOf('ent:') + 4, deepLinkPageRequest.config.url.lastIndexOf('/one')) || ''
-    $ = cheerio.load(deepLinkPageRequest.data)
-    deepLinkPageUrl = deepLinkPageRequest.config.url
+    const deepLinkPageRequest = await agent.get(responseHoldings.url).set(HEADER).timeout(30000)
+    deepLinkPageUrl = deepLinkPageRequest.redirects.length > 0 ? deepLinkPageRequest.redirects[0] : responseHoldings.url
+    itemId = deepLinkPageUrl.substring(deepLinkPageUrl.lastIndexOf('ent:') + 4, deepLinkPageUrl.lastIndexOf('/one')) || ''
+    $ = cheerio.load(deepLinkPageRequest.text)
     if (itemId === '') return common.endResponse(responseHoldings)
-    itemPage = deepLinkPageRequest.data
+    itemPage = deepLinkPageRequest.text
   } catch (e) {
     return common.endResponse(responseHoldings)
   }
@@ -69,8 +71,8 @@ exports.searchByISBN = async function (isbn, service) {
     if (itemId === '') return common.endResponse(responseHoldings)
     const itemPageUrl = service.Url + ITEM_URL.replace('[ILS]', itemId.split('/').join('$002f'))
     try {
-      const itemPageRequest = await axios.get(itemPageUrl, { timeout: 30000 })
-      itemPage = itemPageRequest.data
+      const itemPageRequest = await agent.get(itemPageUrl).timeout(30000)
+      itemPage = itemPageRequest.text
     } catch (e) {
       return common.endResponse(responseHoldings)
     }
@@ -86,8 +88,8 @@ exports.searchByISBN = async function (isbn, service) {
     // e.g. /search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:$002f$002fSD_ILS$002f0$002fSD_ILS:548433/ILS/0/true/true?qu=9780747538493&d=ent%3A%2F%2FSD_ILS%2F0%2FSD_ILS%3A548433%7E%7E0&ps=300
     const availabilityUrl = service.Url + service.AvailabilityUrl.replace('[ITEMID]', itemId.split('/').join('$002f'))
     try {
-      const availabilityPageRequest = await axios.post(availabilityUrl, {}, { headers: HEADER_POST, timeout: 30000 })
-      const availabilityResponse = availabilityPageRequest.data
+      const availabilityPageRequest = await agent.post(availabilityUrl).set(HEADER_POST).timeout(30000)
+      const availabilityResponse = availabilityPageRequest.body
       if (availabilityResponse.ids || availabilityResponse.childRecords) availabilityJson = availabilityResponse
     } catch (e) {
       return common.endResponse(responseHoldings)
@@ -125,8 +127,8 @@ exports.searchByISBN = async function (isbn, service) {
   if (service.TitleDetailUrl) {
     var titleUrl = service.Url + service.TitleDetailUrl.replace('[ITEMID]', itemId.split('/').join('$002f'))
     try {
-      const titleDetailRequest = await axios.post(titleUrl, {}, { headers: HEADER_POST, timeout: 30000 })
-      const titles = titleDetailRequest.data
+      const titleDetailRequest = await agent.post(titleUrl).set(HEADER_POST).timeout(30000)
+      const titles = titleDetailRequest.body
       const libs = {}
       $(titles.childRecords).each(function (i, c) {
         const name = c.LIBRARY

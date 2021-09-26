@@ -1,5 +1,5 @@
 const xml2js = require('xml2js')
-const axios = require('axios')
+const request = require('superagent')
 
 console.log('library thing connector loading...')
 
@@ -10,12 +10,13 @@ const URL = 'https://www.librarything.com/api/thingISBN/'
  * @param {string} isbn
  */
 exports.thingISBN = async (isbn) => {
+  const agent = request.agent()
   const responseISBNs = { isbns: [] }
 
   let isbns = null
   try {
-    const isbnRequest = await axios.get(URL + isbn, { timeout: 1000 })
-    const isbnJs = await xml2js.parseStringPromise(isbnRequest.data)
+    const isbnRequest = await agent.get(URL + isbn).timeout(1000)
+    const isbnJs = await xml2js.parseStringPromise(isbnRequest.text)
     isbns = isbnJs.idlist.isbn
   } catch (e) { }
 

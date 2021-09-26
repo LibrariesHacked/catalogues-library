@@ -19,17 +19,14 @@ exports.getLibraries = async function (service) {
   const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
-  let $ = null
   try {
     await agent.get(service.Url).timeout(20000)
     await agent.post(service.Url + 'pgLogin.aspx?CheckJavascript=1').timeout(20000)
     const libraries = await agent.get(service.Url + service.Libraries).timeout(20000)
-    $ = cheerio.load(libraries.text)
-  } catch (e) {
-    return common.endResponse(responseLibraries)
-  }
+    const $ = cheerio.load(libraries.text)
+    $('ol.list-unstyled li a').each((i, tag) => responseLibraries.libraries.push($(tag).text()))
+  } catch (e) { }
 
-  $('ol.list-unstyled li a').each((idx, tag) => responseLibraries.libraries.push($(tag).text()))
   return common.endResponse(responseLibraries)
 }
 

@@ -1,4 +1,4 @@
-const axios = require('axios')
+const request = require('superagent')
 const cheerio = require('cheerio')
 const common = require('../connectors/common')
 
@@ -18,18 +18,16 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
-    const libsPageRequest = await axios.get(service.Url + LIBS_URL, {
-      headers: { Cookie: 'ALLOWCOOKIES_443=1' },
-      timeout: 60000
-    })
-    const $ = cheerio.load(libsPageRequest.data)
+    const libsPageRequest = await agent.get(service.Url + LIBS_URL).set({ 'Cookie': 'ALLOWCOOKIES_443=1' }).timeout(60000)
+    const $ = cheerio.load(libsPageRequest.text)
     $('#LOC option').each(function (idx, option) {
       if (common.isLibrary($(option).text())) responseLibraries.libraries.push($(option).text())
     })
-  } catch (e) {}
+  } catch (e) { }
 
   return common.endResponse(responseLibraries)
 }
@@ -40,18 +38,19 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = service.Url + SEARCH_URL + isbn
 
   try {
-    const itemPageRequest = await axios.get(responseHoldings.url, { timeout: 30000 })
-    let $ = cheerio.load(itemPageRequest.data)
+    const itemPageRequest = await agent.get(responseHoldings.url).timeout(30000)
+    let $ = cheerio.load(itemPageRequest.text)
     if ($('#result-content-list').length === 0) return common.endResponse(responseHoldings)
 
     const availabilityUrl = $('.card-text.availability').first().find('a').attr('href')
-    const availabilityRequest = await axios.get(service.Url + availabilityUrl, { timeout: 30000 })
+    const availabilityRequest = await agent.get(service.Url + availabilityUrl).timeout(30000)
 
-    $ = cheerio.load(availabilityRequest.data)
+    $ = cheerio.load(availabilityRequest.text)
 
     var libs = {}
     $('table tr').slice(1).each(function (i, tr) {

@@ -1,4 +1,4 @@
-const axios = require('axios').default
+const request = require('superagent')
 const cheerio = require('cheerio')
 const common = require('../connectors/common')
 
@@ -18,14 +18,15 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   const url = service.Url + (LIBS_URL.replace('[MULTIBRANCH]', service.MultiBranchLimit ? 'multibranchlimit=' + service.MultiBranchLimit + '&' : ''))
 
   let $ = null
   try {
-    const libraryPageRequest = await axios.get(url, { timeout: 60000 })
-    $ = cheerio.load(libraryPageRequest.data)
+    const libraryPageRequest = await agent.get(url).timeout(60000)
+    $ = cheerio.load(libraryPageRequest.text)
   } catch (e) {
     return common.endResponse(responseLibraries)
   }
@@ -49,13 +50,14 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = service.Url
 
   let $ = null
   try {
-    const searchPageRequest = await axios.get(service.Url + CAT_URL + isbn, { timeout: 30000 })
-    $ = cheerio.load(searchPageRequest.data, { normalizeWhitespace: true, xmlMode: true })
+    const searchPageRequest = await agent.get(service.Url + CAT_URL + isbn).timeout(30000)
+    $ = cheerio.load(searchPageRequest.text, { normalizeWhitespace: true, xmlMode: true })
     responseHoldings.url = $('link').first().text()
   } catch (e) {
     return common.endResponse(responseHoldings)
@@ -67,8 +69,8 @@ exports.searchByISBN = async function (isbn, service) {
   responseHoldings.url = bibLink
 
   try {
-    const itemPageRequest = await axios.get(bibLink + '&viewallitems=1', { timeout: 30000 })
-    $ = cheerio.load(itemPageRequest.data)
+    const itemPageRequest = await agent.get(bibLink + '&viewallitems=1').timeout(30000)
+    $ = cheerio.load(itemPageRequest.text)
   } catch (e) {
     return common.endResponse(responseHoldings)
   }

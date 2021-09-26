@@ -1,4 +1,4 @@
-const axios = require('axios')
+const request = require('superagent')
 const cheerio = require('cheerio')
 const common = require('../connectors/common')
 
@@ -15,11 +15,12 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
-    const advancedSearchPageRequest = await axios.get(service.Url + 'search/X', { timeout: 60000 })
-    const $ = cheerio.load(advancedSearchPageRequest.data)
+    const advancedSearchPageRequest = await agent.get(service.Url + 'search/X').timeout(60000)
+    const $ = cheerio.load(advancedSearchPageRequest.text)
     $('select[Name=searchscope] option').each((idx, option) => {
       if (common.isLibrary($(option).text())) responseLibraries.libraries.push($(option).text().trim())
     })
@@ -34,15 +35,16 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
   const libs = {}
   responseHoldings.url = service.Url + 'search~S1/?searchtype=i&searcharg=' + isbn
 
   try {
-    const responseHoldingsRequest = await axios.get(responseHoldings.url, { timeout: 60000 })
+    const responseHoldingsRequest = await agent.get(responseHoldings.url).timeout(60000)
 
-    const $ = cheerio.load(responseHoldingsRequest.data)
+    const $ = cheerio.load(responseHoldingsRequest.text)
     $('table.bibItems tr.bibItemsEntry').each(function (idx, tr) {
       var name = $(tr).find('td').eq(0).text().trim()
       var status = $(tr).find('td').eq(3).text().trim()

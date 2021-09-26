@@ -1,5 +1,4 @@
-
-const axios = require('axios')
+const request = require('superagent')
 const cheerio = require('cheerio')
 const common = require('../connectors/common')
 
@@ -19,12 +18,13 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   let $ = null
   try {
-    const advancedSearchPageRequest = await axios.get(service.Url + 'advancedsearch?target=catalogue', { timeout: 60000 })
-    $ = cheerio.load(advancedSearchPageRequest.data)
+    const advancedSearchPageRequest = await agent.get(service.Url + 'advancedsearch?target=catalogue').timeout(60000)
+    $ = cheerio.load(advancedSearchPageRequest.text)
   } catch (e) {
     return common.endResponse(responseLibraries)
   }
@@ -42,29 +42,30 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = service.Url + DEEP_LINK + isbn
 
   let $ = null
   try {
-    const searchRequest = await axios.get(service.Url + 'items.json?query=' + isbn, { headers: HEADER, timeout: 30000 })
-    if (searchRequest.data.length === 0) return common.endResponse(responseHoldings)
+    const searchRequest = await agent.get(service.Url + 'items.json?query=' + isbn).set(HEADER).timeout(30000)
+    if (searchRequest.body.length === 0) return common.endResponse(responseHoldings)
 
     let itemUrl = ''
-    Object.keys(searchRequest.data).forEach(key => {
-      const keyData = searchRequest.data[key]
-      if (searchRequest.data[key]['http://purl.org/dc/elements/1.1/format']) {
-        let eBook = false;
-        searchRequest.data[key]['http://purl.org/dc/elements/1.1/format'].forEach(format => {
-          if (format.value === 'eBook') eBook = true;
-        });
+    Object.keys(searchRequest.body).forEach(key => {
+      const keyData = searchRequest.body[key]
+      if (searchRequest.body[key]['http://purl.org/dc/elements/1.1/format']) {
+        let eBook = false
+        searchRequest.body[key]['http://purl.org/dc/elements/1.1/format'].forEach(format => {
+          if (format.value === 'eBook') eBook = true
+        })
         if (!eBook) itemUrl = key
       }
     })
 
     if (itemUrl !== '') {
-      const itemRequest = await axios.get(itemUrl, { headers: HEADER, timeout: 30000 })
-      $ = cheerio.load(itemRequest.data)
+      const itemRequest = await agent.get(itemUrl).set(HEADER).timeout()
+      $ = cheerio.load(itemRequest.text)
     } else {
       return common.endResponse(responseHoldings)
     }

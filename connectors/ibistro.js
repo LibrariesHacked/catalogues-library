@@ -1,5 +1,4 @@
-
-const axios = require('axios').default
+const request = require('superagent')
 const cheerio = require('cheerio')
 const common = require('../connectors/common')
 
@@ -16,10 +15,11 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
-  const homePage = await axios.get(service.Url + service.Home, { timeout: 60000 })
-  const $ = cheerio.load(homePage.data)
+  const homePage = await agent.get(service.Url + service.Home).timeout(60000)
+  const $ = cheerio.load(homePage.text)
   $('#library option').each((idx, option) => {
     if (common.isLibrary($(option).text())) responseLibraries.libraries.push($(option).text())
   })
@@ -32,13 +32,14 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = service.Url + service.Search + isbn
 
   let itemPage = null
   try {
-    const searchPageRequest = await axios.get(responseHoldings.url, { timeout: 30000 })
-    itemPage = searchPageRequest.data
+    const searchPageRequest = await agent.get(responseHoldings.url).timeout(30000)
+    itemPage = searchPageRequest.text
   } catch (e) {
     return common.endResponse(responseHoldings)
   }
@@ -48,8 +49,8 @@ exports.searchByISBN = async function (isbn, service) {
   if ($('form[name=hitlist]').length > 0) {
     const itemUrl = service.Url + $('form[name=hitlist]').attr('action')
     try {
-      const itemPageRequest = axios.post(itemUrl, 'first_hit=1&form_type=&last_hit=2&VIEW%5E1=Details', { timeout: 30000 })
-      $ = cheerio.load(itemPageRequest.data)
+      const itemPageRequest = agent.post(itemUrl).send('first_hit=1&form_type=&last_hit=2&VIEW%5E1=Details').timeout(30000)
+      $ = cheerio.load(itemPageRequest.text)
     } catch (e) {
       return common.endResponse(responseHoldings)
     }
