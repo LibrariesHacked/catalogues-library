@@ -1,7 +1,7 @@
 const index = require('./index')
 
 test('arena_availability', async () => {
-  const availability = await index.availability('9781408855911', 'Glasgow')
+  const availability = await index.availability('9780747538493', 'Lambeth')
   expect(availability).not.toHaveLength(0)
 }, 30000)
 
