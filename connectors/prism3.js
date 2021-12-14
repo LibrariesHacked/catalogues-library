@@ -4,6 +4,7 @@ const common = require('../connectors/common')
 
 console.log('prism3 connector loading...')
 
+const AVAILABLE_STATUSES = ['http://schema.org/InStock', 'http://schema.org/InStoreOnly'];
 const HEADER = { 'Content-Type': 'text/xml; charset=utf-8' }
 const DEEP_LINK = 'items?query='
 
@@ -54,9 +55,9 @@ exports.searchByISBN = async function (isbn, service) {
     let itemUrl = ''
     Object.keys(searchRequest.body).forEach(key => {
       const keyData = searchRequest.body[key]
-      if (searchRequest.body[key]['http://purl.org/dc/elements/1.1/format']) {
+      if (keyData['http://purl.org/dc/elements/1.1/format']) {
         let eBook = false
-        searchRequest.body[key]['http://purl.org/dc/elements/1.1/format'].forEach(format => {
+        keyData['http://purl.org/dc/elements/1.1/format'].forEach(format => {
           if (format.value === 'eBook') eBook = true
         })
         if (!eBook) itemUrl = key
@@ -76,7 +77,8 @@ exports.searchByISBN = async function (isbn, service) {
   $('#availability').find('ul.options li').each((idx, li) => {
     var libr = { library: $(li).find('h3 span span').text().trim(), available: 0, unavailable: 0 }
     $(li).find('div.jsHidden table tbody tr').each((i, tr) => {
-      ($(tr).find("link[itemprop = 'availability']").attr('href') == 'http://schema.org/InStock') ? libr.available++ : libr.unavailable++
+      const status = $(tr).find("link[itemprop = 'availability']").attr('href')
+      AVAILABLE_STATUSES.includes(status) ? libr.available++ : libr.unavailable++
     })
     responseHoldings.availability.push(libr)
   })
