@@ -45,6 +45,8 @@ exports.searchByISBN = async function (isbn, service) {
   const titleId = item?.titleIDField
   if (!titleId) return common.endResponse(responseHoldings)
 
+  responseHoldings.id = `${titleId}`
+
   try {
     const titleSearch = `https://api.blackpool.gov.uk/live/api/library/standard/lookupTitleInformation/${titleId}`
     const titleRequest = await agent.get(titleSearch).timeout(30000)

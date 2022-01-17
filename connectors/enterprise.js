@@ -58,6 +58,7 @@ exports.searchByISBN = async function (isbn, service) {
     const deepLinkPageRequest = await agent.get(responseHoldings.url).set(HEADER).timeout(30000)
     deepLinkPageUrl = deepLinkPageRequest.redirects.length > 0 ? deepLinkPageRequest.redirects[0] : responseHoldings.url
     itemId = deepLinkPageUrl.substring(deepLinkPageUrl.lastIndexOf('ent:') + 4, deepLinkPageUrl.lastIndexOf('/one')) || ''
+    responseHoldings.id = itemId
     $ = cheerio.load(deepLinkPageRequest.text)
     if (itemId === '') return common.endResponse(responseHoldings)
     itemPage = deepLinkPageRequest.text

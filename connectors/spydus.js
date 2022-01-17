@@ -47,6 +47,7 @@ exports.searchByISBN = async function (isbn, service) {
     let $ = cheerio.load(itemPageRequest.text)
     if ($('#result-content-list').length === 0) return common.endResponse(responseHoldings)
 
+    responseHoldings.id = $('.card.card-list').first().find('a').attr('name')
     const availabilityUrl = $('.card-text.availability').first().find('a').attr('href')
     const availabilityRequest = await agent.get(service.Url + availabilityUrl).timeout(30000)
 

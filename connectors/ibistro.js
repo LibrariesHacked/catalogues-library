@@ -46,6 +46,10 @@ exports.searchByISBN = async function (isbn, service) {
 
   let $ = cheerio.load(itemPage)
 
+  var re = /put_keepremove_button\('(?<id>[0-9]+)'/.exec(itemPage)
+  if (re.length > 1)
+    responseHoldings.id = re[1]
+
   if ($('form[name=hitlist]').length > 0) {
     const itemUrl = service.Url + $('form[name=hitlist]').attr('action')
     try {

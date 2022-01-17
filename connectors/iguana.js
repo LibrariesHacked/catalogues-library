@@ -101,6 +101,10 @@ exports.searchByISBN = async function (isbn, service) {
   let record = null
   if (searchJs?.searchRetrieveResponse && !searchJs.searchRetrieveResponse.bestMatch && searchJs.searchRetrieveResponse.records && searchJs.searchRetrieveResponse.records[0].record) record = searchJs.searchRetrieveResponse.records[0]?.record[0]
 
+  if (record?.recordData && record.recordData[0] && record.recordData[0].BibDocument[0]) {
+    responseHoldings.id = record.recordData[0].BibDocument[0].Id[0];
+  }
+
   if (record?.recordData && record.recordData[0] && record.recordData[0].BibDocument[0] && record.recordData[0].BibDocument[0].HoldingsSummary) {
     record.recordData[0].BibDocument[0].HoldingsSummary[0].ShelfmarkData.forEach(function (item) {
       if (item.Shelfmark) {

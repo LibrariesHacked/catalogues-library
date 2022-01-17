@@ -2,6 +2,7 @@ const request = require('superagent')
 const cheerio = require('cheerio')
 const querystring = require('querystring')
 const common = require('../connectors/common')
+const uuid = require('uuid');
 
 console.log('durham connector loading...')
 
@@ -38,6 +39,7 @@ exports.getLibraries = async function (service) {
 exports.searchByISBN = async function (isbn, service) {
   const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
+  responseHoldings.id = uuid.v4()
 
   var headers = {
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -86,6 +88,7 @@ exports.searchByISBN = async function (isbn, service) {
   try {
     const itemPage = await agent.post(resultPageUrl).send(querystring.stringify(aspNetForm)).set(headers).timeout(20000)
     $ = cheerio.load(itemPage.text)
+
     itemPageUrl = itemPage.redirects.length > 0 ? itemPage.redirects[0] : resultPageUrl
   } catch (e) {
     return common.endResponse(responseHoldings)
@@ -106,6 +109,7 @@ exports.searchByISBN = async function (isbn, service) {
   try {
     const availabilityPage = await agent.post(itemPageUrl).send(querystring.stringify(aspNetForm)).set(headers).timeout(20000)
     $ = cheerio.load(availabilityPage.text)
+
   } catch (e) {
     return common.endResponse(responseHoldings)
   }

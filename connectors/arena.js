@@ -102,6 +102,7 @@ exports.searchByISBN = async function (isbn, service) {
   const pageText = searchResponse.text.replace(/\\x3d/g, '=').replace(/\\x26/g, '&')
   let itemId = pageText.substring(pageText.lastIndexOf('search_item_id=') + 15)
   itemId = itemId.substring(0, itemId.indexOf('&'))
+  responseHoldings.id = itemId
 
   const itemDetailsUrl = (service.Portlets ? ITEM_URL_PORTLETS : ITEM_URL_PORTLET).replace('[ARENANAME]', service.ArenaName).replace('[ITEMID]', itemId)
   const itemUrl = service.Url + itemDetailsUrl

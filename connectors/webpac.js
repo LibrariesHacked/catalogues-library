@@ -43,15 +43,26 @@ exports.searchByISBN = async function (isbn, service) {
 
   try {
     const responseHoldingsRequest = await agent.get(responseHoldings.url).timeout(60000)
+      // SuperAgent struggling with the certificate for https://library.south-ayrshire.gov.uk/
+      // Unable to validate the leaf certificate with the latest version of Node in use. Node
+      // uses its own list of root certificate authorities rather than the OS' list. Most puzzling!
+      // Disabling since the connection will still be encrypted; it won't be able to confirm the
+      // party with which it's communicating can be trusted, though.
+      .disableTLSCerts()
 
     const $ = cheerio.load(responseHoldingsRequest.text)
+
+    var id = $('#recordnum')
+    responseHoldings.id = id.attr('href').replace('/record=', '')
+
     $('table.bibItems tr.bibItemsEntry').each(function (idx, tr) {
       var name = $(tr).find('td').eq(0).text().trim()
       var status = $(tr).find('td').eq(3).text().trim()
       if (!libs[name]) libs[name] = { available: 0, unavailable: 0 }
       status === 'AVAILABLE' || status === 'FOR LOAN' ? libs[name].available++ : libs[name].unavailable++
     })
-  } catch (e) {}
+  } 
+  catch (e) {}
 
   for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
 

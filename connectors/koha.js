@@ -66,6 +66,7 @@ exports.searchByISBN = async function (isbn, service) {
   var bibLink = $('guid').text()
   if (!bibLink) return common.endResponse(responseHoldings)
 
+  responseHoldings.id = bibLink.substring(bibLink.lastIndexOf('=') + 1);
   responseHoldings.url = bibLink
 
   try {

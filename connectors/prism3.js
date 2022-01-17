@@ -53,19 +53,44 @@ exports.searchByISBN = async function (isbn, service) {
     if (searchRequest.body.length === 0) return common.endResponse(responseHoldings)
 
     let itemUrl = ''
-    Object.keys(searchRequest.body).forEach(key => {
-      const keyData = searchRequest.body[key]
-      if (keyData['http://purl.org/dc/elements/1.1/format']) {
-        let eBook = false
-        keyData['http://purl.org/dc/elements/1.1/format'].forEach(format => {
-          if (format.value === 'eBook') eBook = true
-        })
-        if (!eBook) itemUrl = key
+
+    for (let k of Object.keys(searchRequest.body)) {
+      let eBook = true
+
+      if (k.indexOf('/items/') > 0) {
+        itemUrl = k;
+
+        for(let key of Object.keys(searchRequest.body[k])) {
+          let item = searchRequest.body[k][key]
+
+          switch (key) {
+            case 'http://purl.org/dc/elements/1.1/format':
+              item.forEach(format => {
+                // One record can contain multiple formats. If *any* aren't
+                // an eBook, we should get the item details.
+                if (format.value !== 'eBook')
+                  eBook = false;
+              })
+              break;
+            case 'http://purl.org/dc/terms/identifier':
+              responseHoldings.id = item[0].value; 
+              break;
+          }
+        }
+
+        if (itemUrl && eBook) {
+          itemUrl = ''
+          // Try the next record, just in case..
+        }
+        else {
+          // We've found what we needed - leave the "for" loop.
+          break;
+        }
       }
-    })
+    }
 
     if (itemUrl !== '') {
-      const itemRequest = await agent.get(itemUrl).set(HEADER).timeout()
+      const itemRequest = await agent.get(itemUrl).timeout()
       $ = cheerio.load(itemRequest.text)
     } else {
       return common.endResponse(responseHoldings)
@@ -74,7 +99,7 @@ exports.searchByISBN = async function (isbn, service) {
     return common.endResponse(responseHoldings)
   }
 
-  $('#availability').find('ul.options li').each((idx, li) => {
+  $('#availability ul.options').find('li').each((idx, li) => {
     var libr = { library: $(li).find('h3 span span').text().trim(), available: 0, unavailable: 0 }
     $(li).find('div.jsHidden table tbody tr').each((i, tr) => {
       const status = $(tr).find("link[itemprop = 'availability']").attr('href')
