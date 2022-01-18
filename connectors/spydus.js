@@ -18,7 +18,7 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
-  const agent = request.agent()
+  const agent = service.DisableTls ? request.agent().disableTLSCerts() : request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
@@ -27,7 +27,9 @@ exports.getLibraries = async function (service) {
     $('#LOC option').each(function (idx, option) {
       if (common.isLibrary($(option).text())) responseLibraries.libraries.push($(option).text())
     })
-  } catch (e) { }
+  } catch (e) { 
+    responseLibraries.exception = e
+  }
 
   return common.endResponse(responseLibraries)
 }
@@ -38,16 +40,21 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
-  const agent = request.agent()
+  const agent = service.DisableTls ? request.agent().disableTLSCerts() : request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = service.Url + SEARCH_URL + isbn
 
   try {
-    const itemPageRequest = await agent.get(responseHoldings.url).timeout(30000)
+    const itemPageRequest = await (await agent.get(responseHoldings.url).timeout(30000))
     let $ = cheerio.load(itemPageRequest.text)
     if ($('#result-content-list').length === 0) return common.endResponse(responseHoldings)
 
     responseHoldings.id = $('.card.card-list').first().find('a').attr('name')
+
+    if (!responseHoldings.id) {
+      responseHoldings.id = $('.card.card-list').first().find('input.form-check-input').attr('value')
+    }
+
     const availabilityUrl = $('.card-text.availability').first().find('a').attr('href')
     const availabilityRequest = await agent.get(service.Url + availabilityUrl).timeout(30000)
 
@@ -61,7 +68,9 @@ exports.searchByISBN = async function (isbn, service) {
       status === 'Available' ? libs[name].available++ : libs[name].unavailable++
     })
     for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
-  } catch (e) { }
+  } catch (e) { 
+    responseHoldings.exception = e
+  }
 
   return common.endResponse(responseHoldings)
 }

@@ -24,56 +24,53 @@ exports.getService = (service) => {
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
-  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
-  let sid = null
   try {
+    const agent = request.agent()
+
     const homePageRequest = await agent.get(service.Url + HOME)
     const sessionCookie = homePageRequest.headers['set-cookie'][0]
-    sid = sessionCookie.substring(43, 53)
-  } catch (e) {
-    return common.endResponse(responseLibraries)
-  }
-
-  const body = ITEM_SEARCH.replace('[ISBN]', 'harry').replace('Index=Isbn', 'Index=Keywords').replace('[DB]', service.Database).replace('[TID]', 'Iguana_Brief').replace(/\[SID\]/g, sid)
-
-  const searchUrl = service.Url + 'Proxy.SearchRequest.cls'
-  const searchPageRequest = await agent.post(searchUrl).send(body).set({ ...HEADER, Referer: service.Url + HOME }).timeout(20000)
-  const searchJs = await xml2js.parseStringPromise(searchPageRequest.text)
-
-  if (service.Faceted) {
-    const resultId = searchJs.searchRetrieveResponse.resultSetId[0]
-
-    let facets = null
-    try {
+    let sid = sessionCookie.substring(43, 53)
+  
+    const body = ITEM_SEARCH.replace('[ISBN]', 'harry').replace('Index=Isbn', 'Index=Keywords').replace('[DB]', service.Database).replace('[TID]', 'Iguana_Brief').replace(/\[SID\]/g, sid)
+  
+    const searchUrl = service.Url + 'Proxy.SearchRequest.cls'
+    const searchPageRequest = await agent.post(searchUrl).send(body).set({ ...HEADER, Referer: service.Url + HOME }).timeout(20000)
+    const searchJs = await xml2js.parseStringPromise(searchPageRequest.text)
+  
+    if (service.Faceted) {
+      const resultId = searchJs.searchRetrieveResponse.resultSetId[0]
+  
       const facetRequest = await agent.post(service.Url + 'Proxy.SearchRequest.cls').send(FACET_SEARCH.replace('[RESULTID]', resultId).replace(/\[SID\]/g, sid)).set({ ...HEADER, Referer: service.Url + HOME }).timeout(20000)
       const facetJs = await xml2js.parseStringPromise(facetRequest.text)
-      facets = facetJs.VubisFacetedSearchResponse.Facets[0].Facet
-    } catch (e) {
-      return common.endResponse(responseLibraries)
-    }
-
-    if (facets) {
-      facets.forEach((facet) => {
-        if (facet.FacetWording[0] === service.LibraryFacet) {
-          facet.FacetEntry.forEach((location) => responseLibraries.libraries.push(location.Display[0]))
-        }
-      })
-    }
-  } else {
-    if (searchJs && searchJs.searchRetrieveResponse && searchJs.searchRetrieveResponse.records) {
-      searchJs.searchRetrieveResponse.records[0].record.forEach(function (record) {
-        const recData = record.recordData
-        if (recData && recData[0] && recData[0].BibDocument && recData[0].BibDocument[0] && recData[0].BibDocument[0].HoldingsSummary && recData[0].BibDocument[0].HoldingsSummary[0]) {
-          recData[0].BibDocument[0].HoldingsSummary[0].ShelfmarkData.forEach((item) => {
-            var lib = item.Shelfmark[0].split(' : ')[0]
-            if (responseLibraries.libraries.indexOf(lib) === -1) responseLibraries.libraries.push(lib)
-          })
-        }
-      })
+      let facets = facetJs.VubisFacetedSearchResponse.Facets[0].Facet
+  
+      if (facets) {
+        facets.forEach((facet) => {
+          if (facet.FacetWording[0] === service.LibraryFacet) {
+            facet.FacetEntry.forEach((location) => responseLibraries.libraries.push(location.Display[0]))
+          }
+        })
+      }
+    } else {
+      if (searchJs && searchJs.searchRetrieveResponse && searchJs.searchRetrieveResponse.records) {
+        searchJs.searchRetrieveResponse.records[0].record.forEach(function (record) {
+          const recData = record.recordData
+          if (recData && recData[0] && recData[0].BibDocument && recData[0].BibDocument[0] && recData[0].BibDocument[0].HoldingsSummary && recData[0].BibDocument[0].HoldingsSummary[0]) {
+            recData[0].BibDocument[0].HoldingsSummary[0].ShelfmarkData.forEach((item) => {
+              var lib = item.Shelfmark[0].split(' : ')[0]
+              if (responseLibraries.libraries.indexOf(lib) === -1) responseLibraries.libraries.push(lib)
+            })
+          }
+        })
+      }
     }
   }
+  catch(e) {
+    responseLibraries.exception = e
+  }
+  
   return common.endResponse(responseLibraries)
 }
 
@@ -83,35 +80,36 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
-  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
-  let searchJs = null
   try {
+    const agent = request.agent()
+
     const homePageRequest = await agent.get(service.Url + HOME)
     const sessionCookie = homePageRequest.headers['set-cookie'][0]
     const iguanaCookieIndex = sessionCookie.indexOf('iguana-=')
     const sid = sessionCookie.substring(iguanaCookieIndex + 20, iguanaCookieIndex + 30)
     const searchPageRequest = await agent.post(service.Url + 'Proxy.SearchRequest.cls').set({ ...HEADER, Referer: service.Url + HOME }).send(ITEM_SEARCH.replace('[ISBN]', isbn).replace('[DB]', service.Database).replace('[TID]', 'Iguana_Brief').replace(/\[SID\]/g, sid)).timeout(20000)
-    searchJs = await xml2js.parseStringPromise(searchPageRequest.text)
-  } catch (e) {
-    return common.endResponse(responseHoldings)
+    let searchJs = await xml2js.parseStringPromise(searchPageRequest.text)
+  
+    let record = null
+    if (searchJs?.searchRetrieveResponse && !searchJs.searchRetrieveResponse.bestMatch && searchJs.searchRetrieveResponse.records && searchJs.searchRetrieveResponse.records[0].record) record = searchJs.searchRetrieveResponse.records[0]?.record[0]
+  
+    if (record?.recordData && record.recordData[0] && record.recordData[0].BibDocument[0]) {
+      responseHoldings.id = record.recordData[0].BibDocument[0].Id[0];
+    }
+  
+    if (record?.recordData && record.recordData[0] && record.recordData[0].BibDocument[0] && record.recordData[0].BibDocument[0].HoldingsSummary) {
+      record.recordData[0].BibDocument[0].HoldingsSummary[0].ShelfmarkData.forEach(function (item) {
+        if (item.Shelfmark) {
+          var lib = item.Shelfmark[0].split(' : ')[0]
+          responseHoldings.availability.push({ library: lib, available: item.Available ? parseInt(item.Available[0]) : 0, unavailable: item.Available === '0' ? 1 : 0 })
+        }
+      })
+    }
   }
-
-  let record = null
-  if (searchJs?.searchRetrieveResponse && !searchJs.searchRetrieveResponse.bestMatch && searchJs.searchRetrieveResponse.records && searchJs.searchRetrieveResponse.records[0].record) record = searchJs.searchRetrieveResponse.records[0]?.record[0]
-
-  if (record?.recordData && record.recordData[0] && record.recordData[0].BibDocument[0]) {
-    responseHoldings.id = record.recordData[0].BibDocument[0].Id[0];
-  }
-
-  if (record?.recordData && record.recordData[0] && record.recordData[0].BibDocument[0] && record.recordData[0].BibDocument[0].HoldingsSummary) {
-    record.recordData[0].BibDocument[0].HoldingsSummary[0].ShelfmarkData.forEach(function (item) {
-      if (item.Shelfmark) {
-        var lib = item.Shelfmark[0].split(' : ')[0]
-        responseHoldings.availability.push({ library: lib, available: item.Available ? parseInt(item.Available[0]) : 0, unavailable: item.Available === '0' ? 1 : 0 })
-      }
-    })
+  catch(e) {
+    responseHoldings.exception = e
   }
 
   return common.endResponse(responseHoldings)

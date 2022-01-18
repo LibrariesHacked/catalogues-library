@@ -19,20 +19,21 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
-  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
-  let $ = null
   try {
-    const advancedSearchPageRequest = await agent.get(service.Url + 'advancedsearch?target=catalogue').timeout(60000)
-    $ = cheerio.load(advancedSearchPageRequest.text)
-  } catch (e) {
-    return common.endResponse(responseLibraries)
-  }
+    const agent = request.agent()
 
-  $('#locdd option').each((idx, option) => {
-    if ($(option).text() !== '') responseLibraries.libraries.push($(option).text())
-  })
+    const advancedSearchPageRequest = await agent.get(service.Url + 'advancedsearch?target=catalogue').timeout(60000)
+    const $ = cheerio.load(advancedSearchPageRequest.text)
+  
+    $('#locdd option').each((idx, option) => {
+      if ($(option).text() !== '') responseLibraries.libraries.push($(option).text())
+    })
+  }
+  catch(e) {
+    responseLibraries.exception = e
+  }
 
   return common.endResponse(responseLibraries)
 }
@@ -43,12 +44,13 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
-  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = service.Url + DEEP_LINK + isbn
 
-  let $ = null
   try {
+    const agent = request.agent()
+
+    let $ = null
     const searchRequest = await agent.get(service.Url + 'items.json?query=' + isbn).set(HEADER).timeout(30000)
     if (searchRequest.body.length === 0) return common.endResponse(responseHoldings)
 
@@ -95,18 +97,19 @@ exports.searchByISBN = async function (isbn, service) {
     } else {
       return common.endResponse(responseHoldings)
     }
-  } catch (e) {
-    return common.endResponse(responseHoldings)
-  }
-
-  $('#availability ul.options').find('li').each((idx, li) => {
-    var libr = { library: $(li).find('h3 span span').text().trim(), available: 0, unavailable: 0 }
-    $(li).find('div.jsHidden table tbody tr').each((i, tr) => {
-      const status = $(tr).find("link[itemprop = 'availability']").attr('href')
-      AVAILABLE_STATUSES.includes(status) ? libr.available++ : libr.unavailable++
+  
+    $('#availability ul.options').find('li').each((idx, li) => {
+      var libr = { library: $(li).find('h3 span span').text().trim(), available: 0, unavailable: 0 }
+      $(li).find('div.jsHidden table tbody tr').each((i, tr) => {
+        const status = $(tr).find("link[itemprop = 'availability']").attr('href')
+        AVAILABLE_STATUSES.includes(status) ? libr.available++ : libr.unavailable++
+      })
+      responseHoldings.availability.push(libr)
     })
-    responseHoldings.availability.push(libr)
-  })
+  }
+  catch(e) {
+    responseHoldings.exception = e
+  }
 
   return common.endResponse(responseHoldings)
 }

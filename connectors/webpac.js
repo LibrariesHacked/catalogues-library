@@ -15,7 +15,7 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
-  const agent = request.agent()
+  const agent = service.DisableTls ? request.agent().disableTLSCerts() : request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
@@ -24,7 +24,9 @@ exports.getLibraries = async function (service) {
     $('select[Name=searchscope] option').each((idx, option) => {
       if (common.isLibrary($(option).text())) responseLibraries.libraries.push($(option).text().trim())
     })
-  } catch (e) {}
+  } catch (e) {
+    responseLibraries.exception = e
+  }
 
   return common.endResponse(responseLibraries)
 }
@@ -35,21 +37,14 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
-  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
-
-  const libs = {}
   responseHoldings.url = service.Url + 'search~S1/?searchtype=i&searcharg=' + isbn
+
+  const agent = service.DisableTls ? request.agent().disableTLSCerts() : request.agent()
+  const libs = {}
 
   try {
     const responseHoldingsRequest = await agent.get(responseHoldings.url).timeout(60000)
-      // SuperAgent struggling with the certificate for https://library.south-ayrshire.gov.uk/
-      // Unable to validate the leaf certificate with the latest version of Node in use. Node
-      // uses its own list of root certificate authorities rather than the OS' list. Most puzzling!
-      // Disabling since the connection will still be encrypted; it won't be able to confirm the
-      // party with which it's communicating can be trusted, though.
-      .disableTLSCerts()
-
     const $ = cheerio.load(responseHoldingsRequest.text)
 
     var id = $('#recordnum')
@@ -61,10 +56,12 @@ exports.searchByISBN = async function (isbn, service) {
       if (!libs[name]) libs[name] = { available: 0, unavailable: 0 }
       status === 'AVAILABLE' || status === 'FOR LOAN' ? libs[name].available++ : libs[name].unavailable++
     })
-  } 
-  catch (e) {}
 
-  for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
+    for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
+  } 
+  catch (e) {
+    responseHoldings.exception = e
+  }
 
   return common.endResponse(responseHoldings)
 }

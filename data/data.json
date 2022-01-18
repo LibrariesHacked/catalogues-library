@@ -124,7 +124,7 @@
       "Code": "E06000008",
       "Type": "spydus",
       "Url": "https://bwdlibraries.spydus.co.uk/",
-      "TestISBN": "9781408835012"
+      "TestISBN": "9781408855713"
     },
     {
       "Name": "Blackpool",
@@ -616,12 +616,9 @@
     {
       "Name": "East Renfrewshire",
       "Code": "S12000011",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://capitadiscovery.co.uk/eastrenfrewshire/",
-      "TestISBN": "9781408855713"
+      "Type": "spydus",
+      "Url": "https://ercl.spydus.co.uk/",
+      "TestISBN": "9781785301544"
     },
     {
       "Name": "East Riding of Yorkshire",
@@ -686,7 +683,7 @@
       "Available": [
         "In stock"
       ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailitemstable_0:loadavailability/0/ent:",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailitemstable_0.webservicefieldsajax:lookuptitleinfo/detailItemsDiv0/ent:[ITEMID]/ILS/true/true",
       "Url": "http://fct.ent.sirsidynix.net.uk/client/en_GB/libraries/",
       "TestISBN": "9780747595823"
@@ -756,11 +753,14 @@
     {
       "Name": "Guernsey",
       "Code": "",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://capitadiscovery.co.uk/guernsey/",
+      "Type": "arena",
+      "Id": "220001",
+      "OrganisationName": "Guernsey",
+      "ArenaName": "AUKGUERNSEY",
+      "SearchType": "Keyword",
+      "Url": "https://www.catalogue.library.gg/",
+      "AdvancedUrl": "extended-search",
+      "Portlets": false,
       "TestISBN": "9781408855713"
     },
     {
@@ -889,6 +889,7 @@
       "Available": [
         "In stock"
       ],
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "http://hldn.ent.sirsidynix.net.uk/client/en_GB/public/",
       "TestISBN": "9781408855713"
@@ -988,6 +989,7 @@
       "Available": [
         "In stock"
       ],
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "http://kir.ent.sirsidynix.net.uk/client/en_GB/default/",
       "TestISBN": "9781408855713"
@@ -1156,7 +1158,7 @@
       "Url": "https://libraries.midlothian.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000075|0",
-      "Portlets": true,
+      "Portlets": false,
       "TestISBN": "9780747584667"
     },
     {
@@ -1173,9 +1175,10 @@
       "Available": [
         "Available"
       ],
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/mmou_en/",
-      "TestISBN": "9780747538493"
+      "TestISBN": "9781408855959"
     },
     {
       "Name": "Moray",
@@ -1233,7 +1236,7 @@
       "Code": "E10000020",
       "Type": "spydus",
       "Url": "https://norfolk.spydus.co.uk/",
-      "TestISBN": "9780747538493"
+      "TestISBN": "9780747591085"
     },
     {
       "Name": "North Ayrshire",
@@ -1253,7 +1256,7 @@
       "AdvancedUrl": "advanced-search",
       "OrganisationId": "AUK000252|1",
       "OrganisationName": "NELC Libraries",
-      "Portlets": true,
+      "Portlets": false,
       "TestISBN": "9780747591054"
     },
     {
@@ -1462,7 +1465,8 @@
       "Code": "E06000038",
       "Type": "spydus",
       "Url": "https://library.reading.gov.uk/",
-      "TestISBN": "9780751565355"
+      "TestISBN": "9780751565355",
+      "DisableTls": true
     },
     {
       "Name": "Redbridge",
@@ -1641,7 +1645,8 @@
       "Code": "S12000028",
       "Type": "webpac",
       "Url": "https://library.south-ayrshire.gov.uk/",
-      "TestISBN": "9780751565362"
+      "TestISBN": "9780751565362",
+      "DisableTls": true
     },
     {
       "Name": "South Gloucestershire",
@@ -1685,7 +1690,7 @@
       "Code": "E06000033",
       "Type": "spydus",
       "Url": "https://southend.spydus.co.uk/",
-      "TestISBN": "9780747538493"
+      "TestISBN": "9781408855713"
     },
     {
       "Name": "Southwark",
@@ -1712,7 +1717,7 @@
       "Url": "https://www.yourlibcat.staffordshire.gov.uk/web/arena/",
       "AdvancedUrl": "advanced-search",
       "OrganisationId": "AUK000250|1",
-      "Portlets": true,
+      "Portlets": false,
       "TestISBN": "9781408894637"
     },
     {
@@ -1736,12 +1741,9 @@
     {
       "Name": "Stockton on Tees",
       "Code": "E06000004",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://capitadiscovery.co.uk/stockton/",
-      "TestISBN": "9780747538493"
+      "Type": "spydus",
+      "Url": "https://stockton.spydus.co.uk/",
+      "TestISBN": "9781408845677"
     },
     {
       "Name": "Stoke on Trent",
@@ -1772,14 +1774,13 @@
     {
       "Name": "Surrey",
       "Code": "E10000030",
-      "Type": "arena",
-      "ArenaName": "AUK000021",
-      "Id": "210002",
-      "ISBNAlias": "number",
-      "Url": "https://arena.surreylibraries.org/web/arena/",
-      "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000021|0",
-      "Portlets": false,
+      "Type": "enterprise",
+      "Available": [
+        "Available"
+      ],
+      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/sutton/",
+      "LibraryNameFilter": "Surrey",
       "TestISBN": "9781408810569"
     },
     {
@@ -1899,16 +1900,14 @@
     {
       "Name": "Wakefield",
       "Code": "E08000036",
-      "Type": "arena",
-      "Id": "212001",
-      "ArenaName": "AUK000212",
-      "IgnoreSSL": true,
-      "ISBNAlias": "number",
-      "Url": "https://libraries.wakefield.gov.uk/web/arena/",
-      "AdvancedUrl": "advanced-search",
-      "OrganisationId": "AUK000212|1",
-      "Portlets": true,
-      "TestISBN": "9781408855669"
+      "Type": "enterprise",
+      "Available": [
+        "Available"
+      ],
+      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "Url": "https://wakefield.ent.sirsidynix.net.uk/client/en_GB/default/",
+      "LibraryNameFilter": "Wakefield",
+      "TestISBN": "9781408855713"
     },
     {
       "Name": "Walsall",
@@ -1947,7 +1946,7 @@
       "Code": "E06000007",
       "Type": "koha",
       "Url": "https://libonline.livewirewarrington.co.uk/",
-      "TestISBN": "9780747591269"
+      "TestISBN": "9780747561071"
     },
     {
       "Name": "Warwickshire",
