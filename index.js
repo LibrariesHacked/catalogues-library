@@ -89,24 +89,3 @@ exports.openLibrarySearch = async (query) => {
   var openLibData = await openLibrary.search(query)
   return openLibData
 }
-
-/**
- * Runs through tests for the ISBN search and reports where no copies are found for the test ISBNs
- * @param {String} serviceFilter An optional service to filter by using either code or name
- * @param {Object[]} searches The results of the searches
- */
-exports.testIsbnSearch = async (serviceFilter) => {
-  var searches = data.LibraryServices
-    .filter((service) => {
-      return (service.Type !== '' && (!serviceFilter || service.Name === serviceFilter || service.Code === serviceFilter))
-    })
-    .map((service) => {
-      return async () => {
-        var response = await serviceFunctions[service.Type].searchByISBN(service.TestISBN, service)
-        if (response.availability.length === 0) console.log('None found. ' + JSON.stringify(response))
-        return response
-      }
-    })
-  var searches = await async.parallel(searches)
-  return searches
-}

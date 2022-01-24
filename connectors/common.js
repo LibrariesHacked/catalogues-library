@@ -64,7 +64,7 @@ exports.initialiseGetLibrariesResponse = function (service) {
  * @param {object} service
  */
 exports.initialiseSearchByISBNResponse = function (service) {
-  return { service: service.Name, code: service.Code, availability: [], start: new Date(), end: null }
+  return { id: null, service: service.Name, code: service.Code, availability: [], start: new Date(), end: null }
 }
 
 /**

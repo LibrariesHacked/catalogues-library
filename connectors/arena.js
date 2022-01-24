@@ -1,4 +1,3 @@
-const async = require('async')
 const xml2js = require('xml2js')
 const cheerio = require('cheerio')
 const querystring = require('querystring')
@@ -30,46 +29,44 @@ exports.getService = (service) => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
-  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
-  if (responseLibraries.libraries.length > 0) return common.endResponse(responseLibraries)
-
-  // Get the advanced search page
-  let advancedSearchResponse = null
+  
   try {
+    const agent = request.agent()
+    if (responseLibraries.libraries.length > 0) return common.endResponse(responseLibraries)
+  
+    // Get the advanced search page
+    let advancedSearchResponse = null
     // The AdvancedUrl tends to either be advanced-search or extended-search
     advancedSearchResponse = await agent.get(service.Url + service.AdvancedUrl)
-  } catch (e) {
-    common.endResponse(responseLibraries)
-  }
-
-  // The advanced search page may have libraries listed on it
-  let $ = cheerio.load(advancedSearchResponse.text)
-  if ($('.arena-extended-search-branch-choice option').length > 1) {
-    $('.arena-extended-search-branch-choice option').each(function () {
-      if (common.isLibrary($(this).text())) responseLibraries.libraries.push($(this).text())
-    })
-    return common.endResponse(responseLibraries)
-  }
-
-  // If not we'll need to call a portlet to get the data
-  const headers = { Accept: 'text/xml', 'Wicket-Ajax': true, 'Wicket-FocusedElementId': 'id__extendedSearch__WAR__arenaportlet____e', 'Content-Type': 'application/x-www-form-urlencoded' }
-  const url = service.Url + service.AdvancedUrl + (service.portlets ? LIBRARIES_URL_PORTLETS : LIBRARIES_URL_PORTLET)
-  let js = null
-  try {
+  
+    // The advanced search page may have libraries listed on it
+    let $ = cheerio.load(advancedSearchResponse.text)
+    if ($('.arena-extended-search-branch-choice option').length > 1) {
+      $('.arena-extended-search-branch-choice option').each(function () {
+        if (common.isLibrary($(this).text())) responseLibraries.libraries.push($(this).text())
+      })
+      return common.endResponse(responseLibraries)
+    }
+  
+    // If not we'll need to call a portlet to get the data
+    const headers = { Accept: 'text/xml', 'Wicket-Ajax': true, 'Wicket-FocusedElementId': 'id__extendedSearch__WAR__arenaportlet____e', 'Content-Type': 'application/x-www-form-urlencoded' }
+    const url = service.Url + service.AdvancedUrl + (service.portlets ? LIBRARIES_URL_PORTLETS : LIBRARIES_URL_PORTLET)
     const responseHeaderRequest = await agent.post(url).send(querystring.stringify({ 'organisationHierarchyPanel:organisationContainer:organisationChoice': service.OrganisationId })).set(headers)
-    js = await xml2js.parseStringPromise(responseHeaderRequest.text)
-  } catch (e) {
-    common.endResponse(responseLibraries)
+    const js = await xml2js.parseStringPromise(responseHeaderRequest.text)
+  
+    // Parse the results of the request
+    if (js && js !== 'Undeployed' && js['ajax-response']?.component) {
+      $ = cheerio.load(js['ajax-response'].component[0]._)
+      $('option').each(function () {
+        if (common.isLibrary($(this).text())) responseLibraries.libraries.push($(this).text())
+      })
+    }
+  }
+  catch(e) {
+    responseLibraries.exception = e
   }
 
-  // Parse the results of the request
-  if (js && js !== 'Undeployed' && js['ajax-response']?.component) {
-    $ = cheerio.load(js['ajax-response'].component[0]._)
-    $('option').each(function () {
-      if (common.isLibrary($(this).text())) responseLibraries.libraries.push($(this).text())
-    })
-  }
   return common.endResponse(responseLibraries)
 }
 
@@ -79,124 +76,103 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
-  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
-  let bookQuery = (service.SearchType !== 'Keyword' ? service.ISBNAlias + '_index:' + isbn : isbn)
-  if (service.OrganisationId) bookQuery = 'organisationId_index:' + service.OrganisationId + '+AND+' + bookQuery
-
-  const searchUrl = (service.Portlets ? SEARCH_URL_PORTLETS : SEARCH_URL_PORTLET).replace('[BOOKQUERY]', bookQuery)
-  responseHoldings.url = service.Url + searchUrl
-
-  let searchResponse = null
   try {
-    searchResponse = await agent.get(responseHoldings.url).timeout(20000)
-  } catch (e) {
-    return common.endResponse(responseHoldings)
-  }
+    const agent = request.agent()
+  
+    let bookQuery = (service.SearchType !== 'Keyword' ? service.ISBNAlias + '_index:' + isbn : isbn)
+    if (service.OrganisationId) bookQuery = 'organisationId_index:' + service.OrganisationId + '+AND+' + bookQuery
+  
+    const searchUrl = (service.Portlets ? SEARCH_URL_PORTLETS : SEARCH_URL_PORTLET).replace('[BOOKQUERY]', bookQuery)
+    responseHoldings.url = service.Url + searchUrl
+  
+    let searchResponse = await agent.get(responseHoldings.url).timeout(20000)
+  
+    // No item found
+    if (!searchResponse || !searchResponse.text || (searchResponse.text && searchResponse.text.lastIndexOf('search_item_id') === -1)) return common.endResponse(responseHoldings)
+  
+    // Call to the item page
+    const pageText = searchResponse.text.replace(/\\x3d/g, '=').replace(/\\x26/g, '&')
+    let itemId = pageText.substring(pageText.lastIndexOf('search_item_id=') + 15)
+    itemId = itemId.substring(0, itemId.indexOf('&'))
+    responseHoldings.id = itemId
+  
+    const itemDetailsUrl = (service.Portlets ? ITEM_URL_PORTLETS : ITEM_URL_PORTLET).replace('[ARENANAME]', service.ArenaName).replace('[ITEMID]', itemId)
+    const itemUrl = service.Url + itemDetailsUrl
 
-  // No item found
-  if (!searchResponse || !searchResponse.text || (searchResponse.text && searchResponse.text.lastIndexOf('search_item_id') === -1)) return common.endResponse(responseHoldings)
-
-  // Call to the item page
-  const pageText = searchResponse.text.replace(/\\x3d/g, '=').replace(/\\x26/g, '&')
-  let itemId = pageText.substring(pageText.lastIndexOf('search_item_id=') + 15)
-  itemId = itemId.substring(0, itemId.indexOf('&'))
-
-  const itemDetailsUrl = (service.Portlets ? ITEM_URL_PORTLETS : ITEM_URL_PORTLET).replace('[ARENANAME]', service.ArenaName).replace('[ITEMID]', itemId)
-  const itemUrl = service.Url + itemDetailsUrl
-
-  let $ = null
-  try {
     const itemPageResponse = await agent.get(itemUrl).set({ Connection: 'keep-alive' }).timeout(20000)
-    $ = cheerio.load(itemPageResponse.text)
-  } catch (e) {
-    return common.endResponse(responseHoldings)
-  }
-
-  if ($('.arena-availability-viewbranch').length > 0) { // If the item holdings are available immediately on the page
-    $('.arena-availability-viewbranch').each(function () {
-      var libName = $(this).find('.arena-branch-name span').text()
-      var totalAvailable = $(this).find('.arena-availability-info span').eq(0).text().replace('Total ', '')
-      var checkedOut = $(this).find('.arena-availability-info span').eq(1).text().replace('On loan ', '')
-      if (libName) responseHoldings.availability.push({ library: libName, available: ((totalAvailable ? parseInt(totalAvailable) : 0) - (checkedOut ? parseInt(checkedOut) : 0)), unavailable: (checkedOut !== '' ? parseInt(checkedOut) : 0) })
-    })
-    return common.endResponse(responseHoldings)
-  }
-
-  // Get the item holdings widget
-  const holdingsPanelHeader = { Accept: 'text/xml', 'Wicket-Ajax': true }
-  const holdingsPanelUrl = service.Url + (service.Portlets ? HOLDINGS_URL_PORTLETS : HOLDINGS_URL_PORTLET)
-
-  try {
+    let $ = cheerio.load(itemPageResponse.text)
+  
+    if ($('.arena-availability-viewbranch').length > 0) { // If the item holdings are available immediately on the page
+      $('.arena-availability-viewbranch').each(function () {
+        var libName = $(this).find('.arena-branch-name span').text()
+        var totalAvailable = $(this).find('.arena-availability-info span').eq(0).text().replace('Total ', '')
+        var checkedOut = $(this).find('.arena-availability-info span').eq(1).text().replace('On loan ', '')
+        if (libName) responseHoldings.availability.push({ library: libName, available: ((totalAvailable ? parseInt(totalAvailable) : 0) - (checkedOut ? parseInt(checkedOut) : 0)), unavailable: (checkedOut !== '' ? parseInt(checkedOut) : 0) })
+      })
+      return common.endResponse(responseHoldings)
+    }
+  
+    // Get the item holdings widget
+    const holdingsPanelHeader = { Accept: 'text/xml', 'Wicket-Ajax': true }
+    const holdingsPanelUrl = service.Url + (service.Portlets ? HOLDINGS_URL_PORTLETS : HOLDINGS_URL_PORTLET)
+  
     var holdingsPanelPortletResponse = await agent.get(holdingsPanelUrl).set(holdingsPanelHeader).timeout(20000)
     var js = await xml2js.parseStringPromise(holdingsPanelPortletResponse.text)
     if (!js['ajax-response'] || !js['ajax-response'].component) return common.endResponse(responseHoldings)
     $ = cheerio.load(js['ajax-response'].component[0]._)
-  } catch (e) {
-    return common.endResponse(responseHoldings)
-  }
-
-  if ($('.arena-holding-nof-total, .arena-holding-nof-checked-out, .arena-holding-nof-available-for-loan').length > 0) {
-    $('.arena-holding-child-container').each(function () {
-      var libName = $(this).find('span.arena-holding-link').text()
-      var totalAvailable = $(this).find('td.arena-holding-nof-total span.arena-value').text() || (parseInt($(this).find('td.arena-holding-nof-available-for-loan span.arena-value').text() || 0) + parseInt($(this).find('td.arena-holding-nof-checked-out span.arena-value').text() || 0))
-      var checkedOut = $(this).find('td.arena-holding-nof-checked-out span.arena-value').text()
-      if (libName) responseHoldings.availability.push({ library: libName, available: (parseInt(totalAvailable) - (checkedOut ? parseInt(checkedOut) : 0)), unavailable: (checkedOut !== '' ? parseInt(checkedOut) : 0) })
-    })
-    return common.endResponse(responseHoldings)
-  }
-
-  let currentOrg = null
-  $('.arena-holding-hyper-container .arena-holding-container a span').each(function (i) { if ($(this).text().trim() === (service.OrganisationName || service.Name)) currentOrg = i })
-  if (currentOrg == null) return common.endResponse(responseHoldings)
-
-  var holdingsHeaders = { Accept: 'text/xml', 'Wicket-Ajax': true }
-  holdingsHeaders['Wicket-FocusedElementId'] = 'id__crDetailWicket__WAR__arenaportlets____2a'
-  var resourceId = '/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel:content:holdingsView:' + (currentOrg + 1) + ':holdingContainer:togglableLink::IBehaviorListener:0:'
-  var holdingsUrl = service.Url + (service.Portlets ? HOLDINGSDETAIL_URL_PORTLETS : HOLDINGSDETAIL_URL_PORTLET).replace('[RESOURCEID]', resourceId)
-
-  try {
+  
+    if ($('.arena-holding-nof-total, .arena-holding-nof-checked-out, .arena-holding-nof-available-for-loan').length > 0) {
+      $('.arena-holding-child-container').each(function () {
+        var libName = $(this).find('span.arena-holding-link').text()
+        var totalAvailable = $(this).find('td.arena-holding-nof-total span.arena-value').text() || (parseInt($(this).find('td.arena-holding-nof-available-for-loan span.arena-value').text() || 0) + parseInt($(this).find('td.arena-holding-nof-checked-out span.arena-value').text() || 0))
+        var checkedOut = $(this).find('td.arena-holding-nof-checked-out span.arena-value').text()
+        if (libName) responseHoldings.availability.push({ library: libName, available: (parseInt(totalAvailable) - (checkedOut ? parseInt(checkedOut) : 0)), unavailable: (checkedOut !== '' ? parseInt(checkedOut) : 0) })
+      })
+      return common.endResponse(responseHoldings)
+    }
+  
+    let currentOrg = null
+    $('.arena-holding-hyper-container .arena-holding-container a span').each(function (i) { if ($(this).text().trim() === (service.OrganisationName || service.Name)) currentOrg = i })
+    if (currentOrg == null) return common.endResponse(responseHoldings)
+  
+    var holdingsHeaders = { Accept: 'text/xml', 'Wicket-Ajax': true }
+    holdingsHeaders['Wicket-FocusedElementId'] = 'id__crDetailWicket__WAR__arenaportlets____2a'
+    var resourceId = '/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel:content:holdingsView:' + (currentOrg + 1) + ':holdingContainer:togglableLink::IBehaviorListener:0:'
+    var holdingsUrl = service.Url + (service.Portlets ? HOLDINGSDETAIL_URL_PORTLETS : HOLDINGSDETAIL_URL_PORTLET).replace('[RESOURCEID]', resourceId)
     var holdingsResponse = await agent.get(holdingsUrl).set(holdingsHeaders).timeout(20000)
     var holdingsJs = await xml2js.parseStringPromise(holdingsResponse.text)
     $ = cheerio.load(holdingsJs['ajax-response'].component[0]._)
-  } catch (e) {
-    return common.endResponse(responseHoldings)
-  }
-
-  var libsData = $('.arena-holding-container')
-  const numLibs = libsData.length
-  if (!numLibs || numLibs === 0) return common.endResponse(responseHoldings)
-
-  const availabilityRequests = []
-  libsData.each(function (i) {
-    resourceId = '/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel:content:holdingsView:' + (currentOrg + 1) + ':childContainer:childView:' + i + ':holdingPanel:holdingContainer:togglableLink::IBehaviorListener:0:'
-    const libUrl = service.Url + (service.Portlets ? HOLDINGSDETAIL_URL_PORTLETS : HOLDINGSDETAIL_URL_PORTLET).replace('[RESOURCEID]', resourceId)
-    var headers = { Accept: 'text/xml', 'Wicket-Ajax': true }
-    availabilityRequests.push(agent.get(libUrl).set(headers).timeout(20000))
-  })
-
-  let responses = null
-  try {
-    responses = await async.parallel(availabilityRequests)
-  } catch (e) {
-    return common.endResponse(responseHoldings)
-  }
-
-  responses.forEach(async (response) => {
-    var availabilityJs = await xml2js.parseStringPromise(response.text)
-    if (availabilityJs && availabilityJs['ajax-response']) {
-      try {
+  
+    var libsData = $('.arena-holding-container')
+    const numLibs = libsData.length
+    if (!numLibs || numLibs === 0) return common.endResponse(responseHoldings)
+  
+    const availabilityRequests = []
+    libsData.each(function (i) {
+      resourceId = '/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel:content:holdingsView:' + (currentOrg + 1) + ':childContainer:childView:' + i + ':holdingPanel:holdingContainer:togglableLink::IBehaviorListener:0:'
+      const libUrl = service.Url + (service.Portlets ? HOLDINGSDETAIL_URL_PORTLETS : HOLDINGSDETAIL_URL_PORTLET).replace('[RESOURCEID]', resourceId)
+      var headers = { Accept: 'text/xml', 'Wicket-Ajax': true }
+      availabilityRequests.push(agent.get(libUrl).set(headers).timeout(20000))
+    })
+  
+    let responses = await Promise.all(availabilityRequests);
+  
+    responses.forEach(async (response) => {
+      var availabilityJs = await xml2js.parseStringPromise(response.text)
+      if (availabilityJs && availabilityJs['ajax-response']) {
         $ = cheerio.load(availabilityJs['ajax-response'].component[0]._)
         var totalAvailable = $('td.arena-holding-nof-total span.arena-value').text()
         var checkedOut = $('td.arena-holding-nof-checked-out span.arena-value').text()
         $ = cheerio.load(availabilityJs['ajax-response'].component[2]._)
         responseHoldings.availability.push({ library: $('span.arena-holding-link').text(), available: ((totalAvailable ? parseInt(totalAvailable) : 0) - (checkedOut ? parseInt(checkedOut) : 0)), unavailable: (checkedOut ? parseInt(checkedOut) : 0) })
-      } catch (e) {
-        return common.endResponse(responseHoldings)
       }
-    }
-  })
+    })
+  }
+  catch(e) {
+    responseHoldings.exception = e
+  }
 
   return common.endResponse(responseHoldings)
 }

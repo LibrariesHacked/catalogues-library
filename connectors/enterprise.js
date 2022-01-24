@@ -28,6 +28,7 @@ exports.getLibraries = async function (service) {
     const advancedPage = await agent.get(service.Url + 'search/advanced').timeout(30000)
     $ = cheerio.load(advancedPage.text)
   } catch (e) {
+    responseLibraries.exception = e
     return common.endResponse(responseLibraries)
   }
 
@@ -56,27 +57,66 @@ exports.searchByISBN = async function (isbn, service) {
   try {
     // We could also use RSS https://wales.ent.sirsidynix.net.uk/client/rss/hitlist/ynysmon_en/qu=9780747538493
     const deepLinkPageRequest = await agent.get(responseHoldings.url).set(HEADER).timeout(30000)
-    deepLinkPageUrl = deepLinkPageRequest.redirects.length > 0 ? deepLinkPageRequest.redirects[0] : responseHoldings.url
-    itemId = deepLinkPageUrl.substring(deepLinkPageUrl.lastIndexOf('ent:') + 4, deepLinkPageUrl.lastIndexOf('/one')) || ''
+
+    if (deepLinkPageRequest.redirects.length > 0) {
+      let url = deepLinkPageRequest.redirects.find(x => x.indexOf('ent:') > 0)
+      if (url) {
+        deepLinkPageUrl = url;
+      }
+      else {
+        deepLinkPageUrl = responseHoldings.url;
+      }
+    }
+    else {
+      deepLinkPageUrl = responseHoldings.url;
+    }
+
+    if (deepLinkPageUrl.indexOf('ent:') > 0) {
+      itemId = deepLinkPageUrl.substring(deepLinkPageUrl.lastIndexOf('ent:') + 4, deepLinkPageUrl.lastIndexOf('/one')) || ''
+      responseHoldings.id = itemId
+    }
+
     $ = cheerio.load(deepLinkPageRequest.text)
-    if (itemId === '') return common.endResponse(responseHoldings)
     itemPage = deepLinkPageRequest.text
-  } catch (e) {
-    return common.endResponse(responseHoldings)
+
+    if (deepLinkPageUrl.lastIndexOf('ent:') === -1) {
+      // In this situation we're probably still on the search page (there may be duplicate results).
+      let items = $('input.results_chkbox.DISCOVERY_ALL')
+  
+      for (let item of items) {
+        itemId = item.attribs.value;
+        itemId = itemId.substring(itemId.lastIndexOf('ent:') + 4)
+        itemId = itemId.split('/').join('$002f')
+        responseHoldings.id = itemId
+  
+        if (itemId === '') return common.endResponse(responseHoldings)
+  
+        const itemPageUrl = service.Url + ITEM_URL.replace('[ILS]', itemId)
+        const itemPageRequest = await agent.get(itemPageUrl).timeout(30000)
+        itemPage = itemPageRequest.text
+  
+        responseHoldings.availability = await processItemPage(agent, itemId, itemPage, service)
+  
+        if (responseHoldings.availability.length > 0)
+          break;
+      }
+    }
+    else {
+      responseHoldings.availability = await processItemPage(agent, itemId, itemPage, service)
+    }
+  } 
+  catch (e) {
+    responseHoldings.exception = e
   }
 
-  if (deepLinkPageUrl.lastIndexOf('ent:') === -1) {
-    // In this situation we're probably still on the search page (there may be duplicate results).
-    if ($('#da0').attr('value')) itemId = $('#da0').attr('value').substring($('#da0').attr('value').lastIndexOf('ent:') + 4) || ''
-    if (itemId === '') return common.endResponse(responseHoldings)
-    const itemPageUrl = service.Url + ITEM_URL.replace('[ILS]', itemId.split('/').join('$002f'))
-    try {
-      const itemPageRequest = await agent.get(itemPageUrl).timeout(30000)
-      itemPage = itemPageRequest.text
-    } catch (e) {
-      return common.endResponse(responseHoldings)
-    }
-  }
+  return common.endResponse(responseHoldings)
+}
+
+const processItemPage = async (agent, itemId, itemPage, service) => {
+  let availabilityJson = null
+  const availability = [];
+
+  let $ = cheerio.load(itemPage)
 
   // Availability information may already be part of the page.
   var matches = /parseDetailAvailabilityJSON\(([\s\S]*?)\)/.exec(itemPage)
@@ -87,13 +127,10 @@ exports.searchByISBN = async function (isbn, service) {
   if (availabilityJson === null && service.AvailabilityUrl) {
     // e.g. /search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:$002f$002fSD_ILS$002f0$002fSD_ILS:548433/ILS/0/true/true?qu=9780747538493&d=ent%3A%2F%2FSD_ILS%2F0%2FSD_ILS%3A548433%7E%7E0&ps=300
     const availabilityUrl = service.Url + service.AvailabilityUrl.replace('[ITEMID]', itemId.split('/').join('$002f'))
-    try {
-      const availabilityPageRequest = await agent.post(availabilityUrl).set(HEADER_POST).timeout(30000)
-      const availabilityResponse = availabilityPageRequest.body
-      if (availabilityResponse.ids || availabilityResponse.childRecords) availabilityJson = availabilityResponse
-    } catch (e) {
-      return common.endResponse(responseHoldings)
-    }
+
+    const availabilityPageRequest = await agent.post(availabilityUrl).set(HEADER_POST).timeout(30000)
+    const availabilityResponse = availabilityPageRequest.body
+    if (availabilityResponse.ids || availabilityResponse.childRecords) availabilityJson = availabilityResponse
   }
 
   if (availabilityJson?.childRecords) {
@@ -104,8 +141,8 @@ exports.searchByISBN = async function (isbn, service) {
       if (!libs[name]) libs[name] = { available: 0, unavailable: 0 }
       service.Available.indexOf(status) > 0 ? libs[name].available++ : libs[name].unavailable++
     })
-    for (var lib in libs) responseHoldings.availability.push({ library: lib, available: libs[lib].available, unavailable: libs[lib].unavailable })
-    return common.endResponse(responseHoldings)
+    for (var lib in libs) availability.push({ library: lib, available: libs[lib].available, unavailable: libs[lib].unavailable })
+    return availability
   }
 
   if (availabilityJson?.ids) {
@@ -120,27 +157,23 @@ exports.searchByISBN = async function (isbn, service) {
         service.Available.indexOf(status) > 0 ? libs[name].available++ : libs[name].unavailable++
       }
     })
-    for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
-    return common.endResponse(responseHoldings)
+    for (var l in libs) availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
+    return availability
   }
 
   if (service.TitleDetailUrl) {
     var titleUrl = service.Url + service.TitleDetailUrl.replace('[ITEMID]', itemId.split('/').join('$002f'))
-    try {
-      const titleDetailRequest = await agent.post(titleUrl).set(HEADER_POST).timeout(30000)
-      const titles = titleDetailRequest.body
-      const libs = {}
-      $(titles.childRecords).each(function (i, c) {
-        const name = c.LIBRARY
-        const status = c.SD_ITEM_STATUS
-        if (!libs[name]) libs[name] = { available: 0, unavailable: 0 }
-        service.Available.indexOf(status) > 0 ? libs[name].available++ : libs[name].unavailable++
-      })
-      for (var lib in libs) responseHoldings.availability.push({ library: lib, available: libs[lib].available, unavailable: libs[lib].unavailable })
-    } catch (e) {
-      return common.endResponse(responseHoldings)
-    }
-  }
 
-  return common.endResponse(responseHoldings)
+    const titleDetailRequest = await agent.post(titleUrl).set(HEADER_POST).timeout(30000)
+    const titles = titleDetailRequest.body
+    const libs = {}
+    $(titles.childRecords).each(function (i, c) {
+      const name = c.LIBRARY
+      const status = c.SD_ITEM_STATUS
+      if (!libs[name]) libs[name] = { available: 0, unavailable: 0 }
+      service.Available.indexOf(status) > 0 ? libs[name].available++ : libs[name].unavailable++
+    })
+    for (var lib in libs) availability.push({ library: lib, available: libs[lib].available, unavailable: libs[lib].unavailable })
+    return availability
+  }
 }

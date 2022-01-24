@@ -1,0 +1,27 @@
+const index = require('.');
+
+test('E06000055 - Bedford', async () => await index.runTest('9781526606198', 'Bedford'), 300000);
+test('E09000004 - Bexley', async () => await index.runTest('9780747550990', 'Bexley'), 300000);
+test('E06000056 - Central Bedfordshire', async () => await index.runTest('9780747591054', 'Central Bedfordshire'), 300000);
+test('E06000005 - Darlington', async () => await index.runTest('9781408855652', 'Darlington'), 300000);
+test('E10000008 - Devon', async () => await index.runTest('9780747591054', 'Devon'), 300000);
+test('E08000017 - Doncaster', async () => await index.runTest('0747542988', 'Doncaster'), 300000);
+test('E06000011 - East Riding of Yorkshire', async () => await index.runTest('9781408898123', 'East Riding of Yorkshire'), 300000);
+test('S12000036 - Edinburgh', async () => await index.runTest('9780747538493', 'Edinburgh'), 300000);
+test('S12000046 - Glasgow', async () => await index.runTest('9781408855911', 'Glasgow'), 300000);
+test(' - Guernsey', async () => await index.runTest('9781408855713', 'Guernsey'), 300000);
+test('E09000022 - Lambeth', async () => await index.runTest('9780747538493', 'Lambeth'), 300000);
+test('E06000016 - Leicester City', async () => await index.runTest('9781408855706', 'Leicester City'), 300000);
+test('S12000019 - Midlothian', async () => await index.runTest('9780747584667', 'Midlothian'), 300000);
+test('E06000012 - North East Lincolnshire', async () => await index.runTest('9780747591054', 'North East Lincolnshire'), 300000);
+test('E06000013 - North Lincolnshire', async () => await index.runTest('9780747583257', 'North Lincolnshire'), 300000);
+test('E10000021 - Northamptonshire', async () => await index.runTest('9781408812525', 'Northamptonshire'), 300000);
+test('E10000025 - Oxfordshire', async () => await index.runTest('9781408845660', 'Oxfordshire'), 300000);
+test('E06000026 - Plymouth', async () => await index.runTest('9780747591054', 'Plymouth'), 300000);
+test('E06000003 - Redcar and Cleveland', async () => await index.runTest('9780747538486', 'Redcar and Cleveland'), 300000);
+test('E06000051 - Shropshire', async () => await index.runTest('9780747591054', 'Shropshire'), 300000);
+test('E10000028 - Staffordshire', async () => await index.runTest('9781408894637', 'Staffordshire'), 300000);
+test('E06000020 - Telford and Wrekin', async () => await index.runTest('9781408865279', 'Telford and Wrekin'), 300000);
+test('E06000027 - Torbay', async () => await index.runTest('9780751565355', 'Torbay'), 300000);
+test('E10000032 - West Sussex', async () => await index.runTest('9781408855683', 'West Sussex'), 300000);
+test('E06000054 - Wiltshire', async () => await index.runTest('9781408810545', 'Wiltshire'), 300000);
