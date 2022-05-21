@@ -22,7 +22,7 @@ exports.getLibraries = async function (service) {
     const advancedSearchPageRequest = await agent.get(service.Url + 'search/X').timeout(60000)
     const $ = cheerio.load(advancedSearchPageRequest.text)
     $('select[Name=searchscope] option').each((idx, option) => {
-      if (common.isLibrary($(option).text())) responseLibraries.libraries.push($(option).text().trim())
+      if (common.isLibrary($(option).text().trim())) responseLibraries.libraries.push($(option).text().trim())
     })
   } catch (e) {
     responseLibraries.exception = e

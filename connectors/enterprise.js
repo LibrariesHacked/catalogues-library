@@ -33,8 +33,8 @@ exports.getLibraries = async function (service) {
   }
 
   $('#libraryDropDown option').each((idx, lib) => {
-    const name = $(lib).text()
-    if (common.isLibrary(name) && name.indexOf(service.LibraryNameFilter) !== -1) responseLibraries.libraries.push(name)
+    const name = $(lib).text().trim()
+    if (common.isLibrary(name) && ((service.LibraryNameFilter && name.indexOf(service.LibraryNameFilter) !== -1) || !service.LibraryNameFilter)) responseLibraries.libraries.push(name)
   })
   return common.endResponse(responseLibraries)
 }

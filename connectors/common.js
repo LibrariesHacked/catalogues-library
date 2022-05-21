@@ -40,10 +40,35 @@ exports.isJsonString = function (str) {
  * @param {string} str
  */
 exports.isLibrary = function (str) {
-  const nonLibraries = ['All libraries', 'All Locations', 'Select library', 'Invalid key', 'Any Library', 'ALL', 'ANY', 'HERE', 'All', 'Adult Books', 'Audio Books', 'Children/s Books', 'Fiction', 'DVDs', 'Large Print', 'Local History', 'School Libraries Collections', 'Non-Fiction', 'View Entire Collection', 'Young Adult Collection']
-  let library = true
-  nonLibraries.forEach(nl => { if (str.indexOf(nl) !== -1) library = false })
-  return library
+  const nonLibraries = [
+    'ALL', 
+    'ANY', 
+    'ADULT BOOKS', 
+    'ALL BRANCHES',
+    'ALL HULL CITY LIBRARIES',
+    'ALL LOCATIONS', 
+    'ALL LIBRARIES', 
+    'ALL', 
+    'ANY LIBRARY', 
+    'AUDIO BOOKS', 
+    'CHILDREN\'S BOOKS', 
+    'CHOOSE ONE',
+    'DVDS', 
+    'FICTION', 
+    'HERE', 
+    'INVALID KEY', 
+    'LARGE PRINT', 
+    'LOCAL HISTORY', 
+    'NON-FICTION', 
+    'SCHOOL LIBRARIES COLLECTIONS', 
+    'SELECT AN ALTERNATIVE',
+    'SELECT BRANCH',
+    'SELECT DEFAULT BRANCH',
+    'SELECT LIBRARY', 
+    'VIEW ENTIRE COLLECTION', 
+    'YOUNG ADULT COLLECTION'
+  ]
+  return !nonLibraries.includes(str.toUpperCase());
 }
 
 /**
@@ -54,7 +79,7 @@ exports.initialiseGetLibrariesResponse = function (service) {
   const response = { service: service.Name, code: service.Code, libraries: [], start: new Date(), end: null }
   // Sometimes we have to use libraries that are hardcoded into the config
   if (service.Libraries) {
-    for (const lib in service.Libraries) responseLibraries.libraries.push(lib)
+    for (const lib in service.Libraries) response.libraries.push(lib)
   }
   return response
 }

@@ -17,6 +17,7 @@ test('S12000011 - East Renfrewshire', async () => await index.runTest('978178530
 test('E10000011 - East Sussex', async () => await index.runTest('9780747538486', 'East Sussex'), 300000);
 test('E10000013 - Gloucestershire', async () => await index.runTest('9781408855713', 'Gloucestershire'), 300000);
 test('E10000014 - Hampshire', async () => await index.runTest('9781408845646', 'Hampshire'), 300000);
+test('E06000001 - Hartlepool', async () => await index.runTest('9781408855669', 'Hartlepool'), 300000);
 test('E10000015 - Hertfordshire', async () => await index.runTest('9781408834985', 'Hertfordshire'), 300000);
 test('S12000017 - Highland', async () => await index.runTest('9780751565355', 'Highland'), 300000);
 test('S12000018 - Inverclyde', async () => await index.runTest('9781408865408', 'Inverclyde'), 300000);

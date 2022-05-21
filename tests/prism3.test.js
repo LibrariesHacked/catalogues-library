@@ -11,7 +11,6 @@ test('S12000015 - Fife', async () => await index.runTest('9780747538486', 'Fife'
 test('E08000037 - Gateshead', async () => await index.runTest('9781408855713', 'Gateshead'), 300000);
 test('E09000011 - Greenwich', async () => await index.runTest('9780747538493', 'Greenwich'), 300000);
 test('E09000014 - Haringey', async () => await index.runTest('9780747584667', 'Haringey'), 300000);
-test('E06000001 - Hartlepool', async () => await index.runTest('9781408855669', 'Hartlepool'), 300000);
 test('E06000019 - Herefordshire', async () => await index.runTest('9781408834985', 'Herefordshire'), 300000);
 test('E09000019 - Islington', async () => await index.runTest('9781408855713', 'Islington'), 300000);
 test(' - Jersey', async () => await index.runTest('9780747538493', 'Jersey'), 300000);
