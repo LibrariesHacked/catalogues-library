@@ -7,6 +7,7 @@
     "dev": "webpack-dev-server --open --mode development",
     "build": "webpack --mode production",
     "test": "jest --runInBand",
+    "test-ci": "jest --silent",
     "test-file": "jest --no-color 2>output.txt"
   },
   "repository": {

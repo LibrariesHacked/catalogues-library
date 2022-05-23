@@ -1,11 +1,14 @@
 name: CI
-on: push
+on:
+  push
+  #schedule:
+  #  - cron: "0 13 * * 1" # Every Monday at 13:00
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Install modules
       run: npm install
     - name: Run tests
-      run: npm test
+      run: npm test-ci

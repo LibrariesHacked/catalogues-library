@@ -15,7 +15,7 @@ exports.runTest = async (isbn, service) => {
 
     // Libraries
     results = await index.libraries(service);
-    console.log(results);
+    //console.log(results);
     expect(results).not.toHaveLength(0);
     
     if (!librariesIgnoreList.includes(service))
@@ -23,7 +23,7 @@ exports.runTest = async (isbn, service) => {
 
     // Availability
     results = await index.availability(isbn, service);
-    console.log(results);
+    //console.log(results);
     expect(results).not.toHaveLength(0);
 
     if (!availabilityIgnoreList.includes(service)) {
