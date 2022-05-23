@@ -1,8 +1,7 @@
 name: CI
 on:
-  push
-  #schedule:
-  #  - cron: "0 13 * * 1" # Every Monday at 13:00
+  schedule:
+    - cron: "0 13 * * 5" # Every Friday at 13:00 UTC
 jobs:
   test:
     runs-on: ubuntu-latest
