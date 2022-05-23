@@ -6,7 +6,12 @@ const openLibrary = require('./connectors/openlibrary')
 // Loads all the connectors that are currently referenced in data.json
 var serviceFunctions = {}
 data.LibraryServices.forEach((service) => {
-  if (!serviceFunctions[service.Type]) serviceFunctions[service.Type] = require('./connectors/' + service.Type)
+  if (service.Version) {
+    if (!serviceFunctions[`${service.Type}_${service.Version}`]) serviceFunctions[`${service.Type}_${service.Version}`] = require(`./connectors/${service.Type}/${service.Version}`);
+  }
+  else {
+    if (!serviceFunctions[service.Type]) serviceFunctions[service.Type] = require('./connectors/' + service.Type);
+  }
 })
 
 /**
@@ -39,7 +44,7 @@ exports.libraries = async (serviceFilter) => {
     })
     .map((service) => {
       return async () => {
-        var response = await serviceFunctions[service.Type].getLibraries(service)
+        var response = await serviceFunctions[service.Version ? `${service.Type}_${service.Version}` : service.Type].getLibraries(service)
         return response
       }
     })
@@ -61,7 +66,7 @@ exports.availability = async (isbn, serviceFilter) => {
     })
     .map((service) => {
       return async () => {
-        var response = await serviceFunctions[service.Type].searchByISBN(isbn, service)
+        var response = await serviceFunctions[service.Version ? `${service.Type}_${service.Version}` : service.Type].searchByISBN(isbn, service)
         return response
       }
     })

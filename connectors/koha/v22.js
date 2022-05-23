@@ -1,11 +1,14 @@
+// HTML:
+//  <link rel="stylesheet" type="text/css" href="/interface/themes/responsive/css/main.css?v=22.01.10.17">
+
 const request = require('superagent')
 const cheerio = require('cheerio')
-const common = require('../connectors/common')
+const common = require('../common')
 
 console.log('koha connector loading...')
 
-const CAT_URL = 'cgi-bin/koha/opac-search.pl?format=rss2&idx=nb&q='
-const LIBS_URL = 'cgi-bin/koha/opac-search.pl?[MULTIBRANCH]do=Search&expand=holdingbranch#holdingbranch_id'
+const CAT_URL = 'Search/Results?lookfor=[ISBN]&searchIndex=Keyword&sort=relevance&view=rss&searchSource=local'
+const LIBS_URL = 'Union/Search?view=list&showCovers=on&lookfor=&searchIndex=advanced&searchSource=local'
 
 /**
  * Gets the object representing the service
@@ -22,19 +25,14 @@ exports.getLibraries = async function (service) {
 
   try {
     const agent = request.agent()
-    const url = service.Url + (LIBS_URL.replace('[MULTIBRANCH]', service.MultiBranchLimit ? 'multibranchlimit=' + service.MultiBranchLimit + '&' : ''))
+    const url = service.Url + LIBS_URL
   
     const libraryPageRequest = await agent.get(url).timeout(60000)
     let $ = cheerio.load(libraryPageRequest.text)
   
-    $('div#location select#branchloop option').each((idx, option) => {
-      if (common.isLibrary($(option).text())) responseLibraries.libraries.push($(this).text().trim())
-    })
-    $('li#holdingbranch_id ul li span.facet-label').each((idx, label) => {
-      responseLibraries.libraries.push($(label).text().trim())
-    })
-    $('li#homebranch_id ul li span.facet-label').each((idx, label) => {
-      responseLibraries.libraries.push($(label).text().trim())
+    $('option').each((idx, option) => {
+        if (option.attribs["value"].startsWith('owning_location_main:') && common.isLibrary($(option).text().trim()))
+            responseLibraries.libraries.push($(option).text().trim());
     })
   }
   catch(e) {
@@ -56,25 +54,30 @@ exports.searchByISBN = async function (isbn, service) {
   try {
     const agent = request.agent()
 
-    const searchPageRequest = await agent.get(service.Url + CAT_URL + isbn).timeout(30000)
+    const searchUrl = service.Url + CAT_URL.replace('[ISBN]', isbn);
+    const searchPageRequest = await agent.get(searchUrl).timeout(30000)
     let $ = cheerio.load(searchPageRequest.text, { normalizeWhitespace: true, xmlMode: true })
-    responseHoldings.url = $('link').first().text()
+    responseHoldings.url = $('item > link').first().text()
   
     var bibLink = $('guid').text()
     if (!bibLink) return common.endResponse(responseHoldings)
   
-    responseHoldings.id = bibLink.substring(bibLink.lastIndexOf('=') + 1);
-    responseHoldings.url = bibLink
+    responseHoldings.id = bibLink.substring(bibLink.lastIndexOf('/') + 1);
+    bibLink = `${bibLink}/AJAX?method=getCopyDetails&format=Reference&recordId=${responseHoldings.id}`;
   
-    const itemPageRequest = await agent.get(bibLink + '&viewallitems=1').timeout(30000)
-    $ = cheerio.load(itemPageRequest.text)
+    const itemPageRequest = await agent.get(bibLink).timeout(30000);
+    $ = cheerio.load(itemPageRequest.body.modalBody);
   
     const libs = {}
-    $('#holdingst tbody, .holdingst tbody').find('tr').each((idx, table) => {
-      var lib = $(table).find('td.location span span').first().text().trim()
-      if (!libs[lib]) libs[lib] = { available: 0, unavailable: 0 }
-      $(table).find('td.status span').text().trim() === 'Available' ? libs[lib].available++ : libs[lib].unavailable++
-    })
+
+    $('table').find('tbody > tr').each((idx, row) => {
+        var lib = $(row).find('td.notranslate').first().text().trim();
+        if (!libs[lib]) libs[lib] = { available: 0, unavailable: 0 }
+        var quantity = $(row).find('td').first().text().trim().split(' of ');
+        libs[lib].available += parseInt(quantity[0]);
+        libs[lib].unavailable +=  parseInt(quantity[1]) - parseInt(quantity[0]);
+      });
+
     for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
   }
   catch(e) {

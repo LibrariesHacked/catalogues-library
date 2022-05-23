@@ -31,7 +31,8 @@ exports.getLibraries = async function (service) {
 
     const homePageRequest = await agent.get(service.Url + HOME)
     const sessionCookie = homePageRequest.headers['set-cookie'][0]
-    let sid = sessionCookie.substring(43, 53)
+    const iguanaCookieIndex = sessionCookie.indexOf('iguana-=')
+    const sid = sessionCookie.substring(iguanaCookieIndex + 20, iguanaCookieIndex + 30)
   
     const body = ITEM_SEARCH.replace('[ISBN]', 'harry').replace('Index=Isbn', 'Index=Keywords').replace('[DB]', service.Database).replace('[TID]', 'Iguana_Brief').replace(/\[SID\]/g, sid)
   
@@ -101,9 +102,9 @@ exports.searchByISBN = async function (isbn, service) {
   
     if (record?.recordData && record.recordData[0] && record.recordData[0].BibDocument[0] && record.recordData[0].BibDocument[0].HoldingsSummary) {
       record.recordData[0].BibDocument[0].HoldingsSummary[0].ShelfmarkData.forEach(function (item) {
-        if (item.Shelfmark) {
+        if (item.Shelfmark && item.Available) {
           var lib = item.Shelfmark[0].split(' : ')[0]
-          responseHoldings.availability.push({ library: lib, available: item.Available ? parseInt(item.Available[0]) : 0, unavailable: item.Available === '0' ? 1 : 0 })
+          responseHoldings.availability.push({ library: lib, available: item.Available ? parseInt(item.Available[0]) : 0, unavailable: item.Available[0] === '0' ? 1 : 0 })
         }
       })
     }

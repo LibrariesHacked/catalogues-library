@@ -25,7 +25,7 @@ exports.getLibraries = async function (service) {
     const libsPageRequest = await agent.get(service.Url + LIBS_URL).set({ 'Cookie': 'ALLOWCOOKIES_443=1' }).timeout(60000)
     const $ = cheerio.load(libsPageRequest.text)
     $('#LOC option').each(function (idx, option) {
-      if (common.isLibrary($(option).text())) responseLibraries.libraries.push($(option).text())
+      if (common.isLibrary($(option).text().trim())) responseLibraries.libraries.push($(option).text().trim())
     })
   } catch (e) { 
     responseLibraries.exception = e
