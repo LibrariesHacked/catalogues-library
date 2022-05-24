@@ -28,7 +28,7 @@ exports.getLibraries = async function (service) {
     const $ = cheerio.load(advancedSearchPageRequest.text)
   
     $('#locdd option').each((idx, option) => {
-      if (common.isLibrary($(option).text())) responseLibraries.libraries.push($(option).text().trim())
+      if (common.isLibrary($(option).text().trim())) responseLibraries.libraries.push($(option).text().trim())
     })
   }
   catch(e) {
