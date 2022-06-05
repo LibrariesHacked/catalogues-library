@@ -18,9 +18,9 @@ It includes the ONS authority code for each authority. This allows it to be comb
 
 For example:
 
-| Name | Code | Type | URL | TestISBN |
+| Name | Code | Type | URL |
 | ---- | ---- | ---- | --- | -------- |
-| Aberdeen City | S12000033 | spydus | https://aberdeencity.spydus.co.uk/ | 9780747538493 |
+| Aberdeen City | S12000033 | spydus | https://aberdeencity.spydus.co.uk/ |
 
 ## Build
 
@@ -29,6 +29,12 @@ The project uses Node Package Manager (NPM) for package management. On downloadi
 ```bash
 npm install
 ```
+
+## Tests
+
+Run these using Jest. For each library service, five ISBNs  are defined in `tests.json`. The tests require only one
+ISBN lookup to be successful (since books can drop out of circulation and we don't want automated tests to fail frequently
+for non-functional reasons).
 
 ## Usage
 

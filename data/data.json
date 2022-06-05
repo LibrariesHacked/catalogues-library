@@ -4,15 +4,13 @@
       "Name": "Aberdeen City",
       "Code": "S12000033",
       "Type": "spydus",
-      "Url": "https://aberdeencity.spydus.co.uk/",
-      "TestISBN": "9780747560821"
+      "Url": "https://aberdeencity.spydus.co.uk/"
     },
     {
       "Name": "Aberdeenshire",
       "Code": "S12000034",
       "Type": "spydus",
-      "Url": "https://aberdeenshire.spydus.co.uk/",
-      "TestISBN": "9780751565355"
+      "Url": "https://aberdeenshire.spydus.co.uk/"
     },
     {
       "Name": "Sir Ynys Mon - Isle of Anglesey",
@@ -22,22 +20,19 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/ynysmon_en/",
-      "TestISBN": "9781408855959"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/ynysmon_en/"
     },
     {
       "Name": "Angus",
       "Code": "S12000041",
       "Type": "spydus",
-      "Url": "https://angus.spydus.co.uk/",
-      "TestISBN": "9780747538493"
+      "Url": "https://angus.spydus.co.uk/"
     },
     {
       "Name": "Argyll and Bute",
       "Code": "S12000035",
       "Type": "spydus",
-      "Url": "https://argyll-bute.spydus.co.uk/",
-      "TestISBN": "9781408855669"
+      "Url": "https://argyll-bute.spydus.co.uk/"
     },
     {
       "Name": "Barking and Dagenham",
@@ -48,8 +43,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/barking-and-dagenham/",
-      "LibraryNameFilter": "Barking and Dagenham",
-      "TestISBN": "9780747538486"
+      "LibraryNameFilter": "Barking and Dagenham"
     },
     {
       "Name": "Barnet",
@@ -58,8 +52,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/barnet/",
-      "TestISBN": "9781408855713"
+      "Url": "https://prism.librarymanagementcloud.co.uk/barnet/"
     },
     {
       "Name": "Barnsley",
@@ -69,8 +62,7 @@
       "Available": [
         "In stock"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TestISBN": "9780747538493"
+      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
     },
     {
       "Name": "Bath and North East Somerset",
@@ -82,8 +74,7 @@
         "In stock"
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "MultiAuthorityId": 4,
-      "TestISBN": "9780747538493"
+      "MultiAuthorityId": 4
     },
     {
       "Name": "Bedford",
@@ -96,8 +87,7 @@
       "OrganisationId": "AUK000022|3",
       "ArenaName": "AUK000022",
       "Url": "https://beds-arena.culturalservices.net/web/arena/",
-      "AdvancedUrl": "extended-search",
-      "TestISBN": "9781526606198"
+      "AdvancedUrl": "extended-search"
     },
     {
       "Name": "Bexley",
@@ -109,29 +99,25 @@
       "ISBNAlias": "number",
       "Url": "https://arena.yourlondonlibrary.net/web/bexley/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK200102|18",
-      "TestISBN": "9780747550990"
+      "OrganisationId": "AUK200102|18"
     },
     {
       "Name": "Birmingham",
       "Code": "E08000025",
       "Type": "spydus",
-      "Url": "https://birmingham.spydus.co.uk/",
-      "TestISBN": "9780747538493"
+      "Url": "https://birmingham.spydus.co.uk/"
     },
     {
       "Name": "Blackburn with Darwen",
       "Code": "E06000008",
       "Type": "spydus",
-      "Url": "https://bwdlibraries.spydus.co.uk/",
-      "TestISBN": "9781408855713"
+      "Url": "https://bwdlibraries.spydus.co.uk/"
     },
     {
       "Name": "Blackpool",
       "Code": "E06000009",
       "Type": "blackpool",
-      "Url": "https://www.blackpool.gov.uk/Residents/Libraries-arts-and-heritage/Libraries/Library-catalogue-search.aspx",
-      "TestISBN": "9781408865415"
+      "Url": "https://www.blackpool.gov.uk/Residents/Libraries-arts-and-heritage/Libraries/Library-catalogue-search.aspx"
     },
     {
       "Name": "Blaenau Gwent",
@@ -141,15 +127,13 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/bgwent_en/",
-      "TestISBN": "9780747538493"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/bgwent_en/"
     },
     {
       "Name": "Bolton",
       "Code": "E08000001",
       "Type": "spydus",
-      "Url": "https://bolton.spydus.co.uk/",
-      "TestISBN": "9781408890776"
+      "Url": "https://bolton.spydus.co.uk/"
     },
     {
       "Name": "Bournemouth",
@@ -158,8 +142,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/bournemouth/",
-      "TestISBN": "9781408865408"
+      "Url": "https://prism.librarymanagementcloud.co.uk/bournemouth/"
     },
     {
       "Name": "Bracknell Forest",
@@ -168,8 +151,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/bracknellforest/",
-      "TestISBN": "9780747562184"
+      "Url": "https://prism.librarymanagementcloud.co.uk/bracknellforest/"
     },
     {
       "Name": "Bradford",
@@ -179,8 +161,7 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://bradford.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TestISBN": "9780747546290"
+      "Url": "https://bradford.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "Brent",
@@ -191,8 +172,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/brent/",
-      "LibraryNameFilter": "Brent",
-      "TestISBN": "9781408855652"
+      "LibraryNameFilter": "Brent"
     },
     {
       "Name": "Pen-y-bont ar Ogwr - Bridgend",
@@ -202,15 +182,13 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/awen_en/",
-      "TestISBN": "9781408855713"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/awen_en/"
     },
     {
       "Name": "Brighton and Hove",
       "Code": "E06000043",
       "Type": "spydus",
-      "Url": "https://brighton-hove.spydus.co.uk/",
-      "TestISBN": "9780747562184"
+      "Url": "https://brighton-hove.spydus.co.uk/"
     },
     {
       "Name": "Bristol City",
@@ -220,8 +198,7 @@
       "Available": [
         "In stock"
       ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TestISBN": "9780747538493"
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
     },
     {
       "Name": "Bromley",
@@ -230,15 +207,13 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/bromley/",
-      "TestISBN": "9780747532743"
+      "Url": "https://prism.librarymanagementcloud.co.uk/bromley/"
     },
     {
       "Name": "Buckinghamshire",
       "Code": "E10000002",
       "Type": "spydus",
-      "Url": "https://buckinghamshire.spydus.co.uk/",
-      "TestISBN": "9781408855713"
+      "Url": "https://buckinghamshire.spydus.co.uk/"
     },
     {
       "Name": "Bury",
@@ -248,8 +223,7 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://bury.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TestISBN": "9780747591054"
+      "Url": "https://bury.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "Caerphilly",
@@ -260,29 +234,25 @@
         "RESERVES"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/caer_en/",
-      "TestISBN": "9780747538493"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/caer_en/"
     },
     {
       "Name": "Calderdale",
       "Code": "E08000033",
       "Type": "spydus",
-      "Url": "https://calderdale.spydus.co.uk/",
-      "TestISBN": "9780751565362"
+      "Url": "https://calderdale.spydus.co.uk/"
     },
     {
       "Name": "Cambridgeshire",
       "Code": "E10000003",
       "Type": "spydus",
-      "Url": "https://cambridgeshire.spydus.co.uk/",
-      "TestISBN": "9780747538493"
+      "Url": "https://cambridgeshire.spydus.co.uk/"
     },
     {
       "Name": "Camden",
       "Code": "E09000007",
       "Type": "spydus",
-      "Url": "https://camden.spydus.co.uk/",
-      "TestISBN": "9780747538493"
+      "Url": "https://camden.spydus.co.uk/"
     },
     {
       "Name": "Caerdydd - Cardiff",
@@ -293,8 +263,7 @@
         "RESERVES"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/card_en/",
-      "TestISBN": "9781408855713"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/card_en/"
     },
     {
       "Name": "Sir Gaerfyrddin - Carmarthenshire",
@@ -304,8 +273,7 @@
       "Available": [
         "In stock"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TestISBN": "9780747538486"
+      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
     },
     {
       "Name": "Central Bedfordshire",
@@ -319,8 +287,7 @@
       "SearchType": "Keywordx",
       "Url": "https://beds-arena.culturalservices.net/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000022|1",
-      "TestISBN": "9780747591054"
+      "OrganisationId": "AUK000022|1"
     },
     {
       "Name": "Sir Ceredigion - Ceredigion",
@@ -331,24 +298,21 @@
         "RESERVES"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://libraries.ceredigion.gov.uk/client/en_GB/cer_en/",
-      "TestISBN": "9781408855683"
+      "Url": "https://libraries.ceredigion.gov.uk/client/en_GB/cer_en/"
     },
     {
       "Name": "Cheshire East",
       "Code": "E06000049",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://cheslive.koha-ptfs.co.uk/",
-      "TestISBN": "9781408869178"
+      "Url": "https://cheslive.koha-ptfs.co.uk/"
     },
     {
       "Name": "Cheshire West and Chester",
       "Code": "E06000050",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://cheslive.koha-ptfs.co.uk/",
-      "TestISBN": "9781408845660"
+      "Url": "https://cheslive.koha-ptfs.co.uk/"
     },
     {
       "Name": "City of London",
@@ -358,16 +322,14 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://col.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TestISBN": "9781408855669"
+      "Url": "https://col.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "Clackmannanshire",
       "Code": "S12000005",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://clacks.koha-ptfs.co.uk/",
-      "TestISBN": "9781907545009"
+      "Url": "https://clacks.koha-ptfs.co.uk/"
     },
     {
       "Name": "Conwy",
@@ -377,8 +339,7 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/conwy_en/",
-      "TestISBN": "9780747591061"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/conwy_en/"
     },
     {
       "Name": "Cornwall",
@@ -387,16 +348,14 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/cornwall/",
-      "TestISBN": "9781408855713"
+      "Url": "https://prism.librarymanagementcloud.co.uk/cornwall/"
     },
     {
       "Name": "Coventry",
       "Code": "E08000026",
       "Type": "iguana",
       "Database": "1",
-      "Url": "https://librarycatalogue.coventry.gov.uk/iguana/",
-      "TestISBN": "9781408855669"
+      "Url": "https://librarycatalogue.coventry.gov.uk/iguana/"
     },
     {
       "Name": "Croydon",
@@ -406,16 +365,14 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/croydon/",
-      "TestISBN": "9780747538493"
+      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/croydon/"
     },
     {
       "Name": "Cumbria",
       "Code": "E10000006",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://cumbria-libraries.org.uk/",
-      "TestISBN": "9781408855713"
+      "Url": "https://cumbria-libraries.org.uk/"
     },
     {
       "Name": "Darlington",
@@ -428,8 +385,7 @@
       "Url": "https://www2.darlington.gov.uk/web/arena/",
       "OrganisationId": "AUK000023|0",
       "OrganisationName": "Darlington",
-      "AdvancedUrl": "extended-search",
-      "TestISBN": "9781408855652"
+      "AdvancedUrl": "extended-search"
     },
     {
       "Name": "Sir Ddinbych - Denbighshire",
@@ -439,8 +395,7 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/denbighshire_en/",
-      "TestISBN": "9781408855713"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/denbighshire_en/"
     },
     {
       "Name": "Derby City",
@@ -450,8 +405,7 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/derby/",
-      "TestISBN": "9780747591054"
+      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/derby/"
     },
     {
       "Name": "Derbyshire",
@@ -461,8 +415,7 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/derbyshire/",
-      "TestISBN": "9780747591054"
+      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/derbyshire/"
     },
     {
       "Name": "Devon",
@@ -472,8 +425,7 @@
       "ArenaName": "AUK267001",
       "AdvancedUrl": "advanced-search",
       "OrganisationId": "AUK267001|1",
-      "Url": "https://www.devonlibraries.org.uk/web/arena/",
-      "TestISBN": "9780747591054"
+      "Url": "https://www.devonlibraries.org.uk/web/arena/"
     },
     {
       "Name": "Doncaster",
@@ -485,8 +437,7 @@
       "Url": "https://library.doncaster.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000243|1",
-      "OrganisationName": "Doncaster",
-      "TestISBN": "0747542988"
+      "OrganisationName": "Doncaster"
     },
     {
       "Name": "Dorset",
@@ -496,8 +447,7 @@
       "Available": [
         "In stock"
       ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TestISBN": "9780747538493"
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
     },
     {
       "Name": "Dudley",
@@ -506,30 +456,26 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/dudley/",
-      "TestISBN": "9780747538493"
+      "Url": "https://prism.librarymanagementcloud.co.uk/dudley/"
     },
     {
       "Name": "Dumfries and Galloway",
       "Code": "S12000006",
       "Type": "iguana",
       "Database": "1_STOCK",
-      "Url": "https://dumgal.inforlib.uk/iguana/",
-      "TestISBN": "9781408855669"
+      "Url": "https://dumgal.inforlib.uk/iguana/"
     },
     {
       "Name": "Dundee City",
       "Code": "S12000042",
       "Type": "spydus",
-      "Url": "https://dundee.spydus.co.uk/",
-      "TestISBN": "9780747538493"
+      "Url": "https://dundee.spydus.co.uk/"
     },
     {
       "Name": "Durham",
       "Code": "E06000047",
       "Type": "durham",
-      "Url": "https://libraryonline.durham.gov.uk/",
-      "TestISBN": "9780747538486"
+      "Url": "https://libraryonline.durham.gov.uk/"
     },
     {
       "Name": "Ealing",
@@ -540,8 +486,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true?d=ent://SD_ILS/0/SD_ILS:418188~~0",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/ealing/",
-      "LibraryNameFilter": "Ealing",
-      "TestISBN": "9780747591085"
+      "LibraryNameFilter": "Ealing"
     },
     {
       "Name": "East Ayrshire",
@@ -553,16 +498,14 @@
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailitemstable_0.webservicefieldsajax:lookuptitleinfo/detailItemsDiv0/ent:[ITEMID]/ILS/true/true",
-      "Url": "https://ealt.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TestISBN": "9780747581086"
+      "Url": "https://ealt.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "East Dunbartonshire",
       "Code": "S12000045",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://edlc.koha-ptfs.co.uk/",
-      "TestISBN": "9781408810576"
+      "Url": "https://edlc.koha-ptfs.co.uk/"
     },
     {
       "Name": "East Lothian",
@@ -571,15 +514,13 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/eastlothian/",
-      "TestISBN": "9780747538493"
+      "Url": "https://prism.librarymanagementcloud.co.uk/eastlothian/"
     },
     {
       "Name": "East Renfrewshire",
       "Code": "S12000011",
       "Type": "spydus",
-      "Url": "https://ercl.spydus.co.uk/",
-      "TestISBN": "9781785301544"
+      "Url": "https://ercl.spydus.co.uk/"
     },
     {
       "Name": "East Riding of Yorkshire",
@@ -591,15 +532,13 @@
       "Url": "https://library.eastriding.gov.uk/web/arena/",
       "AdvancedUrl": "advanced-search",
       "OrganisationId": "AUK000205|1",
-      "SignupUrl": "https://library.eastriding.gov.uk/web/arena/self-registration",
-      "TestISBN": "9781408898123"
+      "SignupUrl": "https://library.eastriding.gov.uk/web/arena/self-registration"
     },
     {
       "Name": "East Sussex",
       "Code": "E10000011",
       "Type": "spydus",
-      "Url": "https://eastsussex.spydus.co.uk/",
-      "TestISBN": "9780747538486"
+      "Url": "https://eastsussex.spydus.co.uk/"
     },
     {
       "Name": "Edinburgh",
@@ -610,8 +549,7 @@
       "Id": "269001",
       "Url": "https://yourlibrary.edinburgh.gov.uk/web/arena/",
       "AdvancedUrl": "advanced-search",
-      "OrganisationId": "AUK269000|1",
-      "TestISBN": "9780747538493"
+      "OrganisationId": "AUK269000|1"
     },
     {
       "Name": "Enfield",
@@ -622,8 +560,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/enfield/",
-      "LibraryNameFilter": "Enfield",
-      "TestISBN": "9780747538493"
+      "LibraryNameFilter": "Enfield"
     },
     {
       "Name": "Essex",
@@ -633,8 +570,7 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://tlc.ent.sirsidynix.net.uk/client/en_GB/essex/",
-      "TestISBN": "9780747538493"
+      "Url": "https://tlc.ent.sirsidynix.net.uk/client/en_GB/essex/"
     },
     {
       "Name": "Falkirk",
@@ -645,8 +581,7 @@
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailitemstable_0.webservicefieldsajax:lookuptitleinfo/detailItemsDiv0/ent:[ITEMID]/ILS/true/true",
-      "Url": "http://fct.ent.sirsidynix.net.uk/client/en_GB/libraries/",
-      "TestISBN": "9780747595823"
+      "Url": "http://fct.ent.sirsidynix.net.uk/client/en_GB/libraries/"
     },
     {
       "Name": "Fife",
@@ -655,8 +590,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/fife/",
-      "TestISBN": "9780747538486"
+      "Url": "https://prism.librarymanagementcloud.co.uk/fife/"
     },
     {
       "Name": "Sir y Fflint - Flintshire",
@@ -666,8 +600,7 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/flintshire_en/",
-      "TestISBN": "9780747538493"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/flintshire_en/"
     },
     {
       "Name": "Gateshead",
@@ -676,8 +609,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/gateshead/",
-      "TestISBN": "9781408855713"
+      "Url": "https://prism.librarymanagementcloud.co.uk/gateshead/"
     },
     {
       "Name": "Glasgow",
@@ -689,15 +621,13 @@
       "Url": "https://libcat.csglasgow.org/web/arena/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000048|1",
-      "OrganisationName": "Glasgow",
-      "TestISBN": "9781408855911"
+      "OrganisationName": "Glasgow"
     },
     {
       "Name": "Gloucestershire",
       "Code": "E10000013",
       "Type": "spydus",
-      "Url": "https://gloucestershire.spydus.co.uk/",
-      "TestISBN": "9781408855713"
+      "Url": "https://gloucestershire.spydus.co.uk/"
     },
     {
       "Name": "Greenwich",
@@ -706,8 +636,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/royalgreenwich/",
-      "TestISBN": "9780747538493"
+      "Url": "https://prism.librarymanagementcloud.co.uk/royalgreenwich/"
     },
     {
       "Name": "Guernsey",
@@ -719,8 +648,7 @@
       "OrganisationId": "AUKGUERNSEY|1",
       "ArenaName": "AUKGUERNSEY",
       "Url": "https://www.catalogue.library.gg/",
-      "AdvancedUrl": "extended-search",
-      "TestISBN": "9781408855713"
+      "AdvancedUrl": "extended-search"
     },
     {
       "Name": "Gwynedd",
@@ -730,8 +658,7 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/gwynedd_en/",
-      "TestISBN": "9780747538493"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/gwynedd_en/"
     },
     {
       "Name": "Hackney",
@@ -742,16 +669,14 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/hackney/",
-      "LibraryNameFilter": "Hackney",
-      "TestISBN": "9780747538493"
+      "LibraryNameFilter": "Hackney"
     },
     {
       "Name": "Halton",
       "Code": "E06000006",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://hpl.koha-ptfs.co.uk/",
-      "TestISBN": "9780751565355"
+      "Url": "https://hpl.koha-ptfs.co.uk/"
     },
     {
       "Name": "Hammersmith and Fulham",
@@ -761,15 +686,13 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://tlc.ent.sirsidynix.net.uk/client/en_GB/lbhf/",
-      "TestISBN": "9780747538493"
+      "Url": "https://tlc.ent.sirsidynix.net.uk/client/en_GB/lbhf/"
     },
     {
       "Name": "Hampshire",
       "Code": "E10000014",
       "Type": "spydus",
-      "Url": "https://hampshire.spydus.co.uk/",
-      "TestISBN": "9781408845646"
+      "Url": "https://hampshire.spydus.co.uk/"
     },
     {
       "Name": "Haringey",
@@ -778,8 +701,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/haringey/",
-      "TestISBN": "9780747584667"
+      "Url": "https://prism.librarymanagementcloud.co.uk/haringey/"
     },
     {
       "Name": "Harrow",
@@ -790,8 +712,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/harrow/",
-      "LibraryNameFilter": "Harrow",
-      "TestISBN": "9780747591061"
+      "LibraryNameFilter": "Harrow"
     },
     {
       "Name": "Hartlepool",
@@ -800,8 +721,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://hartlepool.spydus.co.uk/",
-      "TestISBN": "9781408855669"
+      "Url": "https://hartlepool.spydus.co.uk/"
     },
     {
       "Name": "Havering",
@@ -812,8 +732,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/havering/",
-      "LibraryNameFilter": "Havering",
-      "TestISBN": "9781408821572"
+      "LibraryNameFilter": "Havering"
     },
     {
       "Name": "Herefordshire",
@@ -822,15 +741,13 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/herefordshire/",
-      "TestISBN": "9781408834985"
+      "Url": "https://prism.librarymanagementcloud.co.uk/herefordshire/"
     },
     {
       "Name": "Hertfordshire",
       "Code": "E10000015",
       "Type": "spydus",
-      "Url": "https://herts.spydus.co.uk/",
-      "TestISBN": "9781408834985"
+      "Url": "https://herts.spydus.co.uk/"
     },
     {
       "Name": "Highland",
@@ -839,8 +756,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://hlh.spydus.co.uk/",
-      "TestISBN": "9780751565355"
+      "Url": "https://hlh.spydus.co.uk/"
     },
     {
       "Name": "Hillingdon",
@@ -851,8 +767,7 @@
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "http://hldn.ent.sirsidynix.net.uk/client/en_GB/public/",
-      "TestISBN": "9781408855713"
+      "Url": "http://hldn.ent.sirsidynix.net.uk/client/en_GB/public/"
     },
     {
       "Name": "Hounslow",
@@ -863,8 +778,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/hounslow/",
-      "LibraryNameFilter": "Hounslow",
-      "TestISBN": "9780747591054"
+      "LibraryNameFilter": "Hounslow"
     },
     {
       "Name": "Kingston upon Hull",
@@ -875,22 +789,19 @@
       ],
       "Url": "https://hull.sirsidynix.net.uk/",
       "Home": "uhtbin/cgisirsi/x/0/0/57/49?user_id=HULLWEB&amp;password=",
-      "Search": "uhtbin/cgisirsi/x/0/0/5?searchdata1=",
-      "TestISBN": "9780747538493"
+      "Search": "uhtbin/cgisirsi/x/0/0/5?searchdata1="
     },
     {
       "Name": "Inverclyde",
       "Code": "S12000018",
       "Type": "spydus",
-      "Url": "https://inverclyde.spydus.co.uk/",
-      "TestISBN": "9781408865408"
+      "Url": "https://inverclyde.spydus.co.uk/"
     },
     {
       "Name": "Isle of Wight",
       "Code": "E06000046",
       "Type": "spydus",
-      "Url": "https://iow.spydus.co.uk/",
-      "TestISBN": "9780747538493"
+      "Url": "https://iow.spydus.co.uk/"
     },
     {
       "Name": "Islington",
@@ -899,8 +810,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/islington/",
-      "TestISBN": "9781408855713"
+      "Url": "https://prism.librarymanagementcloud.co.uk/islington/"
     },
     {
       "Name": "Jersey",
@@ -909,8 +819,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/jersey/",
-      "TestISBN": "9780747538493"
+      "Url": "https://prism.librarymanagementcloud.co.uk/jersey/"
     },
     {
       "Name": "Kensington and Chelsea",
@@ -920,15 +829,13 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://trib.ent.sirsidynix.net.uk/client/en_GB/rbkc/",
-      "TestISBN": "9780747538493"
+      "Url": "https://trib.ent.sirsidynix.net.uk/client/en_GB/rbkc/"
     },
     {
       "Name": "Kent",
       "Code": "E10000016",
       "Type": "spydus",
-      "Url": "https://kent.spydus.co.uk/",
-      "TestISBN": "9780747538493"
+      "Url": "https://kent.spydus.co.uk/"
     },
     {
       "Name": "Kingston upon Thames",
@@ -938,8 +845,7 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/kingston/",
-      "TestISBN": "9780747538486"
+      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/kingston/"
     },
     {
       "Name": "Kirklees",
@@ -950,16 +856,14 @@
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "http://kir.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TestISBN": "9781408855713"
+      "Url": "http://kir.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "Knowsley",
       "Code": "E08000011",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://catalogue.knowsley.gov.uk/",
-      "TestISBN": "9781408855959"
+      "Url": "https://catalogue.knowsley.gov.uk/"
     },
     {
       "Name": "Lambeth",
@@ -970,8 +874,7 @@
       "Id": "750001",
       "Url": "https://libraries.lambeth.gov.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000271|1",
-      "TestISBN": "9781408883778"
+      "OrganisationId": "AUK000271|1"
     },
     {
       "Name": "Lancashire",
@@ -980,8 +883,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/lancashire/",
-      "TestISBN": "9781408855706"
+      "Url": "https://prism.librarymanagementcloud.co.uk/lancashire/"
     },
     {
       "Name": "Leeds",
@@ -991,8 +893,7 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://leeds.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TestISBN": "9780747538493"
+      "Url": "https://leeds.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "Leicester City",
@@ -1004,8 +905,7 @@
       "Url": "https://bookfinder.leicester.gov.uk/web/arena/",
       "AdvancedUrl": "advanced-search",
       "OrganisationId": "AUK000201|1",
-      "OrganisationName": "Leicester City",
-      "TestISBN": "9781408855706"
+      "OrganisationName": "Leicester City"
     },
     {
       "Name": "Leicestershire",
@@ -1015,8 +915,7 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/leics/",
-      "TestISBN": "9781408855713"
+      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/leics/"
     },
     {
       "Name": "Lewisham",
@@ -1027,8 +926,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/lewisham/",
-      "LibraryNameFilter": "Lewisham",
-      "TestISBN": "9780747591061"
+      "LibraryNameFilter": "Lewisham"
     },
     {
       "Name": "Lincolnshire",
@@ -1037,8 +935,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/lincolnshire/",
-      "TestISBN": "9780747538493"
+      "Url": "https://prism.librarymanagementcloud.co.uk/lincolnshire/"
     },
     {
       "Name": "Liverpool",
@@ -1047,8 +944,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/liverpool/",
-      "TestISBN": "9781408845653"
+      "Url": "https://prism.librarymanagementcloud.co.uk/liverpool/"
     },
     {
       "Name": "Luton",
@@ -1059,22 +955,19 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/luton/",
-      "LibraryNameFilter": "Luton",
-      "TestISBN": "9781408883808"
+      "LibraryNameFilter": "Luton"
     },
     {
       "Name": "Manchester",
       "Code": "E08000003",
       "Type": "spydus",
-      "Url": "https://manchester.spydus.co.uk/",
-      "TestISBN": "9780751565362"
+      "Url": "https://manchester.spydus.co.uk/"
     },
     {
       "Name": "Medway",
       "Code": "E06000035",
       "Type": "spydus",
-      "Url": "https://medway.spydus.co.uk/",
-      "TestISBN": "9780747538493"
+      "Url": "https://medway.spydus.co.uk/"
     },
     {
       "Name": "Merthyr Tudful - Merthyr Tydfil",
@@ -1083,8 +976,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/merthyr/",
-      "TestISBN": "9781408855713"
+      "Url": "https://prism.librarymanagementcloud.co.uk/merthyr/"
     },
     {
       "Name": "Merton",
@@ -1095,16 +987,14 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://libraries.merton.gov.uk/client/en_GB/merton/",
-      "LibraryNameFilter": "Merton",
-      "TestISBN": "9780747538493"
+      "LibraryNameFilter": "Merton"
     },
     {
       "Name": "Middlesbrough",
       "Code": "E06000002",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://libraries.middlesbrough.gov.uk/",
-      "TestISBN": "9781408810606"
+      "Url": "https://libraries.middlesbrough.gov.uk/"
     },
     {
       "Name": "Midlothian",
@@ -1116,15 +1006,13 @@
       "Url": "https://libraries.midlothian.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000075|0",
-      "SignupUrl": "https://libraries.midlothian.gov.uk/web/arena/online-registration",
-      "TestISBN": "9780747584667"
+      "SignupUrl": "https://libraries.midlothian.gov.uk/web/arena/online-registration"
     },
     {
       "Name": "Milton Keynes",
       "Code": "E06000042",
       "Type": "spydus",
-      "Url": "https://miltonkeynes.spydus.co.uk/",
-      "TestISBN": "9781510051317"
+      "Url": "https://miltonkeynes.spydus.co.uk/"
     },
     {
       "Name": "Sir Fynwy - Monmouthshire",
@@ -1135,8 +1023,7 @@
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/mmou_en/",
-      "TestISBN": "9781408855959"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/mmou_en/"
     },
     {
       "Name": "Moray",
@@ -1145,8 +1032,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/moray/",
-      "TestISBN": "9780747542155"
+      "Url": "https://prism.librarymanagementcloud.co.uk/moray/"
     },
     {
       "Name": "Castell-nedd Port Talbot - Neath Port Talbot",
@@ -1156,16 +1042,14 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/npt_en/",
-      "TestISBN": "9780747538493"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/npt_en/"
     },
     {
       "Name": "Newcastle upon Tyne",
       "Code": "E08000021",
       "Type": "koha",
       "Version": "v22",
-      "Url": "https://libraries.newcastle.gov.uk/",
-      "TestISBN": "9781408855713"
+      "Url": "https://libraries.newcastle.gov.uk/"
     },
     {
       "Name": "Newham",
@@ -1176,8 +1060,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/newham/",
-      "LibraryNameFilter": "Newham",
-      "TestISBN": "9780747550990"
+      "LibraryNameFilter": "Newham"
     },
     {
       "Name": "Casnewydd - Newport",
@@ -1187,22 +1070,19 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/newport_en/",
-      "TestISBN": "9780747538493"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/newport_en/"
     },
     {
       "Name": "Norfolk",
       "Code": "E10000020",
       "Type": "spydus",
-      "Url": "https://norfolk.spydus.co.uk/",
-      "TestISBN": "9780747591085"
+      "Url": "https://norfolk.spydus.co.uk/"
     },
     {
       "Name": "North Ayrshire",
       "Code": "S12000021",
       "Type": "spydus",
-      "Url": "https://north-ayrshire.spydus.co.uk/",
-      "TestISBN": "9781408855713"
+      "Url": "https://north-ayrshire.spydus.co.uk/"
     },
     {
       "Name": "North East Lincolnshire",
@@ -1214,16 +1094,14 @@
       "Url": "https://www.lincsinspirelibraries.com/web/arena/",
       "AdvancedUrl": "advanced-search",
       "OrganisationId": "AUK000252|1",
-      "OrganisationName": "NELC Libraries",
-      "TestISBN": "9780747591054"
+      "OrganisationName": "NELC Libraries"
     },
     {
       "Name": "North Lanarkshire",
       "Code": "S12000044",
       "Type": "iguana",
       "Database": "1",
-      "Url": "https://libraries.culturenl.co.uk/iguana/",
-      "TestISBN": "9780747574477"
+      "Url": "https://libraries.culturenl.co.uk/iguana/"
     },
     {
       "Name": "North Lincolnshire",
@@ -1236,8 +1114,7 @@
       "OrganisationId": "AUK000221|0",
       "SignupUrl": "https://www.opac.northlincs.gov.uk/join-the-library",
       "Id": "221001",
-      "PreLoad": true,
-      "TestISBN": "9781408855652"
+      "PreLoad": true
     },
     {
       "Name": "North Somerset",
@@ -1249,8 +1126,7 @@
         "In stock"
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "MultiAuthorityId": 2,
-      "TestISBN": "9780747538493"
+      "MultiAuthorityId": 2
     },
     {
       "Name": "North Tyneside",
@@ -1259,8 +1135,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/northtyneside/",
-      "TestISBN": "9780747583899"
+      "Url": "https://prism.librarymanagementcloud.co.uk/northtyneside/"
     },
     {
       "Name": "North Yorkshire",
@@ -1269,8 +1144,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/northyorkshire/",
-      "TestISBN": "9781408855713"
+      "Url": "https://prism.librarymanagementcloud.co.uk/northyorkshire/"
     },
     {
       "Name": "Northamptonshire",
@@ -1282,15 +1156,13 @@
       "Url": "https://www.librarycatalogue.northamptonshire.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000256|1",
-      "OrganisationName": "Northamptonshire",
-      "TestISBN": "9781408812525"
+      "OrganisationName": "Northamptonshire"
     },
     {
       "Name": "Northumberland",
       "Code": "E06000057",
       "Type": "spydus",
-      "Url": "https://northumberland.spydus.co.uk/",
-      "TestISBN": "9781408855959"
+      "Url": "https://northumberland.spydus.co.uk/"
     },
     {
       "Name": "Nottingham City",
@@ -1300,8 +1172,7 @@
         ""
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/nottcity/",
-      "TestISBN": "9780747538493"
+      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/nottcity/"
     },
     {
       "Name": "Nottinghamshire",
@@ -1311,8 +1182,7 @@
         ""
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/nelib/",
-      "TestISBN": "9780747538493"
+      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/nelib/"
     },
     {
       "Name": "Northern Ireland",
@@ -1322,15 +1192,13 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "http://lni.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TestISBN": "9780747538493"
+      "Url": "http://lni.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "Oldham",
       "Code": "E08000004",
       "Type": "spydus",
-      "Url": "https://oldham.spydus.co.uk/",
-      "TestISBN": "9781408855713"
+      "Url": "https://oldham.spydus.co.uk/"
     },
     {
       "Name": "Orkney Islands",
@@ -1339,8 +1207,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/orkney/",
-      "TestISBN": "9780747546245"
+      "Url": "https://prism.librarymanagementcloud.co.uk/orkney/"
     },
     {
       "Name": "Oxfordshire",
@@ -1350,30 +1217,26 @@
       "ArenaName": "AUK000217",
       "Url": "https://libcat.oxfordshire.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000217|0",
-      "TestISBN": "9781408845660"
+      "OrganisationId": "AUK000217|0"
     },
     {
       "Name": "Sir Benfro - Pembrokeshire",
       "Code": "W06000009",
       "Type": "iguana",
       "Database": "1_STOCK",
-      "Url": "https://libraries.pembrokeshire.gov.uk/iguana/",
-      "TestISBN": "9780751565355"
+      "Url": "https://libraries.pembrokeshire.gov.uk/iguana/"
     },
     {
       "Name": "Perth and Kinross",
       "Code": "S12000024",
       "Type": "spydus",
-      "Url": "https://pkc.spydus.co.uk/",
-      "TestISBN": "9781785301544"
+      "Url": "https://pkc.spydus.co.uk/"
     },
     {
       "Name": "Peterborough",
       "Code": "E06000031",
       "Type": "spydus",
-      "Url": "https://peterborough.spydus.co.uk/",
-      "TestISBN": "9780747573760"
+      "Url": "https://peterborough.spydus.co.uk/"
     },
     {
       "Name": "Plymouth",
@@ -1383,8 +1246,7 @@
       "ArenaName": "AUK770000",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK770000|1",
-      "Url": "https://library.plymouth.gov.uk/web/arena/",
-      "TestISBN": "9780747591054"
+      "Url": "https://library.plymouth.gov.uk/web/arena/"
     },
     {
       "Name": "Poole",
@@ -1394,15 +1256,13 @@
       "Available": [
         "In stock"
       ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TestISBN": "9780747538493"
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
     },
     {
       "Name": "Portsmouth",
       "Code": "E06000044",
       "Type": "spydus",
-      "Url": "https://portsmouth.spydus.co.uk/",
-      "TestISBN": "9781408810576"
+      "Url": "https://portsmouth.spydus.co.uk/"
     },
     {
       "Name": "Powys",
@@ -1412,15 +1272,13 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/powys_en/",
-      "TestISBN": "9780751565355"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/powys_en/"
     },
     {
       "Name": "Reading",
       "Code": "E06000038",
       "Type": "spydus",
       "Url": "https://library.reading.gov.uk/",
-      "TestISBN": "9780751565355",
       "DisableTls": true
     },
     {
@@ -1432,8 +1290,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/redbridge/",
-      "LibraryNameFilter": "Redbridge",
-      "TestISBN": "9780747538493"
+      "LibraryNameFilter": "Redbridge"
     },
     {
       "Name": "Redcar and Cleveland",
@@ -1443,8 +1300,7 @@
       "ArenaName": "AUK000215",
       "Url": "https://libraries.redcar-cleveland.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000215|1",
-      "TestISBN": "9780747538486"
+      "OrganisationId": "AUK000215|1"
     },
     {
       "Name": "Renfrewshire",
@@ -1452,8 +1308,7 @@
       "Type": "iguana",
       "Database": "1",
       "Faceted": false,
-      "Url": "https://libcat.renfrewshire.gov.uk/iguana/",
-      "TestISBN": "9781408855683"
+      "Url": "https://libcat.renfrewshire.gov.uk/iguana/"
     },
     {
       "Name": "Rhondda Cynon Taf",
@@ -1463,22 +1318,19 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/rct_en/",
-      "TestISBN": "9780747538493"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/rct_en/"
     },
     {
       "Name": "Richmond upon Thames",
       "Code": "E09000027",
       "Type": "spydus",
-      "Url": "https://richmond.spydus.co.uk/",
-      "TestISBN": "9780751565362"
+      "Url": "https://richmond.spydus.co.uk/"
     },
     {
       "Name": "Rochdale",
       "Code": "E08000005",
       "Type": "spydus",
-      "Url": "https://rochdale.spydus.co.uk/",
-      "TestISBN": "9781408855676"
+      "Url": "https://rochdale.spydus.co.uk/"
     },
     {
       "Name": "Rotherham",
@@ -1488,8 +1340,7 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://rotherham.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TestISBN": "9780747538493"
+      "Url": "https://rotherham.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "Rutland",
@@ -1499,15 +1350,13 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/rutland/",
-      "TestISBN": "9781408855706"
+      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/rutland/"
     },
     {
       "Name": "Salford",
       "Code": "E08000006",
       "Type": "spydus",
-      "Url": "https://salfordlibraries.spydus.co.uk/",
-      "TestISBN": "9781408855706"
+      "Url": "https://salfordlibraries.spydus.co.uk/"
     },
     {
       "Name": "Sandwell",
@@ -1516,24 +1365,21 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/sandwell/",
-      "TestISBN": "9781408855706"
+      "Url": "https://prism.librarymanagementcloud.co.uk/sandwell/"
     },
     {
       "Name": "Scottish Borders",
       "Code": "S12000026",
       "Type": "iguana",
       "Database": "1",
-      "Url": "https://liveborders.inforlib.uk/iguana/",
-      "TestISBN": "9781408855690"
+      "Url": "https://liveborders.inforlib.uk/iguana/"
     },
     {
       "Name": "Sefton",
       "Code": "E08000014",
       "Type": "koha",
       "Version": "v22",
-      "Url": "https://catalogue.sefton.gov.uk/",
-      "TestISBN": "9780751565355"
+      "Url": "https://catalogue.sefton.gov.uk/"
     },
     {
       "Name": "Sheffield",
@@ -1543,8 +1389,7 @@
       "Available": [
         "In stock"
       ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TestISBN": "9780747538493"
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
     },
     {
       "Name": "Shetland Islands",
@@ -1553,8 +1398,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/shetland/",
-      "TestISBN": "9780747538493"
+      "Url": "https://prism.librarymanagementcloud.co.uk/shetland/"
     },
     {
       "Name": "Shropshire",
@@ -1564,22 +1408,19 @@
       "ArenaName": "AUK000034",
       "Url": "https://libraries.shropshire.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000034|1",
-      "TestISBN": "9780747591054"
+      "OrganisationId": "AUK000034|1"
     },
     {
       "Name": "Slough",
       "Code": "E06000039",
       "Type": "spydus",
-      "Url": "https://slough.spydus.co.uk/",
-      "TestISBN": "9781408855669"
+      "Url": "https://slough.spydus.co.uk/"
     },
     {
       "Name": "Solihull",
       "Code": "E08000029",
       "Type": "spydus",
-      "Url": "https://solihull.spydus.co.uk/",
-      "TestISBN": "9780751565362"
+      "Url": "https://solihull.spydus.co.uk/"
     },
     {
       "Name": "Somerset",
@@ -1591,15 +1432,13 @@
         "In stock"
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "MultiAuthorityId": 1,
-      "TestISBN": "9780747538493"
+      "MultiAuthorityId": 1
     },
     {
       "Name": "South Ayrshire",
       "Code": "S12000028",
       "Type": "webpac",
       "Url": "https://library.south-ayrshire.gov.uk/",
-      "TestISBN": "9780751565362",
       "DisableTls": true
     },
     {
@@ -1612,15 +1451,13 @@
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://www.librarieswest.org.uk/client/en_GB/default/",
-      "MultiAuthorityId": 5,
-      "TestISBN": "9780747538493"
+      "MultiAuthorityId": 5
     },
     {
       "Name": "South Lanarkshire",
       "Code": "S12000029",
       "Type": "spydus",
-      "Url": "https://www.sllclibrary.co.uk/",
-      "TestISBN": "9780747538493"
+      "Url": "https://www.sllclibrary.co.uk/"
     },
     {
       "Name": "South Tyneside",
@@ -1629,37 +1466,32 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/southtyneside/",
-      "TestISBN": "9781408855683"
+      "Url": "https://prism.librarymanagementcloud.co.uk/southtyneside/"
     },
     {
       "Name": "Southampton",
       "Code": "E06000045",
       "Type": "spydus",
-      "Url": "https://southampton.spydus.co.uk/",
-      "TestISBN": "9781408855676"
+      "Url": "https://southampton.spydus.co.uk/"
     },
     {
       "Name": "Southend on Sea",
       "Code": "E06000033",
       "Type": "spydus",
-      "Url": "https://southend.spydus.co.uk/",
-      "TestISBN": "9781408855713"
+      "Url": "https://southend.spydus.co.uk/"
     },
     {
       "Name": "Southwark",
       "Code": "E09000028",
       "Type": "spydus",
-      "Url": "https://southwark.spydus.co.uk/",
-      "TestISBN": "9781408898147"
+      "Url": "https://southwark.spydus.co.uk/"
     },
     {
       "Name": "St Helens",
       "Code": "E08000013",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://sthlibraries.koha-ptfs.co.uk/",
-      "TestISBN": "9781408855706"
+      "Url": "https://sthlibraries.koha-ptfs.co.uk/"
     },
     {
       "Name": "Staffordshire",
@@ -1669,8 +1501,7 @@
         "In stock"
       ],
       "Url": "https://stafford.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TestISBN": "9781408894637"
+      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
     },
     {
       "Name": "Stirling",
@@ -1680,37 +1511,32 @@
         "In stock"
       ],
       "Url": "https://scl.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TestISBN": "9780751565355"
+      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
     },
     {
       "Name": "Stockport",
       "Code": "E08000007",
       "Type": "spydus",
-      "Url": "https://stockport.spydus.co.uk/",
-      "TestISBN": "9781408855669"
+      "Url": "https://stockport.spydus.co.uk/"
     },
     {
       "Name": "Stockton on Tees",
       "Code": "E06000004",
       "Type": "spydus",
-      "Url": "https://stockton.spydus.co.uk/",
-      "TestISBN": "9781408845677"
+      "Url": "https://stockton.spydus.co.uk/"
     },
     {
       "Name": "Stoke on Trent",
       "Code": "E06000021",
       "Type": "iguana",
       "Database": "1",
-      "Url": "https://librariesonline.stoke.gov.uk/iguana/",
-      "TestISBN": "9781408855690"
+      "Url": "https://librariesonline.stoke.gov.uk/iguana/"
     },
     {
       "Name": "Suffolk",
       "Code": "E10000029",
       "Type": "spydus",
-      "Url": "https://suffolk.spydus.co.uk/",
-      "TestISBN": "9781526622808"
+      "Url": "https://suffolk.spydus.co.uk/"
     },
     {
       "Name": "Sunderland",
@@ -1720,8 +1546,7 @@
         "In stock"
       ],
       "Url": "https://libraries.sunderland.gov.uk/client/en_GB/default/",
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailitemstable_0.webservicefieldsajax:lookuptitleinfo/detailItemsDiv0/ent:[ITEMID]/ILS/true/true",
-      "TestISBN": "9780747538493"
+      "TitleDetailUrl": "search/detailnonmodal.detail.detailitemstable_0.webservicefieldsajax:lookuptitleinfo/detailItemsDiv0/ent:[ITEMID]/ILS/true/true"
     },
     {
       "Name": "Surrey",
@@ -1732,8 +1557,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/sutton/",
-      "LibraryNameFilter": "Surrey",
-      "TestISBN": "9781408810569"
+      "LibraryNameFilter": "Surrey"
     },
     {
       "Name": "Sutton",
@@ -1744,8 +1568,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/sutton/",
-      "LibraryNameFilter": "Sutton",
-      "TestISBN": "9780747591085"
+      "LibraryNameFilter": "Sutton"
     },
     {
       "Name": "Abertawe - Swansea",
@@ -1755,22 +1578,19 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/swan_en/",
-      "TestISBN": "9780747591054"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/swan_en/"
     },
     {
       "Name": "Swindon",
       "Code": "E06000030",
       "Type": "spydus",
-      "Url": "https://swindon.spydus.co.uk/",
-      "TestISBN": "9781408845660"
+      "Url": "https://swindon.spydus.co.uk/"
     },
     {
       "Name": "Tameside",
       "Code": "E08000008",
       "Type": "spydus",
-      "Url": "https://tameside.spydus.co.uk/",
-      "TestISBN": "9780751565355"
+      "Url": "https://tameside.spydus.co.uk/"
     },
     {
       "Name": "Telford and Wrekin",
@@ -1781,8 +1601,7 @@
       "Id": "320001",
       "Url": "https://library.telford.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000032|0",
-      "TestISBN": "9781408865279"
+      "OrganisationId": "AUK000032|0"
     },
     {
       "Name": "Thurrock",
@@ -1792,8 +1611,7 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://tlc.ent.sirsidynix.net.uk/client/en_GB/thurrock/",
-      "TestISBN": "9780747538493"
+      "Url": "https://tlc.ent.sirsidynix.net.uk/client/en_GB/thurrock/"
     },
     {
       "Name": "Torbay",
@@ -1803,8 +1621,7 @@
       "ArenaName": "AUK267001",
       "Url": "https://www.torbaylibraries.org.uk/web/arena/",
       "AdvancedUrl": "advanced-search",
-      "OrganisationId": "AUK267001|2",
-      "TestISBN": "9780751565355"
+      "OrganisationId": "AUK267001|2"
     },
     {
       "Name": "Tor-faen - Torfaen",
@@ -1814,8 +1631,7 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/tor_en/",
-      "TestISBN": "9780751565355"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/tor_en/"
     },
     {
       "Name": "Tower Hamlets",
@@ -1826,15 +1642,13 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/tower-hamlets/",
-      "LibraryNameFilter": "Tower Hamlets",
-      "TestISBN": "9780747581086"
+      "LibraryNameFilter": "Tower Hamlets"
     },
     {
       "Name": "Trafford",
       "Code": "E08000009",
       "Type": "spydus",
-      "Url": "https://trafford.spydus.co.uk/",
-      "TestISBN": "9780751565355"
+      "Url": "https://trafford.spydus.co.uk/"
     },
     {
       "Name": "Bro Morgannwg - the Vale of Glamorgan",
@@ -1844,8 +1658,7 @@
         "Available"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/vog_en/",
-      "TestISBN": "9780747538493"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/vog_en/"
     },
     {
       "Name": "Wakefield",
@@ -1856,8 +1669,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://wakefield.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "LibraryNameFilter": "Wakefield",
-      "TestISBN": "9781408855713"
+      "LibraryNameFilter": "Wakefield"
     },
     {
       "Name": "Walsall",
@@ -1866,8 +1678,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/walsall/",
-      "TestISBN": "9781408855713"
+      "Url": "https://prism.librarymanagementcloud.co.uk/walsall/"
     },
     {
       "Name": "Waltham Forest",
@@ -1878,8 +1689,7 @@
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/walthamforest/",
-      "LibraryNameFilter": "Waltham Forest",
-      "TestISBN": "9780747574491"
+      "LibraryNameFilter": "Waltham Forest"
     },
     {
       "Name": "Wandsworth",
@@ -1888,31 +1698,27 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/wandsworth/",
-      "TestISBN": "9781408834985"
+      "Url": "https://prism.librarymanagementcloud.co.uk/wandsworth/"
     },
     {
       "Name": "Warrington",
       "Code": "E06000007",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://libonline.livewirewarrington.co.uk/",
-      "TestISBN": "9780747561071"
+      "Url": "https://libonline.livewirewarrington.co.uk/"
     },
     {
       "Name": "Warwickshire",
       "Code": "E10000031",
       "Type": "iguana",
       "Database": "1",
-      "Url": "https://library.warwickshire.gov.uk/iguana/",
-      "TestISBN": "9780747562184"
+      "Url": "https://library.warwickshire.gov.uk/iguana/"
     },
     {
       "Name": "West Berkshire",
       "Code": "E06000037",
       "Type": "spydus",
-      "Url": "https://westberks.spydus.co.uk/",
-      "TestISBN": "9780747599876"
+      "Url": "https://westberks.spydus.co.uk/"
     },
     {
       "Name": "West Dunbartonshire",
@@ -1923,8 +1729,7 @@
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailitemstable_0.webservicefieldsajax:lookuptitleinfo/detailItemsDiv0/ent:[ITEMID]/ILS/true/true",
-      "Url": "http://wd.ent.sirsidynix.net.uk/client/wd/",
-      "TestISBN": "9781408810606"
+      "Url": "http://wd.ent.sirsidynix.net.uk/client/wd/"
     },
     {
       "Name": "West Lothian",
@@ -1934,8 +1739,7 @@
         "AVAILABLE"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wlcls.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TestISBN": "9780751565355"
+      "Url": "https://wlcls.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "West Sussex",
@@ -1946,16 +1750,14 @@
       "ArenaName": "AUK000038",
       "Url": "https://arena.westsussex.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000038|1",
-      "TestISBN": "9781408855683"
+      "OrganisationId": "AUK000038|1"
     },
     {
       "Name": "Western Isles",
       "Code": "S12000013",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://wi.koha-ptfs.co.uk/",
-      "TestISBN": "9780751565355"
+      "Url": "https://wi.koha-ptfs.co.uk/"
     },
     {
       "Name": "Westminster",
@@ -1965,8 +1767,7 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://elibrary.westminster.gov.uk/client/en_GB/wcc/",
-      "TestISBN": "9781408855713"
+      "Url": "https://elibrary.westminster.gov.uk/client/en_GB/wcc/"
     },
     {
       "Name": "Wigan",
@@ -1975,8 +1776,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/wigan/",
-      "TestISBN": "9780747538493"
+      "Url": "https://prism.librarymanagementcloud.co.uk/wigan/"
     },
     {
       "Name": "Wiltshire",
@@ -1988,15 +1788,13 @@
       "OrganisationId": "AUK000040|1",
       "OrganisationName": "Wiltshire Libraries",
       "Url": "https://libraries.wiltshire.gov.uk/web/arena/",
-      "AdvancedUrl": "advanced-search",
-      "TestISBN": "9781408810545"
+      "AdvancedUrl": "advanced-search"
     },
     {
       "Name": "Windsor & Maidenhead",
       "Code": "E06000040",
       "Type": "spydus",
-      "Url": "https://rbwm.spydus.co.uk/",
-      "TestISBN": "9781510051317"
+      "Url": "https://rbwm.spydus.co.uk/"
     },
     {
       "Name": "Wirral",
@@ -2005,15 +1803,13 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/wirral/",
-      "TestISBN": "9781408855713"
+      "Url": "https://prism.librarymanagementcloud.co.uk/wirral/"
     },
     {
       "Name": "Wokingham",
       "Code": "E06000041",
       "Type": "spydus",
-      "Url": "https://wokingham.spydus.co.uk/",
-      "TestISBN": "9781408845653"
+      "Url": "https://wokingham.spydus.co.uk/"
     },
     {
       "Name": "Wolverhampton",
@@ -2022,8 +1818,7 @@
       "Available": [
         "Available"
       ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/wolverhampton/",
-      "TestISBN": "9780747538493"
+      "Url": "https://prism.librarymanagementcloud.co.uk/wolverhampton/"
     },
     {
       "Name": "Worcestershire",
@@ -2033,8 +1828,7 @@
         "Available"
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wcc.ent.sirsidynix.net.uk/client/en_GB/wcc/",
-      "TestISBN": "9780747538493"
+      "Url": "https://wcc.ent.sirsidynix.net.uk/client/en_GB/wcc/"
     },
     {
       "Name": "Wrecsam - Wrexham",
@@ -2044,8 +1838,7 @@
         "Available"
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/wrexham_en/",
-      "TestISBN": "9780747591054"
+      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/wrexham_en/"
     },
     {
       "Name": "York City",
@@ -2055,8 +1848,7 @@
         "On the shelf"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://cyc.sdp.sirsidynix.net.uk/client/en_GB/default/",
-      "TestISBN": "9780747591061"
+      "Url": "https://cyc.sdp.sirsidynix.net.uk/client/en_GB/default/"
     }
   ]
 }
