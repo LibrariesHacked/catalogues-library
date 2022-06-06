@@ -2,7 +2,6 @@ const index = require('../index');
 const tests = require('./tests.json');
 
 const librariesIgnoreList = [
-  'Western Isles'
 ];
 
 exports.runTest = async (service) => {
@@ -35,7 +34,7 @@ exports.runTest = async (service) => {
     The following libraries do not have ISBNs available for availability checks: 
 
       - Bexley - some issue with cookies that I just can't seem to work around.
-      - Western Isles - catalogue down at the time of last updating this code.
+      - Falkirk - issues with their catalogue delivering availability information at the time of testing.
     */
 
     const isbns = tests.find(x => x.Name == service).ISBNs;
