@@ -34,7 +34,6 @@ exports.runTest = async (service) => {
     The following libraries do not have ISBNs available for availability checks: 
 
       - Bexley - some issue with cookies that I just can't seem to work around.
-      - Falkirk - issues with their catalogue delivering availability information at the time of testing.
     */
 
     const isbns = tests.find(x => x.Name == service).ISBNs;
