@@ -31,7 +31,7 @@ exports.getLibraries = async function (service) {
     let $ = cheerio.load(libraryPageRequest.text)
   
     $('option').each((idx, option) => {
-        if (option.attribs["value"].startsWith('owning_location_main:') && common.isLibrary($(option).text().trim()))
+        if ((option.attribs["value"].startsWith('owning_location_main:') || option.attribs["value"].startsWith('owning_location:')) && common.isLibrary($(option).text().trim()))
             responseLibraries.libraries.push($(option).text().trim());
     })
   }
