@@ -1278,8 +1278,7 @@
       "Name": "Reading",
       "Code": "E06000038",
       "Type": "spydus",
-      "Url": "https://library.reading.gov.uk/",
-      "DisableTls": true
+      "Url": "https://library.reading.gov.uk/"
     },
     {
       "Name": "Redbridge",
@@ -1438,8 +1437,7 @@
       "Name": "South Ayrshire",
       "Code": "S12000028",
       "Type": "webpac",
-      "Url": "https://library.south-ayrshire.gov.uk/",
-      "DisableTls": true
+      "Url": "https://library.south-ayrshire.gov.uk/"
     },
     {
       "Name": "South Gloucestershire",
