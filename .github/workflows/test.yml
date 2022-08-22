@@ -1,5 +1,6 @@
 name: CI
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 13 * * 5" # Every Friday at 13:00 UTC
 jobs:
