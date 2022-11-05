@@ -1744,12 +1744,13 @@
       "Name": "West Sussex",
       "Code": "E10000032",
       "Type": "arena",
-      "Version": "v6",
+      "Version": "v7",
       "Id": "380001",
       "ArenaName": "AUK000038",
       "Url": "https://arena.westsussex.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000038|1"
+      "OrganisationId": "AUK000038|1",
+      "OrganisationName": "West Sussex Libraries"
     },
     {
       "Name": "Western Isles",
