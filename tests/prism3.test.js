@@ -10,7 +10,6 @@ test('S12000010 - East Lothian', async () => await index.runTest('East Lothian')
 test('S12000015 - Fife', async () => await index.runTest('Fife'), 300000);
 test('E08000037 - Gateshead', async () => await index.runTest('Gateshead'), 300000);
 test('E09000011 - Greenwich', async () => await index.runTest('Greenwich'), 300000);
-test('E09000014 - Haringey', async () => await index.runTest('Haringey'), 300000);
 test('E06000019 - Herefordshire', async () => await index.runTest('Herefordshire'), 300000);
 test('E09000019 - Islington', async () => await index.runTest('Islington'), 300000);
 test(' - Jersey', async () => await index.runTest('Jersey'), 300000);
