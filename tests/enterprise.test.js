@@ -30,6 +30,7 @@ test('W06000005 - Sir y Fflint - Flintshire', async () => await index.runTest('S
 test('W06000002 - Gwynedd', async () => await index.runTest('Gwynedd'), 300000);
 test('E09000012 - Hackney', async () => await index.runTest('Hackney'), 300000);
 test('E09000013 - Hammersmith and Fulham', async () => await index.runTest('Hammersmith and Fulham'), 300000);
+test('E09000014 - Haringey', async () => await index.runTest('Haringey'), 300000);
 test('E09000015 - Harrow', async () => await index.runTest('Harrow'), 300000);
 test('E09000016 - Havering', async () => await index.runTest('Havering'), 300000);
 test('E09000017 - Hillingdon', async () => await index.runTest('Hillingdon'), 300000);
