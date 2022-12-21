@@ -6,7 +6,6 @@ test('E06000036 - Bracknell Forest', async () => await index.runTest('Bracknell 
 test('E09000006 - Bromley', async () => await index.runTest('Bromley'), 300000);
 test('E06000052 - Cornwall', async () => await index.runTest('Cornwall'), 300000);
 test('E08000027 - Dudley', async () => await index.runTest('Dudley'), 300000);
-test('S12000010 - East Lothian', async () => await index.runTest('East Lothian'), 300000);
 test('S12000015 - Fife', async () => await index.runTest('Fife'), 300000);
 test('E08000037 - Gateshead', async () => await index.runTest('Gateshead'), 300000);
 test('E09000011 - Greenwich', async () => await index.runTest('Greenwich'), 300000);
