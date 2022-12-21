@@ -8,5 +8,5 @@
         "**/Thumbs.db": true,
         "**/node_modules": true
     },
-    "jest.autoRun": "false"
+    "jest.autoRun": "off"
 }

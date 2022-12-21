@@ -510,11 +510,8 @@
     {
       "Name": "East Lothian",
       "Code": "S12000010",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/eastlothian/"
+      "Type": "spydus",
+      "Url": "https://eastlothian.spydus.co.uk/"
     },
     {
       "Name": "East Renfrewshire",
