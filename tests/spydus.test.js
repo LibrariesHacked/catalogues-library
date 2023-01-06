@@ -16,6 +16,7 @@ test('S12000042 - Dundee City', async () => await index.runTest('Dundee City'), 
 test('S12000010 - East Lothian', async () => await index.runTest('East Lothian'), 300000);
 test('S12000011 - East Renfrewshire', async () => await index.runTest('East Renfrewshire'), 300000);
 test('E10000011 - East Sussex', async () => await index.runTest('East Sussex'), 300000);
+test('S12000014 - Falkirk', async () => await index.runTest('Falkirk'), 300000);
 test('E10000013 - Gloucestershire', async () => await index.runTest('Gloucestershire'), 300000);
 test('E10000014 - Hampshire', async () => await index.runTest('Hampshire'), 300000);
 test('E06000001 - Hartlepool', async () => await index.runTest('Hartlepool'), 300000);

@@ -572,13 +572,8 @@
     {
       "Name": "Falkirk",
       "Code": "S12000014",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailitemstable_0.webservicefieldsajax:lookuptitleinfo/detailItemsDiv0/ent:[ITEMID]/ILS/true/true",
-      "Url": "http://fct.ent.sirsidynix.net.uk/client/en_GB/libraries/"
+      "Type": "spydus",
+      "Url": "https://falkirk.spydus.co.uk/"
     },
     {
       "Name": "Fife",
