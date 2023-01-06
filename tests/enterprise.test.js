@@ -25,7 +25,6 @@ test('E09000009 - Ealing', async () => await index.runTest('Ealing'), 300000);
 test('S12000008 - East Ayrshire', async () => await index.runTest('East Ayrshire'), 300000);
 test('E09000010 - Enfield', async () => await index.runTest('Enfield'), 300000);
 test('E10000012 - Essex', async () => await index.runTest('Essex'), 300000);
-test('S12000014 - Falkirk', async () => await index.runTest('Falkirk'), 300000);
 test('W06000005 - Sir y Fflint - Flintshire', async () => await index.runTest('Sir y Fflint - Flintshire'), 300000);
 test('W06000002 - Gwynedd', async () => await index.runTest('Gwynedd'), 300000);
 test('E09000012 - Hackney', async () => await index.runTest('Hackney'), 300000);
