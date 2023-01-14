@@ -1101,14 +1101,11 @@
       "Name": "North Lincolnshire",
       "Code": "E06000013",
       "Type": "arena",
-      "Version": "v6",
+      "Version": "v7",
       "ArenaName": "AUK000221",
       "Url": "https://www.opac.northlincs.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000221|0",
-      "SignupUrl": "https://www.opac.northlincs.gov.uk/join-the-library",
-      "Id": "221001",
-      "PreLoad": true
+      "OrganisationId": "AUK000221|0"
     },
     {
       "Name": "North Somerset",
