@@ -2,6 +2,8 @@ const index = require('../index');
 const tests = require('./tests.json');
 
 const librariesIgnoreList = [
+  // Only has "All Locations" option
+  'Southampton'
 ];
 
 exports.runTest = async (service) => {
