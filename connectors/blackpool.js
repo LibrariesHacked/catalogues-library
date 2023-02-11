@@ -10,7 +10,7 @@ console.log('blackpool connector loading...')
  */
 exports.getService = (service) => common.getService(service)
 
-getLibrariesInternal = async function (service) {
+getBlackpoolLibrariesInternal = async function (service) {
   const agent = request.agent()
   const response = {
     libraries: []
@@ -44,7 +44,7 @@ getLibrariesInternal = async function (service) {
  */
 exports.getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
-  const libs = await getLibrariesInternal(service);
+  const libs = await getBlackpoolLibrariesInternal(service);
 
   responseLibraries.exception = libs.exception;
   responseLibraries.libraries = libs.libraries.map(x => x.name)
@@ -78,7 +78,7 @@ exports.searchByISBN = async function (isbn, service) {
   
     responseHoldings.id = `${titleId}`
 
-    const libs = await getLibrariesInternal(service)
+    const libs = await getBlackpoolLibrariesInternal(service)
   
     const titleSearch = `https://api.blackpool.gov.uk/live/api/library/standard/lookupTitleInformation/${titleId}`
     const titleRequest = await agent.get(titleSearch).timeout(30000)

@@ -9,7 +9,7 @@ console.log('luci connector loading...')
  */
 exports.getService = (service) => common.getService(service)
 
-getLibrariesInternal = async function (service) {
+getLuciLibrariesInternal = async function (service) {
   const agent = request.agent()
   const response = {
     libraries: []
@@ -42,7 +42,7 @@ getLibrariesInternal = async function (service) {
  */
 exports.getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
-  const libs = await getLibrariesInternal(service);
+  const libs = await getLuciLibrariesInternal(service);
 
   responseLibraries.exception = libs.exception;
   responseLibraries.libraries = libs.libraries.map(x => x.name)
@@ -94,7 +94,10 @@ exports.searchByISBN = async function (isbn, service) {
     responseHoldings.id = result.recordID;
     responseHoldings.url = `${service.Url}manifestations/${result.recordID}`;
 
-    resp = await agent.get(`${service.Url}api/record?id=${result.recordID}&source=ILSWS`).timeout(20000);
+    resp = await agent.get(`${service.Url}api/record?id=${result.recordID}&source=ILSWS`)
+      .set('solus-app-id', appId)
+      .timeout(20000);
+      
     let libraries = resp.body.data.copies.map(x => x.location.locationName);
 
     // Get unique library values.
