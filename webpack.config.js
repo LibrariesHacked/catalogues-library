@@ -10,5 +10,6 @@ module.exports = {
   },
   plugins: [
     new NodePolyfillPlugin()
-  ]
+  ],
+  target: 'node'
 }
