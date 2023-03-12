@@ -40,7 +40,6 @@ test('E08000034 - Kirklees', async () => await index.runTest('Kirklees'), 300000
 test('E08000035 - Leeds', async () => await index.runTest('Leeds'), 300000);
 test('E10000018 - Leicestershire', async () => await index.runTest('Leicestershire'), 300000);
 test('E09000023 - Lewisham', async () => await index.runTest('Lewisham'), 300000);
-test('E06000032 - Luton', async () => await index.runTest('Luton'), 300000);
 test('E09000024 - Merton', async () => await index.runTest('Merton'), 300000);
 test('W06000021 - Sir Fynwy - Monmouthshire', async () => await index.runTest('Sir Fynwy - Monmouthshire'), 300000);
 test('W06000012 - Castell-nedd Port Talbot - Neath Port Talbot', async () => await index.runTest('Castell-nedd Port Talbot - Neath Port Talbot'), 300000);

@@ -943,13 +943,9 @@
     {
       "Name": "Luton",
       "Code": "E06000032",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/luton/",
-      "LibraryNameFilter": "Luton"
+      "Type": "luci",
+      "Url": "https://www.lutonlibraries.co.uk/",
+      "Home": "home"
     },
     {
       "Name": "Manchester",
@@ -1552,7 +1548,8 @@
       "Name": "Sutton",
       "Code": "E09000029",
       "Type": "luci",
-      "Url": "https://libraries.sutton.gov.uk/"
+      "Url": "https://libraries.sutton.gov.uk/",
+      "Home": "bookshelf"
     },
     {
       "Name": "Abertawe - Swansea",
