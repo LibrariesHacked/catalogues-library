@@ -16,7 +16,7 @@ getLuciLibrariesInternal = async function (service) {
   };
 
   try {
-    let resp = await agent.get(`${service.Url}bookshelf`).timeout(20000);
+    let resp = await agent.get(`${service.Url}${service.Home}`).timeout(20000);
     const frontEndId = /\/_next\/static\/([^\/]+)\/_buildManifest.js/gm.exec(resp.text)[1];
 
     resp = await agent.get(`${service.Url}_next/data/${frontEndId}/user/register.json`).timeout(20000);
@@ -60,7 +60,7 @@ exports.searchByISBN = async function (isbn, service) {
 
   try {
     const agent = request.agent();
-    let resp = await agent.get(`${service.Url}bookshelf`).timeout(20000);
+    let resp = await agent.get(`${service.Url}${service.Home}`).timeout(20000);
 
     const appId = /\?appid=([a-f0-9\-]+)/gm.exec(resp.text)[1];
 
