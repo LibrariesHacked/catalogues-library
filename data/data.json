@@ -353,9 +353,13 @@
     {
       "Name": "Coventry",
       "Code": "E08000026",
-      "Type": "iguana",
-      "Database": "1",
-      "Url": "https://librarycatalogue.coventry.gov.uk/iguana/"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKCOVENTRY",
+      "Url": "https://librarycatalogue.coventry.gov.uk/",
+      "OrganisationId": "AUKCOVENTRY|1",
+      "OrganisationName": "Coventry",
+      "AdvancedUrl": "extended-search"
     },
     {
       "Name": "Croydon",

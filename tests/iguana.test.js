@@ -1,6 +1,5 @@
 const index = require('.');
 
-test('E08000026 - Coventry', async () => await index.runTest('Coventry'), 300000);
 test('S12000006 - Dumfries and Galloway', async () => await index.runTest('Dumfries and Galloway'), 300000);
 test('S12000044 - North Lanarkshire', async () => await index.runTest('North Lanarkshire'), 300000);
 test('W06000009 - Sir Benfro - Pembrokeshire', async () => await index.runTest('Sir Benfro - Pembrokeshire'), 300000);
