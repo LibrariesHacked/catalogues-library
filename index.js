@@ -2,7 +2,7 @@ const async = require('async')
 const data = require('./data/data.json')
 const libThing = require('./connectors/librarything')
 const openLibrary = require('./connectors/openlibrary')
-const syswidecas = require('./syswide-cas.js');
+const syswidecas = require('@small-tech/syswide-cas');
 
 // Intermediate certificate that's often incomplete in SSL chains.
 syswidecas.addCAs('./SectigoRSADomainValidationSecureServerCA.cer');
