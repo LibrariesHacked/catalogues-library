@@ -3,6 +3,7 @@ const index = require('.');
 test('E06000055 - Bedford', async () => await index.runTest('Bedford'), 300000);
 test('E09000004 - Bexley', async () => await index.runTest('Bexley'), 300000);
 test('E06000056 - Central Bedfordshire', async () => await index.runTest('Central Bedfordshire'), 300000);
+test('E08000026 - Coventry', async () => await index.runTest('Coventry'), 300000);
 test('E06000005 - Darlington', async () => await index.runTest('Darlington'), 300000);
 test('E10000008 - Devon', async () => await index.runTest('Devon'), 300000);
 test('E08000017 - Doncaster', async () => await index.runTest('Doncaster'), 300000);

@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/LibrariesHacked/catalogues-library#readme",
   "dependencies": {
+    "@small-tech/syswide-cas": "^6.0.2",
     "@types/tough-cookie": "^4.0.2",
     "async": "^3.2.4",
     "cheerio": "^1.0.0-rc.12",
