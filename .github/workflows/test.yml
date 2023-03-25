@@ -10,14 +10,16 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install modules
       run: npm install
-    - name: Install and Launch OpenVPN
+    - name: Install OpenVPN
       run: |
         curl ${{ secrets.OVPN_URL }} --output config.ovpn --silent
-        sudo apt-get update
-        sudo apt-get --assume-yes --no-install-recommends install openvpn 
-        sudo openvpn --config "config.ovpn" --auth-user-pass <(echo -e ${{ secrets.OVPN_USERNAME }}"\n"${{ secrets.OVPN_PASSWORD }}) --daemon
+        sudo apt update
+        sudo apt install -y openvpn openvpn-systemd-resolved
+    - name: Connect to VPN
+      uses: "kota65535/github-openvpn-connect-action@v2"
+      with:
+        config_file: config.ovpn
+        username: ${{ secrets.OVPN_USERNAME }}
+        password: ${{ secrets.OVPN_PASSWORD }}
     - name: Run tests
       run: npm run test-ci
-    - name: Close OpenVPN
-      run: |
-        sudo killall openvpn
