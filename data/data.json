@@ -218,12 +218,8 @@
     {
       "Name": "Bury",
       "Code": "E08000002",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://bury.ent.sirsidynix.net.uk/client/en_GB/default/"
+      "Type": "spydus",
+      "Url": "https://bury.spydus.co.uk/"
     },
     {
       "Name": "Caerphilly",
