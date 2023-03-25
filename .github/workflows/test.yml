@@ -19,5 +19,5 @@ jobs:
     - name: Run tests
       run: npm run test-ci
     - name: Close OpenVPN
-        run: |
-          sudo killall openvpn
+      run: |
+        sudo killall openvpn
