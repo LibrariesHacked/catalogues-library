@@ -11,11 +11,11 @@ jobs:
     - name: Install modules
       run: npm install
     - name: Install and Launch OpenVPN
-        run: |
-          curl ${{ secrets.OVPN_URL }} --output config.ovpn --silent
-          sudo apt-get update
-          sudo apt-get --assume-yes --no-install-recommends install openvpn 
-          sudo openvpn --config "config.ovpn" --auth-user-pass <(echo -e ${{ secrets.OVPN_USERNAME }}"\n"${{ secrets.OVPN_PASSWORD }}) --daemon
+      run: |
+        curl ${{ secrets.OVPN_URL }} --output config.ovpn --silent
+        sudo apt-get update
+        sudo apt-get --assume-yes --no-install-recommends install openvpn 
+        sudo openvpn --config "config.ovpn" --auth-user-pass <(echo -e ${{ secrets.OVPN_USERNAME }}"\n"${{ secrets.OVPN_PASSWORD }}) --daemon
     - name: Run tests
       run: npm run test-ci
     - name: Close OpenVPN
