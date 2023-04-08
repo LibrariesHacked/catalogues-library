@@ -9,7 +9,6 @@ test('E08000032 - Bradford', async () => await index.runTest('Bradford'), 300000
 test('E09000005 - Brent', async () => await index.runTest('Brent'), 300000);
 test('W06000013 - Pen-y-bont ar Ogwr - Bridgend', async () => await index.runTest('Pen-y-bont ar Ogwr - Bridgend'), 300000);
 test('E06000023 - Bristol City', async () => await index.runTest('Bristol City'), 300000);
-test('E08000002 - Bury', async () => await index.runTest('Bury'), 300000);
 test('W06000018 - Caerphilly', async () => await index.runTest('Caerphilly'), 300000);
 test('W06000015 - Caerdydd - Cardiff', async () => await index.runTest('Caerdydd - Cardiff'), 300000);
 test('W06000010 - Sir Gaerfyrddin - Carmarthenshire', async () => await index.runTest('Sir Gaerfyrddin - Carmarthenshire'), 300000);

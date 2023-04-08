@@ -9,6 +9,7 @@ test('E06000008 - Blackburn with Darwen', async () => await index.runTest('Black
 test('E08000001 - Bolton', async () => await index.runTest('Bolton'), 300000);
 test('E06000043 - Brighton and Hove', async () => await index.runTest('Brighton and Hove'), 300000);
 test('E10000002 - Buckinghamshire', async () => await index.runTest('Buckinghamshire'), 300000);
+test('E08000002 - Bury', async () => await index.runTest('Bury'), 300000);
 test('E08000033 - Calderdale', async () => await index.runTest('Calderdale'), 300000);
 test('E10000003 - Cambridgeshire', async () => await index.runTest('Cambridgeshire'), 300000);
 test('E09000007 - Camden', async () => await index.runTest('Camden'), 300000);
