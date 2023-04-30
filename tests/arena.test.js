@@ -16,6 +16,7 @@ test('E06000016 - Leicester City', async () => await index.runTest('Leicester Ci
 test('S12000019 - Midlothian', async () => await index.runTest('Midlothian'), 300000);
 test('E06000012 - North East Lincolnshire', async () => await index.runTest('North East Lincolnshire'), 300000);
 test('E06000013 - North Lincolnshire', async () => await index.runTest('North Lincolnshire'), 300000);
+test(' - Northern Ireland', async () => await index.runTest('Northern Ireland'), 300000);
 test('E10000021 - Northamptonshire', async () => await index.runTest('Northamptonshire'), 300000);
 test('E10000025 - Oxfordshire', async () => await index.runTest('Oxfordshire'), 300000);
 test('E06000026 - Plymouth', async () => await index.runTest('Plymouth'), 300000);

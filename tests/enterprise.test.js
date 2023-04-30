@@ -47,7 +47,6 @@ test('W06000022 - Casnewydd - Newport', async () => await index.runTest('Casnewy
 test('E06000024 - North Somerset', async () => await index.runTest('North Somerset'), 300000);
 test('E06000018 - Nottingham City', async () => await index.runTest('Nottingham City'), 300000);
 test('E10000024 - Nottinghamshire', async () => await index.runTest('Nottinghamshire'), 300000);
-test(' - Northern Ireland', async () => await index.runTest('Northern Ireland'), 300000);
 test('E06000029 - Poole', async () => await index.runTest('Poole'), 300000);
 test('W06000023 - Powys', async () => await index.runTest('Powys'), 300000);
 test('E09000026 - Redbridge', async () => await index.runTest('Redbridge'), 300000);

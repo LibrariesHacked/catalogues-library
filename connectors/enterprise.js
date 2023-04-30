@@ -116,10 +116,16 @@ const processItemPage = async (agent, itemId, itemPage, service) => {
   let availabilityJson = null
   const availability = [];
 
+  // Get CSRF token, if available
+  let csrfMatches = /__sdcsrf\s+=\s+"([a-f0-9\-]+)"/gm.exec(itemPage);
+  let csrf = null;
+  if (csrfMatches && csrfMatches[1])
+    csrf = csrfMatches[1];
+
   let $ = cheerio.load(itemPage)
 
   // Availability information may already be part of the page.
-  var matches = /parseDetailAvailabilityJSON\(([\s\S]*?)\)/.exec(itemPage)
+  let matches = /parseDetailAvailabilityJSON\(([\s\S]*?)\)/.exec(itemPage)
   if (matches && matches[1] && common.isJsonString(matches[1])) {
     availabilityJson = JSON.parse(matches[1])
   }
@@ -128,7 +134,10 @@ const processItemPage = async (agent, itemId, itemPage, service) => {
     // e.g. /search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:$002f$002fSD_ILS$002f0$002fSD_ILS:548433/ILS/0/true/true?qu=9780747538493&d=ent%3A%2F%2FSD_ILS%2F0%2FSD_ILS%3A548433%7E%7E0&ps=300
     const availabilityUrl = service.Url + service.AvailabilityUrl.replace('[ITEMID]', itemId.split('/').join('$002f'))
 
-    const availabilityPageRequest = await agent.post(availabilityUrl).set(HEADER_POST).timeout(30000)
+    const availabilityPageRequest = await agent.post(availabilityUrl)
+                                      .set(HEADER_POST)
+                                      .set({'sdcsrf': csrf})
+                                      .timeout(30000)
     const availabilityResponse = availabilityPageRequest.body
     if (availabilityResponse.ids || availabilityResponse.childRecords) availabilityJson = availabilityResponse
   }
