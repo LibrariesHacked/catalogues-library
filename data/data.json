@@ -41,7 +41,7 @@
       "Available": [
         "On Shelf"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/barking-and-dagenham/",
       "LibraryNameFilter": "Barking and Dagenham"
     },
@@ -170,7 +170,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/brent/",
       "LibraryNameFilter": "Brent"
     },
@@ -364,7 +364,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/croydon/"
     },
     {
@@ -484,7 +484,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true?d=ent://SD_ILS/0/SD_ILS:418188~~0",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true?d=ent://SD_ILS/0/SD_ILS:418188~~0",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/ealing/",
       "LibraryNameFilter": "Ealing"
     },
@@ -555,7 +555,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/enfield/",
       "LibraryNameFilter": "Enfield"
     },
@@ -566,7 +566,7 @@
       "Available": [
         "In stock"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://tlc.ent.sirsidynix.net.uk/client/en_GB/essex/"
     },
     {
@@ -578,11 +578,8 @@
     {
       "Name": "Fife",
       "Code": "S12000015",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/fife/"
+      "Type": "spydus",
+      "Url": "https://onfife.spydus.co.uk/"
     },
     {
       "Name": "Sir y Fflint - Flintshire",
@@ -659,7 +656,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/hackney/",
       "LibraryNameFilter": "Hackney"
     },
@@ -677,7 +674,7 @@
       "Available": [
         "In stock"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://tlc.ent.sirsidynix.net.uk/client/en_GB/lbhf/"
     },
     {
@@ -693,7 +690,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/haringey/",
       "LibraryNameFilter": "Haringey"
     },
@@ -704,7 +701,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/harrow/",
       "LibraryNameFilter": "Harrow"
     },
@@ -724,7 +721,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/havering/",
       "LibraryNameFilter": "Havering"
     },
@@ -770,7 +767,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/hounslow/",
       "LibraryNameFilter": "Hounslow"
     },
@@ -838,7 +835,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/kingston/"
     },
     {
@@ -918,7 +915,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/lewisham/",
       "LibraryNameFilter": "Lewisham"
     },
@@ -975,7 +972,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://libraries.merton.gov.uk/client/en_GB/merton/",
       "LibraryNameFilter": "Merton"
     },
@@ -1048,7 +1045,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/newham/",
       "LibraryNameFilter": "Newham"
     },
@@ -1174,12 +1171,14 @@
     {
       "Name": "Northern Ireland",
       "Code": "",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "http://lni.ent.sirsidynix.net.uk/client/en_GB/default/"
+      "Type": "arena",
+      "Version": "v7",
+      "Id": "252001",
+      "ArenaName": "AUKLNI",
+      "Url": "https://catalogue.librariesni.org.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKLNI|1",
+      "OrganisationName": "Libraries NI"
     },
     {
       "Name": "Oldham",
@@ -1274,7 +1273,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/redbridge/",
       "LibraryNameFilter": "Redbridge"
     },
@@ -1540,7 +1539,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://tlc.ent.sirsidynix.net.uk/client/en_GB/surrey/",
       "LibraryNameFilter": "Surrey"
     },
@@ -1592,7 +1591,7 @@
       "Available": [
         "In stock"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://tlc.ent.sirsidynix.net.uk/client/en_GB/thurrock/"
     },
     {
@@ -1622,7 +1621,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/tower-hamlets/",
       "LibraryNameFilter": "Tower Hamlets"
     },
@@ -1669,7 +1668,7 @@
       "Available": [
         "Available"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/walthamforest/",
       "LibraryNameFilter": "Waltham Forest"
     },
@@ -1755,11 +1754,8 @@
     {
       "Name": "Wigan",
       "Code": "E08000010",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/wigan/"
+      "Type": "spydus",
+      "Url": "https://wigan.spydus.co.uk/"
     },
     {
       "Name": "Wiltshire",

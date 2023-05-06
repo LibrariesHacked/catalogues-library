@@ -23,3 +23,9 @@ jobs:
         password: ${{ secrets.OVPN_PASSWORD }}
     - name: Run tests
       run: npm run test-ci
+    # Give time for the logs to be uploaded; we don't want the VPN
+    # to die before they are!
+    - name: Sleep for 20 seconds
+      uses: whatnick/wait-action@master
+      with:
+        time: '20s'
