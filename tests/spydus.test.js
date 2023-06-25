@@ -32,6 +32,7 @@ test('E06000035 - Medway', async () => await index.runTest('Medway'), 300000);
 test('E06000042 - Milton Keynes', async () => await index.runTest('Milton Keynes'), 300000);
 test('E10000020 - Norfolk', async () => await index.runTest('Norfolk'), 300000);
 test('S12000021 - North Ayrshire', async () => await index.runTest('North Ayrshire'), 300000);
+test('S12000044 - North Lanarkshire', async () => await index.runTest('North Lanarkshire'), 300000);
 test('E06000057 - Northumberland', async () => await index.runTest('Northumberland'), 300000);
 test('E08000004 - Oldham', async () => await index.runTest('Oldham'), 300000);
 test('S12000024 - Perth and Kinross', async () => await index.runTest('Perth and Kinross'), 300000);

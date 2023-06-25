@@ -1086,9 +1086,8 @@
     {
       "Name": "North Lanarkshire",
       "Code": "S12000044",
-      "Type": "iguana",
-      "Database": "1",
-      "Url": "https://libraries.culturenl.co.uk/iguana/"
+      "Type": "spydus",
+      "Url": "https://librariesnl.spydus.co.uk/"
     },
     {
       "Name": "North Lincolnshire",
@@ -1530,7 +1529,7 @@
         "In stock"
       ],
       "Url": "https://libraries.sunderland.gov.uk/client/en_GB/default/",
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailitemstable_0.webservicefieldsajax:lookuptitleinfo/detailItemsDiv0/ent:[ITEMID]/ILS/true/true"
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
     },
     {
       "Name": "Surrey",
@@ -1719,7 +1718,7 @@
       "Available": [
         "AVAILABLE"
       ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://wlcls.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
