@@ -57,7 +57,6 @@ test('E08000019 - Sheffield', async () => await index.runTest('Sheffield'), 3000
 test('E10000027 - Somerset', async () => await index.runTest('Somerset'), 300000);
 test('E06000025 - South Gloucestershire', async () => await index.runTest('South Gloucestershire'), 300000);
 test('E10000028 - Staffordshire', async () => await index.runTest('Staffordshire'), 300000);
-test('S12000030 - Stirling', async () => await index.runTest('Stirling'), 300000);
 test('E08000024 - Sunderland', async () => await index.runTest('Sunderland'), 300000);
 test('E10000030 - Surrey', async () => await index.runTest('Surrey'), 300000);
 test('W06000011 - Abertawe - Swansea', async () => await index.runTest('Abertawe - Swansea'), 300000);

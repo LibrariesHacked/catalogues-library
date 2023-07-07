@@ -48,6 +48,7 @@ test('S12000029 - South Lanarkshire', async () => await index.runTest('South Lan
 test('E06000045 - Southampton', async () => await index.runTest('Southampton'), 300000);
 test('E06000033 - Southend on Sea', async () => await index.runTest('Southend on Sea'), 300000);
 test('E09000028 - Southwark', async () => await index.runTest('Southwark'), 300000);
+test('S12000030 - Stirling', async () => await index.runTest('Stirling'), 300000);
 test('E08000007 - Stockport', async () => await index.runTest('Stockport'), 300000);
 test('E06000004 - Stockton on Tees', async () => await index.runTest('Stockton on Tees'), 300000);
 test('E10000029 - Suffolk', async () => await index.runTest('Suffolk'), 300000);
