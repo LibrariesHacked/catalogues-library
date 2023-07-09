@@ -1489,12 +1489,8 @@
     {
       "Name": "Stirling",
       "Code": "S12000030",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "Url": "https://scl.ent.sirsidynix.net.uk/client/en_GB/default/",
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
+      "Type": "spydus",
+      "Url": "https://stirling.spydus.co.uk/"
     },
     {
       "Name": "Stockport",
