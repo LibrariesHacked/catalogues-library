@@ -1388,11 +1388,12 @@
       "Name": "Shropshire",
       "Code": "E06000051",
       "Type": "arena",
-      "Version": "v6",
+      "Version": "v7",
       "ArenaName": "AUK000034",
       "Url": "https://libraries.shropshire.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000034|1"
+      "OrganisationId": "AUK000034|1",
+      "SignupUrl": "https://libraries.shropshire.gov.uk/protected/join-the-library"
     },
     {
       "Name": "Slough",
