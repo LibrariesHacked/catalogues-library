@@ -8,8 +8,6 @@ module.exports = {
     mainFields: ['browser', 'module', 'main'],
     aliasFields: ['browser']
   },
-  plugins: [
-    new NodePolyfillPlugin()
-  ],
+  plugins: [new NodePolyfillPlugin()],
   target: 'node'
 }

@@ -360,12 +360,9 @@
     {
       "Name": "Croydon",
       "Code": "E09000008",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/croydon/"
+      "Type": "luci",
+      "Url": "https://libraries.croydon.gov.uk/",
+      "Home": "bookshelf"
     },
     {
       "Name": "Cumbria",
@@ -968,13 +965,9 @@
     {
       "Name": "Merton",
       "Code": "E09000024",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://libraries.merton.gov.uk/client/en_GB/merton/",
-      "LibraryNameFilter": "Merton"
+      "Type": "luci",
+      "Url": "https://libraries.merton.gov.uk/",
+      "Home": "home"
     },
     {
       "Name": "Middlesbrough",
