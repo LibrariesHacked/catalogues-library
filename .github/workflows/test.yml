@@ -7,25 +7,25 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Install modules
-      run: npm install
-    - name: Install OpenVPN
-      run: |
-        curl ${{ secrets.OVPN_URL }} --output config.ovpn --silent
-        sudo apt update
-        sudo apt install -y openvpn openvpn-systemd-resolved
-    - name: Connect to VPN
-      uses: "kota65535/github-openvpn-connect-action@v2"
-      with:
-        config_file: config.ovpn
-        username: ${{ secrets.OVPN_USERNAME }}
-        password: ${{ secrets.OVPN_PASSWORD }}
-    - name: Run tests
-      run: npm run test-ci
-    # Give time for the logs to be uploaded; we don't want the VPN
-    # to die before they are!
-    - name: Sleep for 20 seconds
-      uses: whatnick/wait-action@master
-      with:
-        time: '20s'
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: npm install
+      - name: Install OpenVPN
+        run: |
+          curl ${{ secrets.OVPN_URL }} --output config.ovpn --silent
+          sudo apt update
+          sudo apt install -y openvpn openvpn-systemd-resolved
+      - name: Connect to VPN
+        uses: "kota65535/github-openvpn-connect-action@v2"
+        with:
+          config_file: config.ovpn
+          username: ${{ secrets.OVPN_USERNAME }}
+          password: ${{ secrets.OVPN_PASSWORD }}
+      - name: Run tests
+        run: npm run test-ci
+      # Give time for the logs to be uploaded; we don't want the VPN
+      # to die before they are!
+      - name: Sleep for 20 seconds
+        uses: whatnick/wait-action@master
+        with:
+          time: "20s"

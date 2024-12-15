@@ -22,12 +22,12 @@ exports.getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
-    const libsPageRequest = await agent.get(service.Url + LIBS_URL).set({ 'Cookie': 'ALLOWCOOKIES_443=1' }).timeout(60000)
+    const libsPageRequest = await agent.get(service.Url + LIBS_URL).set({ Cookie: 'ALLOWCOOKIES_443=1' }).timeout(60000)
     const $ = cheerio.load(libsPageRequest.text)
     $('#LOC option').each(function (idx, option) {
       if (common.isLibrary($(option).text().trim())) responseLibraries.libraries.push($(option).text().trim())
     })
-  } catch (e) { 
+  } catch (e) {
     responseLibraries.exception = e
   }
 
@@ -60,15 +60,15 @@ exports.searchByISBN = async function (isbn, service) {
 
     $ = cheerio.load(availabilityRequest.text)
 
-    var libs = {}
+    const libs = {}
     $('table tr').slice(1).each(function (i, tr) {
-      var name = $(tr).find('td').eq(0).text().trim()
-      var status = $(tr).find('td').eq(3).text().trim()
+      const name = $(tr).find('td').eq(0).text().trim()
+      const status = $(tr).find('td').eq(3).text().trim()
       if (!libs[name]) libs[name] = { available: 0, unavailable: 0 }
       status === 'Available' ? libs[name].available++ : libs[name].unavailable++
     })
-    for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
-  } catch (e) { 
+    for (const l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
+  } catch (e) {
     responseHoldings.exception = e
   }
 

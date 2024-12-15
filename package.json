@@ -20,20 +20,21 @@
     "url": "https://github.com/LibrariesHacked/catalogues-library/issues"
   },
   "homepage": "https://github.com/LibrariesHacked/catalogues-library#readme",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.2.0"
+  },
   "dependencies": {
     "@small-tech/syswide-cas": "^6.0.2",
-    "@types/tough-cookie": "^4.0.2",
-    "async": "^3.2.4",
-    "cheerio": "^1.0.0-rc.12",
-    "node-polyfill-webpack-plugin": "^2.0.1",
-    "superagent": "^8.0.9",
-    "tough-cookie": "^4.1.2",
-    "uuid": "^8.3.2",
-    "xml2js": "^0.5.0"
-  },
-  "devDependencies": {
-    "jest": "^28.1.3",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^4.10.0"
+    "@types/tough-cookie": "^4.0.5",
+    "async": "^3.2.6",
+    "cheerio": "^1.0.0",
+    "node-polyfill-webpack-plugin": "^4.1.0",
+    "superagent": "^10.1.1",
+    "tough-cookie": "^5.0.0",
+    "uuid": "^11.0.3",
+    "xml2js": "^0.6.2"
   }
 }

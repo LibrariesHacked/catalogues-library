@@ -1,3 +1,9 @@
-const index = require('.');
+/* eslint-env jest */
 
-test('S12000028 - South Ayrshire', async () => await index.runTest('South Ayrshire'), 300000);
+const index = require('.')
+
+test(
+  'S12000028 - South Ayrshire',
+  async () => await index.runTest('South Ayrshire'),
+  300000
+)

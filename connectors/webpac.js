@@ -47,19 +47,18 @@ exports.searchByISBN = async function (isbn, service) {
     const responseHoldingsRequest = await agent.get(responseHoldings.url).timeout(60000)
     const $ = cheerio.load(responseHoldingsRequest.text)
 
-    var id = $('#recordnum')
+    const id = $('#recordnum')
     responseHoldings.id = id.attr('href').replace('/record=', '')
 
     $('table.bibItems tr.bibItemsEntry').each(function (idx, tr) {
-      var name = $(tr).find('td').eq(0).text().trim()
-      var status = $(tr).find('td').eq(3).text().trim()
+      const name = $(tr).find('td').eq(0).text().trim()
+      const status = $(tr).find('td').eq(3).text().trim()
       if (!libs[name]) libs[name] = { available: 0, unavailable: 0 }
       status === 'AVAILABLE' || status === 'FOR LOAN' ? libs[name].available++ : libs[name].unavailable++
     })
 
-    for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
-  } 
-  catch (e) {
+    for (const l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
+  } catch (e) {
     responseHoldings.exception = e
   }
 

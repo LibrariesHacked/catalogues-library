@@ -1,20 +1,20 @@
 // HTML:
 //  <meta name="generator" content="Koha 20.1113000">
 
-const request = require('superagent')
 const cheerio = require('cheerio')
-const common = require('../common')
+const request = require('superagent')
 
-console.log('koha connector loading...')
+const common = require('./common')
 
 const CAT_URL = 'cgi-bin/koha/opac-search.pl?format=rss2&idx=nb&q='
-const LIBS_URL = 'cgi-bin/koha/opac-search.pl?[MULTIBRANCH]do=Search&expand=holdingbranch#holdingbranch_id'
+const LIBS_URL =
+  'cgi-bin/koha/opac-search.pl?[MULTIBRANCH]do=Search&expand=holdingbranch#holdingbranch_id'
 
 /**
  * Gets the object representing the service
  * @param {object} service
  */
-exports.getService = (service) => common.getService(service)
+exports.getService = service => common.getService(service)
 
 /**
  * Gets the libraries in the service based upon possible search and filters within the library catalogue
@@ -25,13 +25,21 @@ exports.getLibraries = async function (service) {
 
   try {
     const agent = request.agent()
-    const url = service.Url + (LIBS_URL.replace('[MULTIBRANCH]', service.MultiBranchLimit ? 'multibranchlimit=' + service.MultiBranchLimit + '&' : ''))
-  
+    const url =
+      service.Url +
+      LIBS_URL.replace(
+        '[MULTIBRANCH]',
+        service.MultiBranchLimit
+          ? 'multibranchlimit=' + service.MultiBranchLimit + '&'
+          : ''
+      )
+
     const libraryPageRequest = await agent.get(url).timeout(60000)
-    let $ = cheerio.load(libraryPageRequest.text)
-  
+    const $ = cheerio.load(libraryPageRequest.text)
+
     $('#branchloop option').each((idx, option) => {
-      if (common.isLibrary($(option).text())) responseLibraries.libraries.push($(option).text().trim())
+      if (common.isLibrary($(option).text()))
+        responseLibraries.libraries.push($(option).text().trim())
     })
     $('li#holdingbranch_id ul li span.facet-label').each((idx, label) => {
       responseLibraries.libraries.push($(label).text().trim())
@@ -39,8 +47,7 @@ exports.getLibraries = async function (service) {
     $('li#homebranch_id ul li span.facet-label').each((idx, label) => {
       responseLibraries.libraries.push($(label).text().trim())
     })
-  }
-  catch(e) {
+  } catch (e) {
     responseLibraries.exception = e
   }
 
@@ -59,28 +66,43 @@ exports.searchByISBN = async function (isbn, service) {
   try {
     const agent = request.agent()
 
-    const searchPageRequest = await agent.get(service.Url + CAT_URL + isbn).timeout(30000)
-    let $ = cheerio.load(searchPageRequest.text, { normalizeWhitespace: true, xmlMode: true })
-    responseHoldings.url = $('link').first().text()
-  
-    var bibLink = $('guid').text()
-    if (!bibLink) return common.endResponse(responseHoldings)
-  
-    responseHoldings.id = bibLink.substring(bibLink.lastIndexOf('=') + 1);
-    responseHoldings.url = bibLink
-  
-    const itemPageRequest = await agent.get(bibLink + '&viewallitems=1').timeout(30000)
-    $ = cheerio.load(itemPageRequest.text)
-  
-    const libs = {}
-    $('#holdingst tbody, .holdingst tbody').find('tr').each((idx, table) => {
-      var lib = $(table).find('td.location span span').first().text().trim()
-      if (!libs[lib]) libs[lib] = { available: 0, unavailable: 0 }
-      $(table).find('td.status span').text().trim() === 'Available' ? libs[lib].available++ : libs[lib].unavailable++
+    const searchPageRequest = await agent
+      .get(service.Url + CAT_URL + isbn)
+      .timeout(30000)
+    let $ = cheerio.load(searchPageRequest.text, {
+      normalizeWhitespace: true,
+      xmlMode: true
     })
-    for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
-  }
-  catch(e) {
+    responseHoldings.url = $('link').first().text()
+
+    const bibLink = $('guid').text()
+    if (!bibLink) return common.endResponse(responseHoldings)
+
+    responseHoldings.id = bibLink.substring(bibLink.lastIndexOf('=') + 1)
+    responseHoldings.url = bibLink
+
+    const itemPageRequest = await agent
+      .get(bibLink + '&viewallitems=1')
+      .timeout(30000)
+    $ = cheerio.load(itemPageRequest.text)
+
+    const libs = {}
+    $('#holdingst tbody, .holdingst tbody')
+      .find('tr')
+      .each((idx, table) => {
+        const lib = $(table).find('td.location span span').first().text().trim()
+        if (!libs[lib]) libs[lib] = { available: 0, unavailable: 0 }
+        $(table).find('td.status span').text().trim() === 'Available'
+          ? libs[lib].available++
+          : libs[lib].unavailable++
+      })
+    for (const l in libs)
+      responseHoldings.availability.push({
+        library: l,
+        available: libs[l].available,
+        unavailable: libs[l].unavailable
+      })
+  } catch (e) {
     responseHoldings.exception = e
   }
 

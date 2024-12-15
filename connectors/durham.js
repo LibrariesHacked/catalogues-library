@@ -2,7 +2,7 @@ const request = require('superagent')
 const cheerio = require('cheerio')
 const querystring = require('querystring')
 const common = require('../connectors/common')
-const uuid = require('uuid');
+const uuid = require('uuid')
 
 console.log('durham connector loading...')
 
@@ -26,7 +26,7 @@ exports.getLibraries = async function (service) {
     const libraries = await agent.get(service.Url + 'pgLib.aspx').timeout(20000)
     const $ = cheerio.load(libraries.text)
     $('ol.list-unstyled li a').each((i, tag) => responseLibraries.libraries.push($(tag).text()))
-  } catch (e) { 
+  } catch (e) {
     responseLibraries.exception = e
   }
 
@@ -45,7 +45,7 @@ exports.searchByISBN = async function (isbn, service) {
   try {
     const agent = request.agent()
 
-    var headers = {
+    const headers = {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
 
@@ -65,7 +65,7 @@ exports.searchByISBN = async function (isbn, service) {
 
     const resultPage = await agent.post(service.Url + 'pgCatKeywordSearch.aspx').send(querystring.stringify(aspNetForm)).set(headers).timeout(20000)
     $ = cheerio.load(resultPage.text)
-    let resultPageUrl = resultPage.redirects[0]
+    const resultPageUrl = resultPage.redirects[0]
 
     if ($('#cph1_cph2_lvResults_lnkbtnTitle_0').length === 0) return common.endResponse(responseHoldings)
     aspNetForm = {
@@ -81,7 +81,7 @@ exports.searchByISBN = async function (isbn, service) {
     const itemPage = await agent.post(resultPageUrl).send(querystring.stringify(aspNetForm)).set(headers).timeout(20000)
     $ = cheerio.load(itemPage.text)
 
-    let itemPageUrl = itemPage.redirects.length > 0 ? itemPage.redirects[0] : resultPageUrl
+    const itemPageUrl = itemPage.redirects.length > 0 ? itemPage.redirects[0] : resultPageUrl
 
     aspNetForm = {
       __EVENTARGUMENT: '',
@@ -105,11 +105,10 @@ exports.searchByISBN = async function (isbn, service) {
       if (!libs[name]) { libs[name] = { available: 0, unavailable: 0 } }
       (status !== 'Yes' ? libs[name].available++ : libs[name].unavailable++)
     })
-    for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
-  }
-  catch(e) {
+    for (const l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
+  } catch (e) {
     responseHoldings.exception = e
   }
-  
+
   return common.endResponse(responseHoldings)
 }

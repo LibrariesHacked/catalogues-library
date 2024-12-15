@@ -39,37 +39,35 @@ exports.searchByISBN = async function (isbn, service) {
     const agent = request.agent()
 
     const searchPageRequest = await agent.get(responseHoldings.url).timeout(30000)
-    let itemPage = searchPageRequest.text
-  
+    const itemPage = searchPageRequest.text
+
     let $ = cheerio.load(itemPage)
-  
-    var re = /put_keepremove_button\('(?<id>[0-9]+)'/.exec(itemPage)
-    if (re.length > 1)
-      responseHoldings.id = re[1]
-  
+
+    const re = /put_keepremove_button\('(?<id>[0-9]+)'/.exec(itemPage)
+    if (re.length > 1) { responseHoldings.id = re[1] }
+
     if ($('form[name=hitlist]').length > 0) {
       const itemUrl = service.Url + $('form[name=hitlist]').attr('action')
       const itemPageRequest = agent.post(itemUrl).send('first_hit=1&form_type=&last_hit=2&VIEW%5E1=Details').timeout(30000)
       $ = cheerio.load(itemPageRequest.text)
     }
-  
-    var libs = {}
-    var currentLib = ''
+
+    const libs = {}
+    let currentLib = ''
     $('tr').each((idx, tr) => {
-      var libr = $(tr).find('td.holdingsheader,th.holdingsheader').eq(0).text().trim()
+      let libr = $(tr).find('td.holdingsheader,th.holdingsheader').eq(0).text().trim()
       if (libr === 'Copies') libr = $(tr).find('.holdingsheader_users_library').eq(0).text().trim()
-      var status = $(tr).find('td').eq(3).text().trim()
+      const status = $(tr).find('td').eq(3).text().trim()
       if (libr) currentLib = libr
       if (!libr && status) {
         if (!libs[currentLib]) libs[currentLib] = { available: 0, unavailable: 0 }
         service.Available.indexOf(status) > -1 ? libs[currentLib].available++ : libs[currentLib].unavailable++
       }
     })
-    for (var l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
-  }
-  catch(e) {
+    for (const l in libs) responseHoldings.availability.push({ library: l, available: libs[l].available, unavailable: libs[l].unavailable })
+  } catch (e) {
     responseHoldings.exception = e
   }
-  
+
   return common.endResponse(responseHoldings)
 }

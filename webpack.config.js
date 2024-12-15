@@ -1,4 +1,4 @@
-var path = require('path')
+const path = require('path')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 module.exports = {
@@ -8,8 +8,6 @@ module.exports = {
     mainFields: ['browser', 'module', 'main'],
     aliasFields: ['browser']
   },
-  plugins: [
-    new NodePolyfillPlugin()
-  ],
+  plugins: [new NodePolyfillPlugin()],
   target: 'node'
 }
