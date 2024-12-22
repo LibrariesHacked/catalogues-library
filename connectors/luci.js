@@ -1,7 +1,6 @@
 const request = require('superagent')
-const common = require('./common')
 
-console.log('luci connector loading...')
+const common = require('./common')
 
 /**
  * Gets the object representing the service

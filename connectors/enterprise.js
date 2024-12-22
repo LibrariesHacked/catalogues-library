@@ -1,8 +1,7 @@
-const request = require('superagent')
 const cheerio = require('cheerio')
-const common = require('../connectors/common')
+const request = require('superagent')
 
-console.log('enterprise connector loading...')
+const common = require('../connectors/common')
 
 const SEARCH_URL = 'search/results?qu='
 const ITEM_URL = 'search/detailnonmodal/ent:[ILS]/one'
@@ -44,7 +43,9 @@ exports.getLibraries = async function (service) {
       ((service.LibraryNameFilter &&
         name.indexOf(service.LibraryNameFilter) !== -1) ||
         !service.LibraryNameFilter)
-    ) { responseLibraries.libraries.push(name) }
+    ) {
+      responseLibraries.libraries.push(name)
+    }
   })
   return common.endResponse(responseLibraries)
 }
@@ -169,7 +170,9 @@ const processItemPage = async (agent, itemId, itemPage, service) => {
       .set({ sdcsrf: csrf })
       .timeout(30000)
     const availabilityResponse = availabilityPageRequest.body
-    if (availabilityResponse.ids || availabilityResponse.childRecords) { availabilityJson = availabilityResponse }
+    if (availabilityResponse.ids || availabilityResponse.childRecords) {
+      availabilityJson = availabilityResponse
+    }
   }
 
   if (availabilityJson?.childRecords) {

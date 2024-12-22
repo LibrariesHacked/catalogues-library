@@ -132,17 +132,14 @@ test(
   async () => await index.runTest('Kensington and Chelsea'),
   300000
 )
+test('E06000010', async () => await index.runTest('Kingston upon Hull'), 300000)
 test(
-  'E09000021 - Kingston upon Thames',
+  'E09000021',
   async () => await index.runTest('Kingston upon Thames'),
   300000
 )
-test(
-  'E08000034 - Kirklees',
-  async () => await index.runTest('Kirklees'),
-  300000
-)
-test('E08000035 - Leeds', async () => await index.runTest('Leeds'), 300000)
+test('E08000034', async () => await index.runTest('Kirklees'), 300000)
+test('E08000035', async () => await index.runTest('Leeds'), 300000)
 test(
   'E10000018 - Leicestershire',
   async () => await index.runTest('Leicestershire'),

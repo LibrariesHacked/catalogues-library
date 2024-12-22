@@ -18,11 +18,6 @@ test(
   300000
 )
 test(
-  'S12000026 - Scottish Borders',
-  async () => await index.runTest('Scottish Borders'),
-  300000
-)
-test(
   'E06000021 - Stoke on Trent',
   async () => await index.runTest('Stoke on Trent'),
   300000

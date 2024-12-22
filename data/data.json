@@ -116,8 +116,8 @@
     {
       "Name": "Blackpool",
       "Code": "E06000009",
-      "Type": "blackpool",
-      "Url": "https://www.blackpool.gov.uk/Residents/Libraries-arts-and-heritage/Libraries/Library-catalogue-search.aspx"
+      "Type": "spydus",
+      "Url": "https://blackpool.spydus.co.uk/"
     },
     {
       "Name": "Blaenau Gwent",
@@ -463,7 +463,7 @@
       "Code": "S12000006",
       "Type": "iguana",
       "Database": "1_STOCK",
-      "Url": "https://dumgal.inforlib.uk/iguana/"
+      "Url": "https://dag.vsmarthosting.net/iguana/"
     },
     {
       "Name": "Dundee City",
@@ -664,7 +664,7 @@
       "Name": "Halton",
       "Code": "E06000006",
       "Type": "koha",
-      "Version": "v20",
+      "Version": "v22",
       "Url": "https://hpl.koha-ptfs.co.uk/"
     },
     {
@@ -774,13 +774,12 @@
     {
       "Name": "Kingston upon Hull",
       "Code": "E06000010",
-      "Type": "ibistro",
+      "Type": "enterprise",
       "Available": [
-        "Item on shelves"
+        "In stock"
       ],
-      "Url": "https://hull.sirsidynix.net.uk/",
-      "Home": "uhtbin/cgisirsi/x/0/0/57/49?user_id=HULLWEB&amp;password=",
-      "Search": "uhtbin/cgisirsi/x/0/0/5?searchdata1="
+      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "Url": "https://hull.ent.sirsidynix.net.uk/client/en_GB/default"
     },
     {
       "Name": "Inverclyde",
@@ -1354,9 +1353,8 @@
     {
       "Name": "Scottish Borders",
       "Code": "S12000026",
-      "Type": "iguana",
-      "Database": "1",
-      "Url": "https://liveborders.inforlib.uk/iguana/"
+      "Type": "spydus",
+      "Url": "https://liveborders.spydus.co.uk/"
     },
     {
       "Name": "Sefton",
@@ -1595,20 +1593,16 @@
       "Code": "E06000027",
       "Type": "arena",
       "Version": "v7",
-      "ArenaName": "AUK267001",
-      "Url": "https://www.torbaylibraries.org.uk/web/arena/",
-      "AdvancedUrl": "advanced-search",
-      "OrganisationId": "AUK267001|2"
+      "ArenaName": "AUKLIBRARIESUNLIMITED",
+      "Url": "https://discover.librariesunlimited.org.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKLIBRARIESUNLIMITED|2"
     },
     {
       "Name": "Tor-faen - Torfaen",
       "Code": "W06000020",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/tor_en/"
+      "Type": "spydus",
+      "Url": "https://torfaen.spydus.co.uk/"
     },
     {
       "Name": "Tower Hamlets",
@@ -1630,12 +1624,8 @@
     {
       "Name": "Bro Morgannwg - the Vale of Glamorgan",
       "Code": "W06000014",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/vog_en/"
+      "Type": "spydus",
+      "Url": "https://valeofglamorgan.spydus.co.uk/"
     },
     {
       "Name": "Wakefield",
@@ -1660,13 +1650,9 @@
     {
       "Name": "Waltham Forest",
       "Code": "E09000031",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/walthamforest/",
-      "LibraryNameFilter": "Waltham Forest"
+      "Type": "luci",
+      "Url": "https://libraries.walthamforest.gov.uk/",
+      "Home": "bookshelf"
     },
     {
       "Name": "Wandsworth",
@@ -1700,13 +1686,8 @@
     {
       "Name": "West Dunbartonshire",
       "Code": "S12000039",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailitemstable_0.webservicefieldsajax:lookuptitleinfo/detailItemsDiv0/ent:[ITEMID]/ILS/true/true",
-      "Url": "http://wd.ent.sirsidynix.net.uk/client/wd/"
+      "Type": "spydus",
+      "Url": "https://westdun.spydus.co.uk/"
     },
     {
       "Name": "West Lothian",
@@ -1808,12 +1789,8 @@
     {
       "Name": "Wrecsam - Wrexham",
       "Code": "W06000006",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/wrexham_en/"
+      "Type": "spydus",
+      "Url": "https://wrexham.spydus.co.uk/"
     },
     {
       "Name": "York City",

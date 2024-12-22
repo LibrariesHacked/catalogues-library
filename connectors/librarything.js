@@ -1,7 +1,5 @@
-const xml2js = require('xml2js')
 const request = require('superagent')
-
-console.log('library thing connector loading...')
+const xml2js = require('xml2js')
 
 const URL = 'https://www.librarything.com/api/thingISBN/'
 

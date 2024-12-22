@@ -1,10 +1,12 @@
 const request = require('superagent')
 const cheerio = require('cheerio')
+
 const common = require('../connectors/common')
 
-console.log('prism3 connector loading...')
-
-const AVAILABLE_STATUSES = ['http://schema.org/InStock', 'http://schema.org/InStoreOnly']
+const AVAILABLE_STATUSES = [
+  'http://schema.org/InStock',
+  'http://schema.org/InStoreOnly'
+]
 const HEADER = { 'Content-Type': 'text/xml; charset=utf-8' }
 const DEEP_LINK = 'items?query='
 
@@ -12,7 +14,7 @@ const DEEP_LINK = 'items?query='
  * Gets the object representing the service
  * @param {object} service
  */
-exports.getService = (service) => common.getService(service)
+exports.getService = service => common.getService(service)
 
 /**
  * Gets the libraries in the service based upon possible search and filters within the library catalogue
@@ -24,11 +26,14 @@ exports.getLibraries = async function (service) {
   try {
     const agent = request.agent()
 
-    const advancedSearchPageRequest = await agent.get(service.Url + 'advancedsearch?target=catalogue').timeout(60000)
+    const advancedSearchPageRequest = await agent
+      .get(service.Url + 'advancedsearch?target=catalogue')
+      .timeout(60000)
     const $ = cheerio.load(advancedSearchPageRequest.text)
 
     $('#locdd option').each((idx, option) => {
-      if (common.isLibrary($(option).text().trim())) responseLibraries.libraries.push($(option).text().trim())
+      if (common.isLibrary($(option).text().trim()))
+        responseLibraries.libraries.push($(option).text().trim())
     })
   } catch (e) {
     responseLibraries.exception = e
@@ -50,8 +55,12 @@ exports.searchByISBN = async function (isbn, service) {
     const agent = request.agent()
 
     let $ = null
-    const searchRequest = await agent.get(service.Url + 'items.json?query=' + isbn).set(HEADER).timeout(30000)
-    if (searchRequest.body.length === 0) return common.endResponse(responseHoldings)
+    const searchRequest = await agent
+      .get(service.Url + 'items.json?query=' + isbn)
+      .set(HEADER)
+      .timeout(30000)
+    if (searchRequest.body.length === 0)
+      return common.endResponse(responseHoldings)
 
     let itemUrl = ''
 
@@ -69,7 +78,9 @@ exports.searchByISBN = async function (isbn, service) {
               item.forEach(format => {
                 // One record can contain multiple formats. If *any* aren't
                 // an eBook, we should get the item details.
-                if (format.value !== 'eBook') { eBook = false }
+                if (format.value !== 'eBook') {
+                  eBook = false
+                }
               })
               break
             case 'http://purl.org/dc/terms/identifier':
@@ -95,14 +106,26 @@ exports.searchByISBN = async function (isbn, service) {
       return common.endResponse(responseHoldings)
     }
 
-    $('#availability ul.options').find('li').each((idx, li) => {
-      const libr = { library: $(li).find('h3 span span').text().trim(), available: 0, unavailable: 0 }
-      $(li).find('div.jsHidden table tbody tr').each((i, tr) => {
-        const status = $(tr).find("link[itemprop = 'availability']").attr('href')
-        AVAILABLE_STATUSES.includes(status) ? libr.available++ : libr.unavailable++
+    $('#availability ul.options')
+      .find('li')
+      .each((idx, li) => {
+        const libr = {
+          library: $(li).find('h3 span span').text().trim(),
+          available: 0,
+          unavailable: 0
+        }
+        $(li)
+          .find('div.jsHidden table tbody tr')
+          .each((i, tr) => {
+            const status = $(tr)
+              .find("link[itemprop = 'availability']")
+              .attr('href')
+            AVAILABLE_STATUSES.includes(status)
+              ? libr.available++
+              : libr.unavailable++
+          })
+        responseHoldings.availability.push(libr)
       })
-      responseHoldings.availability.push(libr)
-    })
   } catch (e) {
     responseHoldings.exception = e
   }

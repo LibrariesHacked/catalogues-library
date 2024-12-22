@@ -9,10 +9,8 @@ syswidecas.addCAs('./SectigoRSADomainValidationSecureServerCA.cer')
 // Catalogue integration connectors
 const arenav6 = require('./connectors/arena.v6')
 const arenav7 = require('./connectors/arena.v7')
-const blackpool = require('./connectors/blackpool')
 const durham = require('./connectors/durham')
 const enterprise = require('./connectors/enterprise')
-const ibistro = require('./connectors/ibistro')
 const iguana = require('./connectors/iguana')
 const kohav20 = require('./connectors/koha.v20')
 const kohav22 = require('./connectors/koha.v22')
@@ -31,10 +29,8 @@ const data = require('./data/data.json')
 const serviceFunctions = {
   arenav6,
   arenav7,
-  blackpool,
   durham,
   enterprise,
-  ibistro,
   iguana,
   kohav20,
   kohav22,
