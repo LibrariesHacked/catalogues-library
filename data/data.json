@@ -400,22 +400,22 @@
     {
       "Name": "Derby City",
       "Code": "E06000015",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/derby/"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKEMLIBS",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKEMLIBS|1",
+      "Url": "https://derby.arena.axiell.com/"
     },
     {
       "Name": "Derbyshire",
       "Code": "E10000007",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/derbyshire/"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKEMLIBS",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKEMLIBS|2",
+      "Url": "https://libraries.derbyshire.gov.uk/welcome/"
     },
     {
       "Name": "Devon",
@@ -900,12 +900,12 @@
     {
       "Name": "Leicestershire",
       "Code": "E10000018",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/leics/"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKEMLIBS",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKEMLIBS|5",
+      "Url": "https://leicestershire.arena.axiell.com/"
     },
     {
       "Name": "Lewisham",
@@ -1149,22 +1149,22 @@
     {
       "Name": "Nottingham City",
       "Code": "E06000018",
-      "Type": "enterprise",
-      "Available": [
-        ""
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/nottcity/"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKEMLIBS",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKEMLIBS|6",
+      "Url": "https://catalogue.nottinghamcitylibraries.co.uk/"
     },
     {
       "Name": "Nottinghamshire",
       "Code": "E10000024",
-      "Type": "enterprise",
-      "Available": [
-        ""
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/nelib/"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKEMLIBS",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKEMLIBS|4",
+      "Url": "https://nottslibraries.inspireculture.org.uk/"
     },
     {
       "Name": "Northern Ireland",
