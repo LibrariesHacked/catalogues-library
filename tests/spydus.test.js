@@ -1,20 +1,20 @@
 /* eslint-env jest */
 
-const idx = require('.')
+const index = require('.')
 
-test('S12000033', async () => await idx.runTest('Aberdeen City'), 300000)
-test('S12000034', async () => await idx.runTest('Aberdeenshire'), 300000)
-test('S12000041', async () => await idx.runTest('Angus'), 300000)
-test('S12000035', async () => await idx.runTest('Argyll and Bute'), 300000)
-test('E08000025', async () => await idx.runTest('Birmingham'), 300000)
+test('S12000033', async () => await index.runTest('Aberdeen City'), 300000)
+test('S12000034', async () => await index.runTest('Aberdeenshire'), 300000)
+test('S12000041', async () => await index.runTest('Angus'), 300000)
+test('S12000035', async () => await index.runTest('Argyll and Bute'), 300000)
+test('E08000025', async () => await index.runTest('Birmingham'), 300000)
 test('E06000009', async () => await index.runTest('Blackpool'), 300000)
 test(
   'E06000008',
-  async () => await idx.runTest('Blackburn with Darwen'),
+  async () => await index.runTest('Blackburn with Darwen'),
   300000
 )
-test('E08000001', async () => await idx.runTest('Bolton'), 300000)
-test('E06000043', async () => await idx.runTest('Brighton and Hove'), 300000)
+test('E08000001', async () => await index.runTest('Bolton'), 300000)
+test('E06000043', async () => await index.runTest('Brighton and Hove'), 300000)
 test('E10000002', async () => await index.runTest('Buckinghamshire'), 300000)
 test('E08000002', async () => await index.runTest('Bury'), 300000)
 test('E08000033', async () => await index.runTest('Calderdale'), 300000)

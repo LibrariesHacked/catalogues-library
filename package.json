@@ -22,9 +22,9 @@
   "homepage": "https://github.com/LibrariesHacked/catalogues-library#readme",
   "devDependencies": {
     "jest": "^29.7.0",
-    "webpack": "^5.97.1",
+    "webpack": "^5.99.7",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.2.0"
+    "webpack-dev-server": "^5.2.1"
   },
   "dependencies": {
     "@small-tech/syswide-cas": "^6.0.2",
@@ -32,9 +32,9 @@
     "async": "^3.2.6",
     "cheerio": "^1.0.0",
     "node-polyfill-webpack-plugin": "^4.1.0",
-    "superagent": "^10.1.1",
-    "tough-cookie": "^5.0.0",
-    "uuid": "^11.0.3",
+    "superagent": "^10.2.0",
+    "tough-cookie": "^5.1.2",
+    "uuid": "^11.1.0",
     "xml2js": "^0.6.2"
   }
 }

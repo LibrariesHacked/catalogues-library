@@ -2,28 +2,14 @@
 
 const index = require('.')
 
+const t = 300000
+
+test('S12000006', async () => await index.runTest('Dumfries and Galloway'), t)
 test(
-  'S12000006 - Dumfries and Galloway',
-  async () => await index.runTest('Dumfries and Galloway'),
-  300000
-)
-test(
-  'W06000009 - Sir Benfro - Pembrokeshire',
+  'W06000009',
   async () => await index.runTest('Sir Benfro - Pembrokeshire'),
-  300000
+  t
 )
-test(
-  'S12000038 - Renfrewshire',
-  async () => await index.runTest('Renfrewshire'),
-  300000
-)
-test(
-  'E06000021 - Stoke on Trent',
-  async () => await index.runTest('Stoke on Trent'),
-  300000
-)
-test(
-  'E10000031 - Warwickshire',
-  async () => await index.runTest('Warwickshire'),
-  300000
-)
+test('S12000038', async () => await index.runTest('Renfrewshire'), t)
+test('E06000021', async () => await index.runTest('Stoke on Trent'), t)
+test('E10000031', async () => await index.runTest('Warwickshire'), t)

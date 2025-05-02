@@ -1328,12 +1328,12 @@
     {
       "Name": "Rutland",
       "Code": "E06000017",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://emlib.ent.sirsidynix.net.uk/client/en_GB/rutland/"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKEMLIBS",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKEMLIBS|7",
+      "Url": "https://rutland.arena.axiell.com/"
     },
     {
       "Name": "Salford",

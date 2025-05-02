@@ -2,4 +2,6 @@
 
 const index = require('.')
 
-test('E06000047 - Durham', async () => await index.runTest('Durham'), 300000)
+const t = 300000
+
+test('E06000047', async () => await index.runTest('Durham'), t)
