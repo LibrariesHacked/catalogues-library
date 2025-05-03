@@ -1673,9 +1673,12 @@
     {
       "Name": "Warwickshire",
       "Code": "E10000031",
-      "Type": "iguana",
-      "Database": "1",
-      "Url": "https://library.warwickshire.gov.uk/iguana/"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKWARWICKSHIRE",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKWARWICKSHIRE|1",
+      "Url": "https://library.warwickshire.gov.uk/"
     },
     {
       "Name": "West Berkshire",

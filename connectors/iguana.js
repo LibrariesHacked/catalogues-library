@@ -53,6 +53,7 @@ exports.getLibraries = async function (service) {
       .send(body)
       .set({ ...HEADER, Referer: service.Url + HOME })
       .timeout(20000)
+      .buffer()
     const searchJs = await xml2js.parseStringPromise(searchPageRequest.text)
 
     if (service.Faceted) {
@@ -65,6 +66,7 @@ exports.getLibraries = async function (service) {
         )
         .set({ ...HEADER, Referer: service.Url + HOME })
         .timeout(20000)
+        .buffer()
       const facetJs = await xml2js.parseStringPromise(facetRequest.text)
       const facets = facetJs.VubisFacetedSearchResponse.Facets[0].Facet
 
@@ -141,6 +143,7 @@ exports.searchByISBN = async function (isbn, service) {
           .replace(/\[SID\]/g, sid)
       )
       .timeout(20000)
+      .buffer()
     const searchJs = await xml2js.parseStringPromise(searchPageRequest.text)
 
     let record = null

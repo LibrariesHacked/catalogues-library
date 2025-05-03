@@ -12,4 +12,3 @@ test(
 )
 test('S12000038', async () => await index.runTest('Renfrewshire'), t)
 test('E06000021', async () => await index.runTest('Stoke on Trent'), t)
-test('E10000031', async () => await index.runTest('Warwickshire'), t)
