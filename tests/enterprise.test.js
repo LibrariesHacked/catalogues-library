@@ -11,11 +11,6 @@ test(
 )
 test('E09000002', async () => await idx.runTest('Barking and Dagenham'), t)
 test('E08000016', async () => await idx.runTest('Barnsley'), t)
-test(
-  'E06000022',
-  async () => await idx.runTest('Bath and North East Somerset'),
-  t
-)
 test('W06000019', async () => await idx.runTest('Blaenau Gwent'), t)
 test('E08000032', async () => await idx.runTest('Bradford'), t)
 test('E09000005', async () => await idx.runTest('Brent'), t)
@@ -24,7 +19,6 @@ test(
   async () => await idx.runTest('Pen-y-bont ar Ogwr - Bridgend'),
   t
 )
-test('E06000023', async () => await idx.runTest('Bristol City'), t)
 test('W06000018', async () => await idx.runTest('Caerphilly'), t)
 test('W06000015', async () => await idx.runTest('Caerdydd - Cardiff'), t)
 test(
@@ -45,7 +39,6 @@ test(
   async () => await idx.runTest('Sir Ddinbych - Denbighshire'),
   t
 )
-test('E10000009', async () => await idx.runTest('Dorset'), t)
 test('E09000009', async () => await idx.runTest('Ealing'), t)
 test('S12000008', async () => await idx.runTest('East Ayrshire'), t)
 test('E09000010', async () => await idx.runTest('Enfield'), t)
@@ -74,32 +67,19 @@ test(
 )
 test('E09000025', async () => await idx.runTest('Newham'), t)
 test('W06000022', async () => await idx.runTest('Casnewydd - Newport'), t)
-test('E06000024', async () => await idx.runTest('North Somerset'), t)
 test('E06000029', async () => await idx.runTest('Poole'), t)
 test('W06000023', async () => await idx.runTest('Powys'), t)
 test('E09000026', async () => await idx.runTest('Redbridge'), t)
 test('W06000016', async () => await idx.runTest('Rhondda Cynon Taf'), t)
 test('E08000018', async () => await idx.runTest('Rotherham'), t)
 test('E08000019', async () => await idx.runTest('Sheffield'), t)
-test('E10000027', async () => await idx.runTest('Somerset'), t)
-test('E06000025', async () => await idx.runTest('South Gloucestershire'), t)
 test('E10000028', async () => await idx.runTest('Staffordshire'), t)
-test('E08000024', async () => await idx.runTest('Sunderland'), t)
 test('E10000030', async () => await idx.runTest('Surrey'), t)
-test('W06000011', async () => await idx.runTest('Abertawe - Swansea'), t)
 test('E06000034', async () => await idx.runTest('Thurrock'), t)
-test('W06000020', async () => await idx.runTest('Tor-faen - Torfaen'), t)
 test('E09000030', async () => await idx.runTest('Tower Hamlets'), t)
-test(
-  'W06000014',
-  async () => await idx.runTest('Bro Morgannwg - the Vale of Glamorgan'),
-  t
-)
 test('E08000036', async () => await idx.runTest('Wakefield'), t)
 test('E09000031', async () => await idx.runTest('Waltham Forest'), t)
 test('S12000039', async () => await idx.runTest('West Dunbartonshire'), t)
 test('S12000040', async () => await idx.runTest('West Lothian'), t)
-test('E09000033', async () => await idx.runTest('Westminster'), t)
 test('E10000034', async () => await idx.runTest('Worcestershire'), t)
-test('W06000006', async () => await idx.runTest('Wrecsam - Wrexham'), t)
-test('E06000014 - York City', async () => await idx.runTest('York City'), t)
+test('E06000014', async () => await idx.runTest('York City'), t)

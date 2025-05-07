@@ -67,14 +67,12 @@
     {
       "Name": "Bath and North East Somerset",
       "Code": "E06000022",
-      "Type": "enterprise",
-      "Id": "280001",
-      "Url": "https://www.librarieswest.org.uk/client/en_GB/default/",
-      "Available": [
-        "In stock"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "MultiAuthorityId": 4
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKLIBSWEST",
+      "Url": "https://www.librarieswest.org.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKLIBSWEST|1"
     },
     {
       "Name": "Bedford",
@@ -138,11 +136,12 @@
     {
       "Name": "Bournemouth",
       "Code": "E06000028",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/bournemouth/"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKLIBSWEST",
+      "Url": "https://www.librarieswest.org.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKLIBSWEST|2"
     },
     {
       "Name": "Bracknell Forest",
@@ -193,12 +192,12 @@
     {
       "Name": "Bristol City",
       "Code": "E06000023",
-      "Type": "enterprise",
-      "Url": "https://www.librarieswest.org.uk/client/en_GB/default/",
-      "Available": [
-        "In stock"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKLIBSWEST",
+      "Url": "https://www.librarieswest.org.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKLIBSWEST|3"
     },
     {
       "Name": "Bromley",
@@ -300,14 +299,14 @@
       "Name": "Cheshire East",
       "Code": "E06000049",
       "Type": "koha",
-      "Version": "v20",
+      "Version": "v23",
       "Url": "https://cheslive.koha-ptfs.co.uk/"
     },
     {
       "Name": "Cheshire West and Chester",
       "Code": "E06000050",
       "Type": "koha",
-      "Version": "v20",
+      "Version": "v23",
       "Url": "https://cheslive.koha-ptfs.co.uk/"
     },
     {
@@ -372,7 +371,7 @@
       "Code": "E10000006",
       "Type": "koha",
       "Version": "v20",
-      "Url": "https://cumbria-libraries.org.uk/"
+      "Url": "https://cwflibraries.org.uk/"
     },
     {
       "Name": "Darlington",
@@ -415,7 +414,7 @@
       "ArenaName": "AUKEMLIBS",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|2",
-      "Url": "https://libraries.derbyshire.gov.uk/welcome/"
+      "Url": "https://libraries.derbyshire.gov.uk/"
     },
     {
       "Name": "Devon",
@@ -423,9 +422,9 @@
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUK267001",
-      "AdvancedUrl": "advanced-search",
+      "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK267001|1",
-      "Url": "https://www.devonlibraries.org.uk/web/arena/"
+      "Url": "https://discover.librariesunlimited.org.uk/"
     },
     {
       "Name": "Doncaster",
@@ -442,12 +441,12 @@
     {
       "Name": "Dorset",
       "Code": "E10000009",
-      "Type": "enterprise",
-      "Url": "https://www.librarieswest.org.uk/client/en_GB/default/",
-      "Available": [
-        "In stock"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKLIBSWEST",
+      "Url": "https://www.librarieswest.org.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKLIBSWEST|4"
     },
     {
       "Name": "Dudley",
@@ -503,8 +502,7 @@
     {
       "Name": "East Dunbartonshire",
       "Code": "S12000045",
-      "Type": "koha",
-      "Version": "v20",
+      "Type": "aspen",
       "Url": "https://edlc.koha-ptfs.co.uk/"
     },
     {
@@ -525,11 +523,9 @@
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUK000205",
-      "Id": "205001",
-      "Url": "https://library.eastriding.gov.uk/web/arena/",
-      "AdvancedUrl": "advanced-search",
-      "OrganisationId": "AUK000205|1",
-      "SignupUrl": "https://library.eastriding.gov.uk/web/arena/self-registration"
+      "Url": "https://library.eastriding.gov.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUK000205|1"
     },
     {
       "Name": "East Sussex",
@@ -892,7 +888,7 @@
       "Version": "v7",
       "ArenaName": "AUK000201",
       "Id": "201001",
-      "Url": "https://bookfinder.leicester.gov.uk/web/arena/",
+      "Url": "https://bookfinder.leicester.gov.uk/",
       "AdvancedUrl": "advanced-search",
       "OrganisationId": "AUK000201|1",
       "OrganisationName": "Leicester City"
@@ -958,11 +954,8 @@
     {
       "Name": "Merthyr Tudful - Merthyr Tydfil",
       "Code": "W06000024",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/merthyr/"
+      "Type": "spydus",
+      "Url": "https://merthyr.spydus.co.uk/"
     },
     {
       "Name": "Merton",
@@ -978,21 +971,14 @@
     {
       "Name": "Middlesbrough",
       "Code": "E06000002",
-      "Type": "koha",
-      "Version": "v20",
+      "Type": "aspen",
       "Url": "https://libraries.middlesbrough.gov.uk/"
     },
     {
       "Name": "Midlothian",
       "Code": "S12000019",
-      "Type": "arena",
-      "Version": "v7",
-      "ArenaName": "AUK000075",
-      "Id": "750001",
-      "Url": "https://libraries.midlothian.gov.uk/web/arena/",
-      "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000075|0",
-      "SignupUrl": "https://libraries.midlothian.gov.uk/web/arena/online-registration"
+      "Type": "spydus",
+      "Url": "https://midlothian.spydus.co.uk/"
     },
     {
       "Name": "Milton Keynes",
@@ -1014,11 +1000,8 @@
     {
       "Name": "Moray",
       "Code": "S12000020",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/moray/"
+      "Type": "spydus",
+      "Url": "https://moraylibraries.spydus.co.uk/"
     },
     {
       "Name": "Castell-nedd Port Talbot - Neath Port Talbot",
@@ -1094,21 +1077,19 @@
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUK000221",
-      "Url": "https://www.opac.northlincs.gov.uk/web/arena/",
+      "Url": "https://www.opac.northlincs.gov.uk/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000221|0"
     },
     {
       "Name": "North Somerset",
       "Code": "E06000024",
-      "Type": "enterprise",
-      "Id": "280001",
-      "Url": "https://www.librarieswest.org.uk/client/en_GB/default/",
-      "Available": [
-        "In stock"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "MultiAuthorityId": 2
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKLIBSWEST",
+      "Url": "https://www.librarieswest.org.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKLIBSWEST|5"
     },
     {
       "Name": "North Tyneside",
@@ -1122,11 +1103,8 @@
     {
       "Name": "North Yorkshire",
       "Code": "E10000023",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/northyorkshire/"
+      "Type": "spydus",
+      "Url": "https://nylib.spydus.co.uk/"
     },
     {
       "Name": "Northamptonshire",
@@ -1187,11 +1165,8 @@
     {
       "Name": "Orkney Islands",
       "Code": "S12000023",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/orkney/"
+      "Type": "spydus",
+      "Url": "https://orkney.spydus.co.uk/"
     },
     {
       "Name": "Oxfordshire",
@@ -1279,7 +1254,7 @@
       "Name": "Redcar and Cleveland",
       "Code": "E06000003",
       "Type": "arena",
-      "Version": "v6",
+      "Version": "v7",
       "ArenaName": "AUK000215",
       "Url": "https://libraries.redcar-cleveland.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
@@ -1376,11 +1351,8 @@
     {
       "Name": "Shetland Islands",
       "Code": "S12000027",
-      "Type": "prism3",
-      "Available": [
-        "Available"
-      ],
-      "Url": "https://prism.librarymanagementcloud.co.uk/shetland/"
+      "Type": "spydus",
+      "Url": "https://shetland.spydus.co.uk/"
     },
     {
       "Name": "Shropshire",
@@ -1408,14 +1380,12 @@
     {
       "Name": "Somerset",
       "Code": "E10000027",
-      "Type": "enterprise",
-      "Id": "280001",
-      "Url": "https://www.librarieswest.org.uk/client/en_GB/default/",
-      "Available": [
-        "In stock"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "MultiAuthorityId": 1
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKLIBSWEST",
+      "Url": "https://www.librarieswest.org.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKLIBSWEST|6"
     },
     {
       "Name": "South Ayrshire",
@@ -1426,14 +1396,12 @@
     {
       "Name": "South Gloucestershire",
       "Code": "E06000025",
-      "Type": "enterprise",
-      "Id": "280001",
-      "Available": [
-        "In stock"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://www.librarieswest.org.uk/client/en_GB/default/",
-      "MultiAuthorityId": 5
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUKLIBSWEST",
+      "Url": "https://www.librarieswest.org.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUKLIBSWEST|7"
     },
     {
       "Name": "South Lanarkshire",
@@ -1519,12 +1487,9 @@
     {
       "Name": "Sunderland",
       "Code": "E08000024",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "Url": "https://libraries.sunderland.gov.uk/client/en_GB/default/",
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
+      "Type": "luci",
+      "Url": "https://libraries.culturehousesunderland.com/",
+      "Home": "bookshelf"
     },
     {
       "Name": "Surrey",
@@ -1547,12 +1512,8 @@
     {
       "Name": "Abertawe - Swansea",
       "Code": "W06000011",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/swan_en/"
+      "Type": "spydus",
+      "Url": "https://swansea.spydus.co.uk/"
     },
     {
       "Name": "Swindon",
@@ -1724,12 +1685,8 @@
     {
       "Name": "Westminster",
       "Code": "E09000033",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://elibrary.westminster.gov.uk/client/en_GB/wcc/"
+      "Type": "aspen",
+      "Url": "https://libraries.westminster.gov.uk/"
     },
     {
       "Name": "Wigan",
@@ -1741,7 +1698,7 @@
       "Name": "Wiltshire",
       "Code": "E06000054",
       "Type": "arena",
-      "Version": "v6",
+      "Version": "v7",
       "Id": "400001",
       "ArenaName": "AUK000040",
       "OrganisationId": "AUK000040|1",
@@ -1803,7 +1760,7 @@
         "On the shelf"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://cyc.sdp.sirsidynix.net.uk/client/en_GB/default/"
+      "Url": "https://catalogue.exploreyork.org.uk/client/en_GB/default/"
     }
   ]
 }
