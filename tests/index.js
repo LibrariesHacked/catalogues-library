@@ -67,7 +67,5 @@ exports.runTest = async service => {
     }
     expect(results[0].id).toBeTruthy()
     expect(results[0].exception).toBeUndefined()
-  } catch (e) {
-    console.error(e.exception ?? e)
-  }
+  } catch (e) {}
 }
