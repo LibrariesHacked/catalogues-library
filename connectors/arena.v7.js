@@ -219,12 +219,12 @@ exports.searchByISBN = async function (isbn, service) {
             .text() ||
           parseInt(
             $(container)
-              .find('td.arena-holding-nof-available-for-loan span.arena-value')
+              .find('.arena-holding-nof-available-for-loan span.arena-value')
               .text() || 0
           ) +
             parseInt(
               $(container)
-                .find('td.arena-holding-nof-checked-out span.arena-value')
+                .find('.arena-holding-nof-checked-out span.arena-value')
                 .text() || 0
             )
         const checkedOut = $(container)
