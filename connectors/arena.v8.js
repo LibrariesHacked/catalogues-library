@@ -8,6 +8,7 @@ const xml2js = require('xml2js')
 
 const common = require('./common')
 
+const RESULT_URL = 'results?'
 const LIBRARIES_URL_PORTLET =
   '?p_p_id=extendedSearch_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=/extendedSearch/?wicket:interface=:0:extendedSearchPanel:extendedSearchForm:organisationHierarchyPanel:organisationContainer:organisationChoice::IBehaviorListener:0:&p_p_cacheability=cacheLevelPage&random=0.08709241788681465extended-search?p_p_id=extendedSearch_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=/extendedSearch/?wicket:interface=:0:extendedSearchPanel:extendedSearchForm:organisationHierarchyPanel:organisationContainer:organisationChoice::IBehaviorListener:0:&p_p_cacheability=cacheLevelPage&random=0.08709241788681465'
 const SEARCH_URL_PORTLET =
@@ -15,7 +16,7 @@ const SEARCH_URL_PORTLET =
 const ITEM_URL_PORTLET =
   'results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=1&p_p_state=normal&p_r_p_arena_urn:arena_search_item_id=[ITEMID]&p_r_p_arena_urn:arena_facet_queries=&p_r_p_arena_urn:arena_agency_name=[ARENANAME]&p_r_p_arena_urn:arena_search_item_no=0&p_r_p_arena_urn:arena_search_type=solr'
 const HOLDINGS_URL_PORTLET =
-  'results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel::IBehaviorListener:0:&p_p_cacheability=cacheLevelPage&p_p_col_id=column-2&p_p_col_pos=1&p_p_col_count=3'
+  'results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2FcrDetailWicket%2F%3Fwicket%3Ainterface%3D%3A0%3ArecordPanel%3Apanel%3AholdingsPanel%3A%3AIBehaviorListener%3A0%3A&p_p_cacheability=cacheLevelPage'
 const HOLDINGSDETAIL_URL_PORTLET =
   'results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=[RESOURCEID]&p_p_cacheability='
 
@@ -115,10 +116,9 @@ exports.searchByISBN = async function (isbn, service) {
     let bookQuery =
       service.SearchType !== 'Keyword' ? 'number_index:' + isbn : isbn
 
-    if (service.OrganisationId && service.MultipleOrganisations) {
+    if (service.OrganisationId)
       bookQuery =
         'organisationId_index:' + service.OrganisationId + '+AND+' + bookQuery
-    }
 
     const searchUrl = SEARCH_URL_PORTLET.replace('[BOOKQUERY]', bookQuery)
     responseHoldings.url = service.Url + searchUrl
@@ -190,8 +190,8 @@ exports.searchByISBN = async function (isbn, service) {
     const holdingsPanelHeader = {
       Accept: 'text/xml',
       'Wicket-Ajax': true
-      // Cookie: cookie
     }
+
     const holdingsPanelUrl = service.Url + HOLDINGS_URL_PORTLET
 
     const holdingsPanelPortletResponse = await agent
@@ -211,23 +211,21 @@ exports.searchByISBN = async function (isbn, service) {
         '.arena-holding-nof-total, .arena-holding-nof-checked-out, .arena-holding-nof-available-for-loan'
       ).length > 0
     ) {
-      $('.arena-holding-child-container').each(function (idx, container) {
-        const libName = $(container).find('span.arena-holding-link').text()
+      $('.arena-holding-child-container').each(function (idx, cont) {
+        const libName = $(cont).find('span.arena-holding-link').text()
         const totalAvailable =
-          $(container)
-            .find('.arena-holding-nof-total span.arena-value')
-            .text() ||
+          $(cont).find('.arena-holding-nof-total span.arena-value').text() ||
           parseInt(
-            $(container)
-              .find('td.arena-holding-nof-available-for-loan span.arena-value')
+            $(cont)
+              .find('.arena-holding-nof-available-for-loan span.arena-value')
               .text() || 0
           ) +
             parseInt(
-              $(container)
-                .find('td.arena-holding-nof-checked-out span.arena-value')
+              $(cont)
+                .find('.arena-holding-nof-checked-out span.arena-value')
                 .text() || 0
             )
-        const checkedOut = $(container)
+        const checkedOut = $(cont)
           .find('.arena-holding-nof-checked-out span.arena-value')
           .text()
 
@@ -248,29 +246,55 @@ exports.searchByISBN = async function (isbn, service) {
     }
 
     let currentOrg = null
+    let linkId = null
+    let holdingsLink = null
     $('.arena-holding-hyper-container .arena-holding-container a span').each(
       function (i) {
-        if (
-          $(this).text().trim() === (service.OrganisationName || service.Name)
-        )
+        const text = $(this).text().trim()
+        const id = $(this).parent().attr('id')
+        const link = $(this).parent().attr('href')
+        if (text === (service.OrganisationName || service.Name)) {
           currentOrg = i
+          linkId = id
+          holdingsLink = link
+        }
       }
     )
     if (currentOrg == null) return common.endResponse(responseHoldings)
 
-    const holdingsHeaders = { Accept: 'text/xml', 'Wicket-Ajax': true }
-    holdingsHeaders['Wicket-FocusedElementId'] =
-      'id__crDetailWicket__WAR__arenaportlets____2a'
-    let resourceId =
-      '/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel:content:holdingsView:' +
-      (currentOrg + 1) +
-      ':holdingContainer:togglableLink::IBehaviorListener:0:'
-    const holdingsUrl =
-      service.Url +
-      HOLDINGSDETAIL_URL_PORTLET.replace('[RESOURCEID]', resourceId)
+    const holdingsHeaders = {
+      Accept: 'text/xml',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Wicket-Ajax': true,
+      'Wicket-FocusedElementId': linkId
+    }
+
+    // Get the interface id from the link
+    const holdingsLinkParts = holdingsLink.split('?')[1]
+    const holdingsLinkPartsObj = querystring.parse(holdingsLinkParts)
+    const p_p_resource_id = holdingsLinkPartsObj.p_p_resource_id
+    const interfaceId = p_p_resource_id.substring(
+      p_p_resource_id.indexOf('wicket:interface=') + 18,
+      p_p_resource_id.indexOf(':recordPanel')
+    )
+    const holdingsFormData = {
+      p_p_id: 'crDetailWicket_WAR_arenaportlet',
+      p_p_lifecycle: 2,
+      p_p_state: 'normal',
+      p_p_mode: 'view',
+      p_p_resource_id: `/crDetailWicket/?wicket:interface=:${interfaceId}:recordPanel:panel:holdingsPanel:content:holdingsView:${
+        currentOrg + 1
+      }:holdingContainer:togglableLink::IBehaviorListener:0:`,
+      p_p_cacheability: 'cacheLevelPage'
+    }
+    // Add the form data to the request body
+    const formData = querystring.stringify(holdingsFormData)
+
+    const holdingsUrl = service.Url + RESULT_URL
     const holdingsResponse = await agent
-      .get(holdingsUrl)
+      .post(holdingsUrl)
       .set(holdingsHeaders)
+      .send(formData)
       .timeout(20000)
     const holdingsJs = await xml2js.parseStringPromise(holdingsResponse.text)
     $ = cheerio.load(holdingsJs['ajax-response'].component[0]._)
@@ -280,17 +304,19 @@ exports.searchByISBN = async function (isbn, service) {
     if (!numLibs || numLibs === 0) return common.endResponse(responseHoldings)
 
     const availabilityRequests = []
-    libsData.each(function (i) {
-      resourceId =
-        '/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel:content:holdingsView:' +
-        (currentOrg + 1) +
-        ':childContainer:childView:' +
-        i +
-        ':holdingPanel:holdingContainer:togglableLink::IBehaviorListener:0:'
+    libsData.each(function (i, cont) {
+      const linkId = $(cont).find('a')[0].attribs.id
+      resourceId = `/crDetailWicket/?wicket:interface=:${interfaceId}:recordPanel:panel:holdingsPanel:content:holdingsView:${
+        currentOrg + 1
+      }:childContainer:childView:${i}:holdingPanel:holdingContainer:togglableLink::IBehaviorListener:0:`
       const libUrl =
         service.Url +
         HOLDINGSDETAIL_URL_PORTLET.replace('[RESOURCEID]', resourceId)
-      const headers = { Accept: 'text/xml', 'Wicket-Ajax': true }
+      const headers = {
+        Accept: 'text/xml',
+        'Wicket-Ajax': true,
+        'Wicket-FocusedElementId': linkId
+      }
       availabilityRequests.push(agent.get(libUrl).set(headers).timeout(20000))
     })
 

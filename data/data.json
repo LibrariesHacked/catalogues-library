@@ -42,8 +42,8 @@
         "On Shelf"
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/barking-and-dagenham/",
-      "LibraryNameFilter": "Barking and Dagenham"
+      "LibraryNameFilter": "Barking and Dagenham",
+      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/barking-and-dagenham/"
     },
     {
       "Name": "Barnet",
@@ -58,11 +58,11 @@
       "Name": "Barnsley",
       "Code": "E08000016",
       "Type": "enterprise",
-      "Url": "https://barns.ent.sirsidynix.net.uk/client/en_GB/default/",
       "Available": [
         "In stock"
       ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
+      "Url": "https://barns.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "Bath and North East Somerset",
@@ -70,22 +70,22 @@
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUKLIBSWEST",
-      "Url": "https://www.librarieswest.org.uk/",
+      "OrganisationId": "AUKLIBSWEST|1",
+      "MultipleOrganisations": true,
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUKLIBSWEST|1"
+      "Url": "https://www.librarieswest.org.uk/"
     },
     {
       "Name": "Bedford",
       "Code": "E06000055",
       "Type": "arena",
       "Version": "v7",
-      "Id": "220001",
-      "ISBNAlias": "number",
-      "OrganisationName": "Bedford",
-      "OrganisationId": "AUK000022|3",
       "ArenaName": "AUK000022",
-      "Url": "https://beds-arena.culturalservices.net/web/arena/",
-      "AdvancedUrl": "extended-search"
+      "OrganisationId": "AUK000022|3",
+      "MultipleOrganisations": true,
+      "ISBNAlias": "number",
+      "AdvancedUrl": "extended-search",
+      "Url": "https://beds-arena.culturalservices.net/web/arena/"
     },
     {
       "Name": "Bexley",
@@ -93,11 +93,11 @@
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUK000226",
-      "Id": "750001",
+      "OrganisationId": "AUK200102|18",
+      "MultipleOrganisations": true,
       "ISBNAlias": "number",
-      "Url": "https://arena.yourlondonlibrary.net/web/bexley/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK200102|18"
+      "Url": "https://arena.yourlondonlibrary.net/web/bexley/"
     },
     {
       "Name": "Birmingham",
@@ -139,9 +139,10 @@
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUKLIBSWEST",
-      "Url": "https://www.librarieswest.org.uk/",
+      "OrganisationId": "AUKLIBSWEST|2",
+      "MultipleOrganisations": true,
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUKLIBSWEST|2"
+      "Url": "https://www.librarieswest.org.uk/"
     },
     {
       "Name": "Bracknell Forest",
@@ -170,8 +171,8 @@
         "Available"
       ],
       "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/brent/",
-      "LibraryNameFilter": "Brent"
+      "LibraryNameFilter": "Brent",
+      "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/brent/"
     },
     {
       "Name": "Pen-y-bont ar Ogwr - Bridgend",
@@ -197,7 +198,8 @@
       "ArenaName": "AUKLIBSWEST",
       "Url": "https://www.librarieswest.org.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUKLIBSWEST|3"
+      "OrganisationId": "AUKLIBSWEST|3",
+      "MultipleOrganisations": true
     },
     {
       "Name": "Bromley",
@@ -277,12 +279,12 @@
       "Version": "v7",
       "OrganisationName": "Central",
       "ArenaName": "AUK000022",
-      "Id": "220001",
       "ISBNAlias": "number",
-      "SearchType": "Keywordx",
+      "SearchType": "Keyword",
       "Url": "https://beds-arena.culturalservices.net/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000022|1"
+      "OrganisationId": "AUK000022|1",
+      "MultipleOrganisations": true
     },
     {
       "Name": "Sir Ceredigion - Ceredigion",
@@ -353,6 +355,7 @@
       "ArenaName": "AUKCOVENTRY",
       "Url": "https://librarycatalogue.coventry.gov.uk/",
       "OrganisationId": "AUKCOVENTRY|1",
+      "MultipleOrganisations": false,
       "OrganisationName": "Coventry",
       "AdvancedUrl": "extended-search"
     },
@@ -381,10 +384,11 @@
       "Id": "230001",
       "ArenaName": "AUK000023",
       "ArenaMemberId": "28980569",
-      "Url": "https://www2.darlington.gov.uk/web/arena/",
       "OrganisationId": "AUK000023|0",
+      "MultipleOrganisations": false,
       "OrganisationName": "Darlington",
-      "AdvancedUrl": "extended-search"
+      "AdvancedUrl": "extended-search",
+      "Url": "https://www2.darlington.gov.uk/web/arena/"
     },
     {
       "Name": "Sir Ddinbych - Denbighshire",
@@ -404,6 +408,7 @@
       "ArenaName": "AUKEMLIBS",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|1",
+      "MultipleOrganisations": false,
       "Url": "https://derby.arena.axiell.com/"
     },
     {
@@ -414,6 +419,7 @@
       "ArenaName": "AUKEMLIBS",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|2",
+      "MultipleOrganisations": true,
       "Url": "https://libraries.derbyshire.gov.uk/"
     },
     {
@@ -421,10 +427,11 @@
       "Code": "E10000008",
       "Type": "arena",
       "Version": "v7",
-      "ArenaName": "AUK267001",
+      "ArenaName": "AUKLIBRARIESUNLIMITED",
+      "Url": "https://discover.librariesunlimited.org.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK267001|1",
-      "Url": "https://discover.librariesunlimited.org.uk/"
+      "OrganisationId": "AUKLIBRARIESUNLIMITED|2",
+      "MultipleOrganisations": true
     },
     {
       "Name": "Doncaster",
@@ -436,7 +443,7 @@
       "Url": "https://library.doncaster.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000243|1",
-      "OrganisationName": "Doncaster"
+      "MultipleOrganisations": true
     },
     {
       "Name": "Dorset",
@@ -446,7 +453,8 @@
       "ArenaName": "AUKLIBSWEST",
       "Url": "https://www.librarieswest.org.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUKLIBSWEST|4"
+      "OrganisationId": "AUKLIBSWEST|4",
+      "MultipleOrganisations": true
     },
     {
       "Name": "Dudley",
@@ -525,7 +533,8 @@
       "ArenaName": "AUK000205",
       "Url": "https://library.eastriding.gov.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000205|1"
+      "OrganisationId": "AUK000205|1",
+      "MultipleOrganisations": true
     },
     {
       "Name": "East Sussex",
@@ -542,7 +551,8 @@
       "Id": "269001",
       "Url": "https://yourlibrary.edinburgh.gov.uk/web/arena/",
       "AdvancedUrl": "advanced-search",
-      "OrganisationId": "AUK269000|1"
+      "OrganisationId": "AUK269000|1",
+      "MultipleOrganisations": true
     },
     {
       "Name": "Enfield",
@@ -606,6 +616,7 @@
       "Url": "https://libcat.csglasgow.org/web/arena/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000048|1",
+      "MultipleOrganisations": false,
       "OrganisationName": "Glasgow"
     },
     {
@@ -631,6 +642,7 @@
       "Id": "220001",
       "OrganisationName": "Guernsey",
       "OrganisationId": "AUKGUERNSEY|1",
+      "MultipleOrganisations": false,
       "ArenaName": "AUKGUERNSEY",
       "Url": "https://www.catalogue.library.gg/",
       "AdvancedUrl": "extended-search"
@@ -860,7 +872,8 @@
       "Id": "750001",
       "Url": "https://libraries.lambeth.gov.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000271|1"
+      "OrganisationId": "AUK000271|1",
+      "MultipleOrganisations": false
     },
     {
       "Name": "Lancashire",
@@ -887,11 +900,10 @@
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUK000201",
-      "Id": "201001",
       "Url": "https://bookfinder.leicester.gov.uk/",
-      "AdvancedUrl": "advanced-search",
+      "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000201|1",
-      "OrganisationName": "Leicester City"
+      "MultipleOrganisations": false
     },
     {
       "Name": "Leicestershire",
@@ -901,6 +913,7 @@
       "ArenaName": "AUKEMLIBS",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|5",
+      "MultipleOrganisations": true,
       "Url": "https://leicestershire.arena.axiell.com/"
     },
     {
@@ -1063,6 +1076,7 @@
       "Url": "https://www.lincsinspirelibraries.com/web/arena/",
       "AdvancedUrl": "advanced-search",
       "OrganisationId": "AUK000252|1",
+      "MultipleOrganisations": false,
       "OrganisationName": "NELC Libraries"
     },
     {
@@ -1079,7 +1093,8 @@
       "ArenaName": "AUK000221",
       "Url": "https://www.opac.northlincs.gov.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000221|0"
+      "OrganisationId": "AUK000221|0",
+      "MultipleOrganisations": false
     },
     {
       "Name": "North Somerset",
@@ -1089,7 +1104,8 @@
       "ArenaName": "AUKLIBSWEST",
       "Url": "https://www.librarieswest.org.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUKLIBSWEST|5"
+      "OrganisationId": "AUKLIBSWEST|5",
+      "MultipleOrganisations": true
     },
     {
       "Name": "North Tyneside",
@@ -1110,13 +1126,12 @@
       "Name": "Northamptonshire",
       "Code": "E10000021",
       "Type": "arena",
-      "Version": "v6",
+      "Version": "v7",
       "ArenaName": "AUK000256",
-      "Id": "256001",
-      "Url": "https://www.librarycatalogue.northamptonshire.gov.uk/web/arena/",
+      "Url": "https://www.librarycatalogue.northamptonshire.gov.uk/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000256|1",
-      "OrganisationName": "Northamptonshire"
+      "MultipleOrganisations": false
     },
     {
       "Name": "Northumberland",
@@ -1128,20 +1143,25 @@
       "Name": "Nottingham City",
       "Code": "E06000018",
       "Type": "arena",
-      "Version": "v7",
+      "Version": "v8",
       "ArenaName": "AUKEMLIBS",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|6",
+      "MultipleOrganisations": true,
+      "SearchType": "Keyword",
       "Url": "https://catalogue.nottinghamcitylibraries.co.uk/"
     },
     {
       "Name": "Nottinghamshire",
       "Code": "E10000024",
       "Type": "arena",
-      "Version": "v7",
+      "Version": "v8",
       "ArenaName": "AUKEMLIBS",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|4",
+      "MultipleOrganisations": true,
+      "OrganisationName": "Inspire",
+      "SearchType": "Keyword",
       "Url": "https://nottslibraries.inspireculture.org.uk/"
     },
     {
@@ -1149,12 +1169,12 @@
       "Code": "",
       "Type": "arena",
       "Version": "v7",
-      "Id": "252001",
       "ArenaName": "AUKLNI",
       "Url": "https://catalogue.librariesni.org.uk/",
       "AdvancedUrl": "extended-search",
+      "SearchType": "Keyword",
       "OrganisationId": "AUKLNI|1",
-      "OrganisationName": "Libraries NI"
+      "MultipleOrganisations": false
     },
     {
       "Name": "Oldham",
@@ -1176,7 +1196,8 @@
       "ArenaName": "AUK000217",
       "Url": "https://libcat.oxfordshire.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000217|0"
+      "OrganisationId": "AUK000217|0",
+      "MultipleOrganisations": false
     },
     {
       "Name": "Sir Benfro - Pembrokeshire",
@@ -1203,8 +1224,9 @@
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUK770000",
-      "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK770000|1",
+      "MultipleOrganisations": false,
+      "AdvancedUrl": "extended-search",
       "Url": "https://library.plymouth.gov.uk/web/arena/"
     },
     {
@@ -1258,7 +1280,8 @@
       "ArenaName": "AUK000215",
       "Url": "https://libraries.redcar-cleveland.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUK000215|1"
+      "OrganisationId": "AUK000215|1",
+      "MultipleOrganisations": false
     },
     {
       "Name": "Renfrewshire",
@@ -1308,6 +1331,7 @@
       "ArenaName": "AUKEMLIBS",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|7",
+      "MultipleOrganisations": true,
       "Url": "https://rutland.arena.axiell.com/"
     },
     {
@@ -1363,6 +1387,7 @@
       "Url": "https://libraries.shropshire.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000034|1",
+      "MultipleOrganisations": false,
       "SignupUrl": "https://libraries.shropshire.gov.uk/protected/join-the-library"
     },
     {
@@ -1385,7 +1410,8 @@
       "ArenaName": "AUKLIBSWEST",
       "Url": "https://www.librarieswest.org.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUKLIBSWEST|6"
+      "OrganisationId": "AUKLIBSWEST|6",
+      "MultipleOrganisations": true
     },
     {
       "Name": "South Ayrshire",
@@ -1401,7 +1427,8 @@
       "ArenaName": "AUKLIBSWEST",
       "Url": "https://www.librarieswest.org.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUKLIBSWEST|7"
+      "OrganisationId": "AUKLIBSWEST|7",
+      "MultipleOrganisations": true
     },
     {
       "Name": "South Lanarkshire",
@@ -1537,6 +1564,7 @@
       "Url": "https://library.telford.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000032|0",
+      "MultipleOrganisations": false,
       "OrganisationName": "wrekin"
     },
     {
@@ -1557,7 +1585,8 @@
       "ArenaName": "AUKLIBRARIESUNLIMITED",
       "Url": "https://discover.librariesunlimited.org.uk/",
       "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUKLIBRARIESUNLIMITED|2"
+      "OrganisationId": "AUKLIBRARIESUNLIMITED|2",
+      "MultipleOrganisations": true
     },
     {
       "Name": "Tor-faen - Torfaen",
@@ -1635,10 +1664,12 @@
       "Name": "Warwickshire",
       "Code": "E10000031",
       "Type": "arena",
-      "Version": "v7",
+      "Version": "v8",
       "ArenaName": "AUKWARWICKSHIRE",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKWARWICKSHIRE|1",
+      "MultipleOrganisations": false,
+      "SearchType": "Keyword",
       "Url": "https://library.warwickshire.gov.uk/"
     },
     {
@@ -1673,6 +1704,7 @@
       "Url": "https://arena.westsussex.gov.uk/web/arena/",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUK000038|1",
+      "MultipleOrganisations": false,
       "OrganisationName": "West Sussex Libraries"
     },
     {
@@ -1698,13 +1730,13 @@
       "Name": "Wiltshire",
       "Code": "E06000054",
       "Type": "arena",
-      "Version": "v7",
-      "Id": "400001",
+      "Version": "v8",
       "ArenaName": "AUK000040",
       "OrganisationId": "AUK000040|1",
-      "OrganisationName": "Wiltshire Libraries",
-      "Url": "https://libraries.wiltshire.gov.uk/web/arena/",
-      "AdvancedUrl": "advanced-search"
+      "MultipleOrganisations": false,
+      "AdvancedUrl": "extended-search",
+      "SearchType": "Keyword",
+      "Url": "https://libraries.wiltshire.gov.uk/"
     },
     {
       "Name": "Windsor & Maidenhead",

@@ -9,6 +9,7 @@ syswidecas.addCAs('./SectigoRSADomainValidationSecureServerCA.cer')
 // Catalogue integration connectors
 const arenav6 = require('./connectors/arena.v6')
 const arenav7 = require('./connectors/arena.v7')
+const arenav8 = require('./connectors/arena.v8')
 const durham = require('./connectors/durham')
 const enterprise = require('./connectors/enterprise')
 const iguana = require('./connectors/iguana')
@@ -29,6 +30,7 @@ const data = require('./data/data.json')
 const serviceFunctions = {
   arenav6,
   arenav7,
+  arenav8,
   durham,
   enterprise,
   iguana,
