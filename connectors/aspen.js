@@ -29,21 +29,17 @@ exports.getLibraries = async function (service) {
     const $ = cheerio.load(res.text)
     const libraries = []
 
-    // The library dropdown elements all include a value of 'owning_location:'
-    $('option[value*="owning_location:"]').each((i, el) => {
+    // The library dropdown elements all include a value that contains 'owning_location:'
+    $('option').each((i, el) => {
+      if (!$(el).val().includes('owning_location:')) return
+
       const library = $(el).text().trim()
-      const id = $(el).val().split(':')[1].trim()
 
       // Add the library to the array
-      libraries.push({
-        id,
-        name: library,
-        serviceId: service.Id,
-        serviceName: service.Name,
-        serviceUrl: service.Url,
-        type: 'library'
-      })
+      libraries.push(library)
     })
+
+    responseLibraries.libraries = libraries
   } catch (e) {
     responseLibraries.exception = e
   }
