@@ -4,6 +4,7 @@ const idx = require('.')
 
 const t = 300000
 
+test('E06000014', async () => await idx.runTest('York City'), t)
 test('E09000002', async () => await idx.runTest('Barking and Dagenham'), t)
 test('E08000016', async () => await idx.runTest('Barnsley'), t)
 test('E08000032', async () => await idx.runTest('Bradford'), t)
@@ -40,4 +41,3 @@ test('E09000031', async () => await idx.runTest('Waltham Forest'), t)
 test('S12000039', async () => await idx.runTest('West Dunbartonshire'), t)
 test('S12000040', async () => await idx.runTest('West Lothian'), t)
 test('E10000034', async () => await idx.runTest('Worcestershire'), t)
-test('E06000014', async () => await idx.runTest('York City'), t)

@@ -287,6 +287,7 @@
       "Available": [
         "In stock"
       ],
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://col.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
@@ -739,6 +740,7 @@
       "Available": [
         "In stock"
       ],
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://hull.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
@@ -1705,6 +1707,7 @@
       "Available": [
         "On the shelf"
       ],
+      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
       "Url": "https://catalogue.exploreyork.org.uk/client/en_GB/default/"
     }
