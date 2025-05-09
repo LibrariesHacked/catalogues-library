@@ -15,12 +15,8 @@
     {
       "Name": "Sir Ynys Mon - Isle of Anglesey",
       "Code": "W06000001",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/ynysmon_en/"
+      "Type": "spydus",
+      "Url": "https://ynysmon.spydus.co.uk/"
     },
     {
       "Name": "Angus",
@@ -120,12 +116,8 @@
     {
       "Name": "Blaenau Gwent",
       "Code": "W06000019",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/bgwent_en/"
+      "Type": "spydus",
+      "Url": "https://aneurin.spydus.co.uk/"
     },
     {
       "Name": "Bolton",
@@ -177,12 +169,8 @@
     {
       "Name": "Pen-y-bont ar Ogwr - Bridgend",
       "Code": "W06000013",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/awen_en/"
+      "Type": "spydus",
+      "Url": "https://awen.spydus.co.uk/"
     },
     {
       "Name": "Brighton and Hove",
@@ -225,13 +213,8 @@
     {
       "Name": "Caerphilly",
       "Code": "W06000018",
-      "Type": "enterprise",
-      "Available": [
-        "SHELVES",
-        "RESERVES"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/caer_en/"
+      "Type": "spydus",
+      "Url": "https://caerphilly.spydus.co.uk/"
     },
     {
       "Name": "Calderdale",
@@ -254,23 +237,14 @@
     {
       "Name": "Caerdydd - Cardiff",
       "Code": "W06000015",
-      "Type": "enterprise",
-      "Available": [
-        "SHELVES",
-        "RESERVES"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/card_en/"
+      "Type": "spydus",
+      "Url": "https://cardiff.spydus.co.uk/"
     },
     {
       "Name": "Sir Gaerfyrddin - Carmarthenshire",
       "Code": "W06000010",
-      "Type": "enterprise",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/carm_en/",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
+      "Type": "spydus",
+      "Url": "https://carmarthenshire.spydus.co.uk/"
     },
     {
       "Name": "Central Bedfordshire",
@@ -289,13 +263,8 @@
     {
       "Name": "Sir Ceredigion - Ceredigion",
       "Code": "W06000008",
-      "Type": "enterprise",
-      "Available": [
-        "SHELVES",
-        "RESERVES"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://libraries.ceredigion.gov.uk/client/en_GB/cer_en/"
+      "Type": "spydus",
+      "Url": "https://ceredigion.spydus.co.uk/"
     },
     {
       "Name": "Cheshire East",
@@ -331,12 +300,8 @@
     {
       "Name": "Conwy",
       "Code": "W06000003",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/conwy_en/"
+      "Type": "spydus",
+      "Url": "https://conwy.spydus.co.uk/"
     },
     {
       "Name": "Cornwall",
@@ -393,12 +358,8 @@
     {
       "Name": "Sir Ddinbych - Denbighshire",
       "Code": "W06000004",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/denbighshire_en/"
+      "Type": "spydus",
+      "Url": "https://denbighshire.spydus.co.uk/"
     },
     {
       "Name": "Derby City",
@@ -590,12 +551,8 @@
     {
       "Name": "Sir y Fflint - Flintshire",
       "Code": "W06000005",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/flintshire_en/"
+      "Type": "spydus",
+      "Url": "https://gwella.spydus.co.uk/"
     },
     {
       "Name": "Gateshead",
@@ -650,12 +607,8 @@
     {
       "Name": "Gwynedd",
       "Code": "W06000002",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/gwynedd_en/"
+      "Type": "spydus",
+      "Url": "https://gwynedd.spydus.co.uk/"
     },
     {
       "Name": "Hackney",
@@ -787,7 +740,7 @@
         "In stock"
       ],
       "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://hull.ent.sirsidynix.net.uk/client/en_GB/default"
+      "Url": "https://hull.ent.sirsidynix.net.uk/client/en_GB/default/"
     },
     {
       "Name": "Inverclyde",
@@ -822,12 +775,8 @@
     {
       "Name": "Kensington and Chelsea",
       "Code": "E09000020",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://trib.ent.sirsidynix.net.uk/client/en_GB/rbkc/"
+      "Type": "aspen",
+      "Url": "https://libraries.rbkc.gov.uk/"
     },
     {
       "Name": "Kent",
@@ -973,13 +922,9 @@
     {
       "Name": "Merton",
       "Code": "E09000024",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://libraries.merton.gov.uk/client/en_GB/merton/",
-      "LibraryNameFilter": "Merton"
+      "Type": "luci",
+      "Url": "https://libraries.merton.gov.uk/",
+      "Home": "home"
     },
     {
       "Name": "Middlesbrough",
@@ -1002,13 +947,8 @@
     {
       "Name": "Sir Fynwy - Monmouthshire",
       "Code": "W06000021",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/mmou_en/"
+      "Type": "spydus",
+      "Url": "https://monmouthshire.spydus.co.uk/"
     },
     {
       "Name": "Moray",
@@ -1019,12 +959,8 @@
     {
       "Name": "Castell-nedd Port Talbot - Neath Port Talbot",
       "Code": "W06000012",
-      "Type": "enterprise",
-      "Available": [
-        "In stock"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/npt_en/"
+      "Type": "spydus",
+      "Url": "https://npt.spydus.co.uk/"
     },
     {
       "Name": "Newcastle upon Tyne",
@@ -1047,12 +983,8 @@
     {
       "Name": "Casnewydd - Newport",
       "Code": "W06000022",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/newport_en/"
+      "Type": "spydus",
+      "Url": "https://newport.spydus.co.uk/"
     },
     {
       "Name": "Norfolk",
@@ -1230,16 +1162,6 @@
       "Url": "https://library.plymouth.gov.uk/web/arena/"
     },
     {
-      "Name": "Poole",
-      "Code": "E06000029",
-      "Type": "enterprise",
-      "Url": "https://www.librarieswest.org.uk/client/en_GB/default/",
-      "Available": [
-        "In stock"
-      ],
-      "AvailabilityUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true"
-    },
-    {
       "Name": "Portsmouth",
       "Code": "E06000044",
       "Type": "spydus",
@@ -1248,12 +1170,8 @@
     {
       "Name": "Powys",
       "Code": "W06000023",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/powys_en/"
+      "Type": "spydus",
+      "Url": "https://powys.spydus.co.uk/"
     },
     {
       "Name": "Reading",
@@ -1294,12 +1212,8 @@
     {
       "Name": "Rhondda Cynon Taf",
       "Code": "W06000016",
-      "Type": "enterprise",
-      "Available": [
-        "Available"
-      ],
-      "TitleDetailUrl": "search/detailnonmodal.detail.detailavailabilityaccordions:lookuptitleinfo/ent:[ITEMID]/ILS/0/true/true",
-      "Url": "https://wales.ent.sirsidynix.net.uk/client/en_GB/rct_en/"
+      "Type": "spydus",
+      "Url": "https://rctcbc.spydus.co.uk/"
     },
     {
       "Name": "Richmond upon Thames",
