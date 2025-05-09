@@ -77,12 +77,6 @@ exports.searchByISBN = async function (isbn, service) {
         sortField: 'any',
         searchLimit: '196',
         offset: 0,
-        facets: [
-          {
-            Name: 'LANGUAGE',
-            Selected: ['ENG']
-          }
-        ],
         count: 40
       })
       .set('Content-Type', 'application/json')
