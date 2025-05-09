@@ -4,6 +4,8 @@ const idx = require('.')
 
 const t = 300000
 
+test('E06000065', async () => await idx.runTest('North Yorkshire'), t)
+test('W06000006', async () => await idx.runTest('Wrecsam - Wrexham'), t)
 test('S12000033', async () => await idx.runTest('Aberdeen City'), t)
 test('S12000034', async () => await idx.runTest('Aberdeenshire'), t)
 test('W06000011', async () => await idx.runTest('Abertawe - Swansea'), t)
@@ -84,7 +86,7 @@ test('W06000022', async () => await idx.runTest('Casnewydd - Newport'), t)
 test('E10000020', async () => await idx.runTest('Norfolk'), t)
 test('S12000021', async () => await idx.runTest('North Ayrshire'), t)
 test('S12000044', async () => await idx.runTest('North Lanarkshire'), t)
-test('E10000023', async () => await idx.runTest('North Yorkshire'), t)
+
 test('E06000057', async () => await idx.runTest('Northumberland'), t)
 test('E08000004', async () => await idx.runTest('Oldham'), t)
 test('S12000023', async () => await idx.runTest('Orkney Islands'), t)
@@ -122,4 +124,3 @@ test('E06000037', async () => await idx.runTest('West Berkshire'), t)
 test('E08000010', async () => await idx.runTest('Wigan'), t)
 test('E06000040', async () => await idx.runTest('Windsor & Maidenhead'), t)
 test('E06000041', async () => await idx.runTest('Wokingham'), t)
-test('W06000006', async () => await idx.runTest('Wrecsam - Wrexham'), t)

@@ -3,8 +3,8 @@ const request = require('superagent')
 
 const common = require('../connectors/common')
 
-const SEARCH_URL = 'cgi-bin/spydus.exe/ENQ/WPAC/BIBENQ?NRECS=1&ISBN='
 const LIBS_URL = 'cgi-bin/spydus.exe/MSGTRN/WPAC/COMB'
+const SEARCH_URL = 'cgi-bin/spydus.exe/ENQ/WPAC/BIBENQ?NRECS=1&ISBN='
 
 /**
  * Gets the object representing the service
@@ -23,10 +23,18 @@ exports.getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
+    let libsUrl = service.Url + LIBS_URL
+    if (service.OpacReference) {
+      libsUrl = libsUrl.replace('WPAC', service.OpacReference)
+    }
+    if (service.CatalogueReference) {
+      libsUrl = libsUrl.replace('COMB', service.CatalogueReference)
+    }
     const libsPageRequest = await agent
-      .get(service.Url + LIBS_URL)
+      .get(libsUrl)
       .set({ Cookie: 'ALLOWCOOKIES_443=1' })
       .timeout(60000)
+
     const $ = cheerio.load(libsPageRequest.text)
     $('#LOC option').each(function (idx, option) {
       if (common.isLibrary($(option).text().trim()))
@@ -45,16 +53,19 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  let holdingsUrl = service.Url + SEARCH_URL + isbn
+  if (service.OpacReference) {
+    holdingsUrl = holdingsUrl.replace('WPAC', service.OpacReference)
+  }
+
   const agent = service.DisableTls
     ? request.agent().disableTLSCerts()
     : request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
-  responseHoldings.url = service.Url + SEARCH_URL + isbn
+  responseHoldings.url = holdingsUrl
 
   try {
-    const itemPageRequest = await await agent
-      .get(responseHoldings.url)
-      .timeout(30000)
+    const itemPageRequest = await await agent.get(holdingsUrl).timeout(30000)
     let $ = cheerio.load(itemPageRequest.text)
     if ($('#result-content-list').length === 0)
       return common.endResponse(responseHoldings)

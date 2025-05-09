@@ -6,7 +6,9 @@ const tests = require('./tests.json')
 
 const librariesIgnoreList = [
   // Only has "All Locations" option
-  'Southampton'
+  'Southampton',
+  // An empty dropdown list
+  'North Yorkshire'
 ]
 
 exports.runTest = async service => {

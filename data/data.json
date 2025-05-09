@@ -16,6 +16,7 @@
       "Name": "Sir Ynys Mon - Isle of Anglesey",
       "Code": "W06000001",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://ynysmon.spydus.co.uk/"
     },
     {
@@ -117,6 +118,7 @@
       "Name": "Blaenau Gwent",
       "Code": "W06000019",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://aneurin.spydus.co.uk/"
     },
     {
@@ -126,8 +128,8 @@
       "Url": "https://bolton.spydus.co.uk/"
     },
     {
-      "Name": "Bournemouth",
-      "Code": "E06000028",
+      "Name": "Bournemouth, Christchurch and Poole",
+      "Code": "E06000058",
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUKLIBSWEST",
@@ -170,6 +172,7 @@
       "Name": "Pen-y-bont ar Ogwr - Bridgend",
       "Code": "W06000013",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://awen.spydus.co.uk/"
     },
     {
@@ -200,7 +203,7 @@
     },
     {
       "Name": "Buckinghamshire",
-      "Code": "E10000002",
+      "Code": "E06000060",
       "Type": "spydus",
       "Url": "https://buckinghamshire.spydus.co.uk/"
     },
@@ -214,6 +217,7 @@
       "Name": "Caerphilly",
       "Code": "W06000018",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://caerphilly.spydus.co.uk/"
     },
     {
@@ -238,12 +242,14 @@
       "Name": "Caerdydd - Cardiff",
       "Code": "W06000015",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://cardiff.spydus.co.uk/"
     },
     {
       "Name": "Sir Gaerfyrddin - Carmarthenshire",
       "Code": "W06000010",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://carmarthenshire.spydus.co.uk/"
     },
     {
@@ -264,6 +270,7 @@
       "Name": "Sir Ceredigion - Ceredigion",
       "Code": "W06000008",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://ceredigion.spydus.co.uk/"
     },
     {
@@ -302,6 +309,7 @@
       "Name": "Conwy",
       "Code": "W06000003",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://conwy.spydus.co.uk/"
     },
     {
@@ -336,8 +344,8 @@
       "Url": "https://llc.ent.sirsidynix.net.uk/client/en_GB/croydon/"
     },
     {
-      "Name": "Cumbria",
-      "Code": "E10000006",
+      "Name": "Cumberland",
+      "Code": "E06000063",
       "Type": "koha",
       "Version": "v20",
       "Url": "https://cwflibraries.org.uk/"
@@ -360,6 +368,7 @@
       "Name": "Sir Ddinbych - Denbighshire",
       "Code": "W06000004",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://denbighshire.spydus.co.uk/"
     },
     {
@@ -409,7 +418,7 @@
     },
     {
       "Name": "Dorset",
-      "Code": "E10000009",
+      "Code": "E06000059",
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUKLIBSWEST",
@@ -553,6 +562,7 @@
       "Name": "Sir y Fflint - Flintshire",
       "Code": "W06000005",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://gwella.spydus.co.uk/"
     },
     {
@@ -609,6 +619,7 @@
       "Name": "Gwynedd",
       "Code": "W06000002",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://gwynedd.spydus.co.uk/"
     },
     {
@@ -919,6 +930,7 @@
       "Name": "Merthyr Tudful - Merthyr Tydfil",
       "Code": "W06000024",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://merthyr.spydus.co.uk/"
     },
     {
@@ -950,6 +962,7 @@
       "Name": "Sir Fynwy - Monmouthshire",
       "Code": "W06000021",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://monmouthshire.spydus.co.uk/"
     },
     {
@@ -962,6 +975,7 @@
       "Name": "Castell-nedd Port Talbot - Neath Port Talbot",
       "Code": "W06000012",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://npt.spydus.co.uk/"
     },
     {
@@ -986,6 +1000,7 @@
       "Name": "Casnewydd - Newport",
       "Code": "W06000022",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://newport.spydus.co.uk/"
     },
     {
@@ -1052,13 +1067,15 @@
     },
     {
       "Name": "North Yorkshire",
-      "Code": "E10000023",
+      "Code": "E06000065",
       "Type": "spydus",
+      "OpacReference": "OPAC",
+      "CatalogueReference": "COMB_WRK",
       "Url": "https://nylib.spydus.co.uk/"
     },
     {
-      "Name": "Northamptonshire",
-      "Code": "E10000021",
+      "Name": "North Northamptonshire",
+      "Code": "E06000061",
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUK000256",
@@ -1173,6 +1190,7 @@
       "Name": "Powys",
       "Code": "W06000023",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://powys.spydus.co.uk/"
     },
     {
@@ -1215,6 +1233,7 @@
       "Name": "Rhondda Cynon Taf",
       "Code": "W06000016",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://rctcbc.spydus.co.uk/"
     },
     {
@@ -1320,7 +1339,7 @@
     },
     {
       "Name": "Somerset",
-      "Code": "E10000027",
+      "Code": "E06000066",
       "Type": "arena",
       "Version": "v7",
       "ArenaName": "AUKLIBSWEST",
@@ -1456,6 +1475,7 @@
       "Name": "Abertawe - Swansea",
       "Code": "W06000011",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://swansea.spydus.co.uk/"
     },
     {
@@ -1508,6 +1528,7 @@
       "Name": "Tor-faen - Torfaen",
       "Code": "W06000020",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://torfaen.spydus.co.uk/"
     },
     {
@@ -1531,6 +1552,7 @@
       "Name": "Bro Morgannwg - the Vale of Glamorgan",
       "Code": "W06000014",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://valeofglamorgan.spydus.co.uk/"
     },
     {
@@ -1624,6 +1646,17 @@
       "OrganisationName": "West Sussex Libraries"
     },
     {
+      "Name": "West Northamptonshire",
+      "Code": "E06000062",
+      "Type": "arena",
+      "Version": "v7",
+      "ArenaName": "AUK000256",
+      "Url": "https://www.librarycatalogue.northamptonshire.gov.uk/",
+      "AdvancedUrl": "extended-search",
+      "OrganisationId": "AUK000256|1",
+      "MultipleOrganisations": false
+    },
+    {
       "Name": "Western Isles",
       "Code": "S12000013",
       "Type": "koha",
@@ -1635,6 +1668,13 @@
       "Code": "E09000033",
       "Type": "aspen",
       "Url": "https://libraries.westminster.gov.uk/"
+    },
+    {
+      "Name": "Westmorland and Furness",
+      "Code": "E06000064",
+      "Type": "koha",
+      "Version": "v20",
+      "Url": "https://cwflibraries.org.uk/"
     },
     {
       "Name": "Wigan",
@@ -1698,6 +1738,7 @@
       "Name": "Wrecsam - Wrexham",
       "Code": "W06000006",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://wrexham.spydus.co.uk/"
     },
     {

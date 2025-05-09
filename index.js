@@ -16,6 +16,7 @@ const enterprise = require('./connectors/enterprise')
 const iguana = require('./connectors/iguana')
 const kohav20 = require('./connectors/koha.v20')
 const kohav22 = require('./connectors/koha.v22')
+const kohav23 = require('./connectors/koha.v23')
 const luci = require('./connectors/luci')
 const prism3 = require('./connectors/prism3')
 const spydus = require('./connectors/spydus')
@@ -38,6 +39,7 @@ const serviceFunctions = {
   iguana,
   kohav20,
   kohav22,
+  kohav23,
   luci,
   prism3,
   spydus,
