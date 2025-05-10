@@ -25,8 +25,12 @@ exports.getLibraries = async function (service) {
   try {
     const agent = request.agent()
     const url = `${service.Url}${ADVANCED_SEARCH_URL}`
+    const headers = {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36'
+    }
 
-    const res = await agent.get(url)
+    const res = await agent.get(url).set(headers)
 
     const $ = cheerio.load(res.text)
     const libraries = []
