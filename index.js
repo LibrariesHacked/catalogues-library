@@ -13,7 +13,9 @@ const aspen = require('./connectors/aspen')
 const durham = require('./connectors/durham')
 const enterprise = require('./connectors/enterprise')
 const iguana = require('./connectors/iguana')
-const koha = require('./connectors/koha')
+const kohav20 = require('./connectors/koha.v20')
+const kohav22 = require('./connectors/koha.v22')
+const kohav23 = require('./connectors/koha.v23')
 const luci = require('./connectors/luci')
 const prism3 = require('./connectors/prism3')
 const spydus = require('./connectors/spydus')
@@ -33,7 +35,9 @@ const serviceFunctions = {
   durham,
   enterprise,
   iguana,
-  koha,
+  kohav20,
+  kohav22,
+  kohav23,
   luci,
   prism3,
   spydus,
