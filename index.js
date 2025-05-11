@@ -7,16 +7,13 @@ const syswidecas = require('@small-tech/syswide-cas')
 syswidecas.addCAs('./SectigoRSADomainValidationSecureServerCA.cer')
 
 // Catalogue integration connectors
-const arenav6 = require('./connectors/arena.v6')
 const arenav7 = require('./connectors/arena.v7')
 const arenav8 = require('./connectors/arena.v8')
 const aspen = require('./connectors/aspen')
 const durham = require('./connectors/durham')
 const enterprise = require('./connectors/enterprise')
 const iguana = require('./connectors/iguana')
-const kohav20 = require('./connectors/koha.v20')
-const kohav22 = require('./connectors/koha.v22')
-const kohav23 = require('./connectors/koha.v23')
+const koha = require('./connectors/koha')
 const luci = require('./connectors/luci')
 const prism3 = require('./connectors/prism3')
 const spydus = require('./connectors/spydus')
@@ -30,16 +27,13 @@ const openLibrary = require('./connectors/openlibrary')
 const data = require('./data/data.json')
 
 const serviceFunctions = {
-  arenav6,
   arenav7,
   arenav8,
   aspen,
   durham,
   enterprise,
   iguana,
-  kohav20,
-  kohav22,
-  kohav23,
+  koha,
   luci,
   prism3,
   spydus,

@@ -31,6 +31,7 @@
     "@types/tough-cookie": "^4.0.5",
     "async": "^3.2.6",
     "cheerio": "^1.0.0",
+    "cycletls": "^1.0.27",
     "node-polyfill-webpack-plugin": "^4.1.0",
     "superagent": "^10.2.1",
     "tough-cookie": "^5.1.2",
