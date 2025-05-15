@@ -278,8 +278,6 @@
       "Code": "E06000049",
       "Type": "koha",
       "Version": "v20",
-      "CatUrl": "cgi-bin/koha/opac-search.pl?format=rss2&idx=nb&q=",
-      "LibsUrl": "cgi-bin/koha/opac-search.pl?do=Search&expand=holdingbranch#holdingbranch_id",
       "Url": "https://cheslive.koha-ptfs.co.uk/"
     },
     {
@@ -287,8 +285,6 @@
       "Code": "E06000050",
       "Type": "koha",
       "Version": "v20",
-      "CatUrl": "cgi-bin/koha/opac-search.pl?format=rss2&idx=nb&q=",
-      "LibsUrl": "cgi-bin/koha/opac-search.pl?do=Search&expand=holdingbranch#holdingbranch_id",
       "Url": "https://cheslive.koha-ptfs.co.uk/"
     },
     {
@@ -307,8 +303,6 @@
       "Code": "S12000005",
       "Type": "koha",
       "Version": "v20",
-      "CatUrl": "cgi-bin/koha/opac-search.pl?format=rss2&idx=nb&q=[ISBN]",
-      "LibsUrl": "cgi-bin/koha/opac-search.pl?do=Search&expand=holdingbranch#holdingbranch_id",
       "Url": "https://clacks.koha-ptfs.co.uk/"
     },
     {
@@ -1161,9 +1155,8 @@
     {
       "Name": "Sir Benfro - Pembrokeshire",
       "Code": "W06000009",
-      "Type": "iguana",
-      "Database": "1_STOCK",
-      "Url": "https://libraries.pembrokeshire.gov.uk/iguana/"
+      "Type": "spydus",
+      "Url": "https://pembrokeshire.spydus.co.uk/"
     },
     {
       "Name": "Perth and Kinross",

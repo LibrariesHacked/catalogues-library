@@ -6,6 +6,9 @@ const common = require('./common')
 const CAT_URL = 'cgi-bin/koha/opac-search.pl?format=rss2&idx=nb&q='
 const LIBS_URL =
   'cgi-bin/koha/opac-search.pl?[MULTIBRANCH]do=Search&expand=holdingbranch#holdingbranch_id'
+const HEADER = {
+  'User-Agent': common.userAgent
+}
 
 /**
  * Gets the object representing the service
@@ -31,7 +34,7 @@ exports.getLibraries = async function (service) {
           : ''
       )
 
-    const libraryPageRequest = await agent.get(url).timeout(60000)
+    const libraryPageRequest = await agent.get(url).set(HEADER).timeout(60000)
     const $ = cheerio.load(libraryPageRequest.text)
 
     $('#branchloop option').each((idx, option) => {
@@ -65,6 +68,7 @@ exports.searchByISBN = async function (isbn, service) {
 
     const searchPageRequest = await agent
       .get(service.Url + CAT_URL + isbn)
+      .set(HEADER)
       .timeout(30000)
     let $ = cheerio.load(searchPageRequest.text, {
       normalizeWhitespace: true,
@@ -80,6 +84,7 @@ exports.searchByISBN = async function (isbn, service) {
 
     const itemPageRequest = await agent
       .get(bibLink + '&viewallitems=1')
+      .set(HEADER)
       .timeout(30000)
     $ = cheerio.load(itemPageRequest.text)
 

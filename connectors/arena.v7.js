@@ -35,8 +35,7 @@ exports.getLibraries = async function (service) {
   try {
     const agent = request.agent()
     let $ = null
-    // if (responseLibraries.libraries.length > 0) return common.endResponse(responseLibraries)
-
+    
     if (service.SignupUrl) {
       // This service needs to be loaded using the signup page rather
       // than the advanced search page.
@@ -190,7 +189,6 @@ exports.searchByISBN = async function (isbn, service) {
     const holdingsPanelHeader = {
       Accept: 'text/xml',
       'Wicket-Ajax': true
-      // Cookie: cookie
     }
     const holdingsPanelUrl = service.Url + HOLDINGS_URL_PORTLET
 

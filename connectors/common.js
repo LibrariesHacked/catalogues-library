@@ -98,3 +98,8 @@ exports.initialiseSearchByISBNResponse = function (service) {
 exports.endResponse = function (request) {
   return { ...request, end: new Date() }
 }
+
+/**
+ * Export a constant string to use for user agent
+ */
+exports.userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586'

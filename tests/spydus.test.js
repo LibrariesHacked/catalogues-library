@@ -92,6 +92,11 @@ test('E08000004', async () => await idx.runTest('Oldham'), t)
 test('S12000023', async () => await idx.runTest('Orkney Islands'), t)
 test('S12000024', async () => await idx.runTest('Perth and Kinross'), t)
 test('E06000031', async () => await idx.runTest('Peterborough'), t)
+test(
+  'W06000009',
+  async () => await idx.runTest('Sir Benfro - Pembrokeshire'),
+  t
+)
 test('E06000044', async () => await idx.runTest('Portsmouth'), t)
 test('W06000023', async () => await idx.runTest('Powys'), t)
 test('E06000038', async () => await idx.runTest('Reading'), t)

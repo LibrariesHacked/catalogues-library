@@ -6,8 +6,7 @@ const common = require('../connectors/common')
 const SEARCH_URL = 'search/results?qu='
 const ITEM_URL = 'search/detailnonmodal/ent:[ILS]/one'
 const HEADER = {
-  'User-Agent':
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586'
+  'User-Agent': common.userAgent
 }
 const HEADER_POST = { 'X-Requested-With': 'XMLHttpRequest' }
 

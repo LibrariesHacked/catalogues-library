@@ -4,16 +4,15 @@ const idx = require('.')
 
 const t = 300000
 
-test('E10000031', async () => await idx.runTest('Warwickshire'), t)
-test('E06000054', async () => await idx.runTest('Wiltshire'), t)
+test('E09000004', async () => await idx.runTest('Bexley'), t)
+test('E06000017', async () => await idx.runTest('Rutland'), t)
 test(
   'E06000022',
   async () => await idx.runTest('Bath and North East Somerset'),
   t
 )
 test('E06000055', async () => await idx.runTest('Bedford'), t)
-test('E09000004', async () => await idx.runTest('Bexley'), t)
-test('E06000028', async () => await idx.runTest('Bournemouth'), t)
+test('E06000058', async () => await idx.runTest('Bournemouth, Christchurch and Poole'), t)
 test('E06000023', async () => await idx.runTest('Bristol City'), t)
 test('E06000056', async () => await idx.runTest('Central Bedfordshire'), t)
 test('E08000026', async () => await idx.runTest('Coventry'), t)
@@ -40,11 +39,12 @@ test('E06000024', async () => await idx.runTest('North Somerset'), t)
 test('E10000025', async () => await idx.runTest('Oxfordshire'), t)
 test('E06000026', async () => await idx.runTest('Plymouth'), t)
 test('E06000003', async () => await idx.runTest('Redcar and Cleveland'), t)
-test('E06000017', async () => await idx.runTest('Rutland'), t)
 test('E06000051', async () => await idx.runTest('Shropshire'), t)
 test('E10000027', async () => await idx.runTest('Somerset'), t)
 test('E06000025', async () => await idx.runTest('South Gloucestershire'), t)
 test('E06000020', async () => await idx.runTest('Telford and Wrekin'), t)
 test('E06000027', async () => await idx.runTest('Torbay'), t)
+test('E10000031', async () => await idx.runTest('Warwickshire'), t)
 test('E10000032', async () => await idx.runTest('West Sussex'), t)
 test('E06000062', async () => await idx.runTest('West Northamptonshire'), t)
+test('E06000054', async () => await idx.runTest('Wiltshire'), t)
