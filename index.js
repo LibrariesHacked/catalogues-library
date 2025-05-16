@@ -1,38 +1,77 @@
+// Description: Main entry point for the catalogue library service
+
 const async = require('async')
-const data = require('./data/data.json')
+
+const syswidecas = require('@small-tech/syswide-cas')
+// Intermediate certificate that's often incomplete in SSL chains.
+syswidecas.addCAs('./SectigoRSADomainValidationSecureServerCA.cer')
+
+// Catalogue integration connectors
+const arenav7 = require('./connectors/arena.v7')
+const arenav8 = require('./connectors/arena.v8')
+const aspen = require('./connectors/aspen')
+const durham = require('./connectors/durham')
+const enterprise = require('./connectors/enterprise')
+const iguana = require('./connectors/iguana')
+const kohav20 = require('./connectors/koha.v20')
+const kohav22 = require('./connectors/koha.v22')
+const kohav23 = require('./connectors/koha.v23')
+const luci = require('./connectors/luci')
+const prism3 = require('./connectors/prism3')
+const spydus = require('./connectors/spydus')
+const webpac = require('./connectors/webpac')
+
+// Other service connectors
 const libThing = require('./connectors/librarything')
 const openLibrary = require('./connectors/openlibrary')
-const syswidecas = require('@small-tech/syswide-cas');
 
-// Intermediate certificate that's often incomplete in SSL chains.
-syswidecas.addCAs('./SectigoRSADomainValidationSecureServerCA.cer');
+// Our data file of library services and their catalogue integrations
+const data = require('./data/data.json')
 
-// Loads all the connectors that are currently referenced in data.json
-var serviceFunctions = {}
-data.LibraryServices.forEach((service) => {
-  if (service.Version) {
-    if (!serviceFunctions[`${service.Type}_${service.Version}`]) serviceFunctions[`${service.Type}_${service.Version}`] = require(`./connectors/${service.Type}/${service.Version}`);
-  }
-  else {
-    if (!serviceFunctions[service.Type]) serviceFunctions[service.Type] = require('./connectors/' + service.Type);
-  }
-})
+const serviceFunctions = {
+  arenav7,
+  arenav8,
+  aspen,
+  durham,
+  enterprise,
+  iguana,
+  kohav20,
+  kohav22,
+  kohav23,
+  luci,
+  prism3,
+  spydus,
+  webpac
+}
+
+const getServiceFunction = service => {
+  return serviceFunctions[service.Type + (service.Version || '')]
+}
+
+const getLibraryServicesFromFilter = serviceFilter => {
+  return data.LibraryServices.filter(service => {
+    return (
+      service.Type !== '' &&
+      (!serviceFilter ||
+        service.Name === serviceFilter ||
+        service.Code === serviceFilter)
+    )
+  })
+}
 
 /**
  * Gets library service data
  * @param {String} serviceFilter An optional service to filter by using either code or name
  * @param {Object[]} serviceResults An array of library services
  */
-exports.services = async (serviceFilter) => {
-  var services = data.LibraryServices
-    .filter((service) => (service.Type !== '' && (!serviceFilter || service.Name === serviceFilter || service.Code === serviceFilter)))
-    .map((service) => {
-      return async () => {
-        return serviceFunctions[service.Type].getService(service)
-      }
-    })
+exports.services = async serviceFilter => {
+  const services = getLibraryServicesFromFilter(serviceFilter).map(service => {
+    return async () => {
+      return getServiceFunction(service).getService(service)
+    }
+  })
 
-  var serviceResults = await async.parallel(services)
+  const serviceResults = await async.parallel(services)
   return serviceResults
 }
 
@@ -41,19 +80,22 @@ exports.services = async (serviceFilter) => {
  * @param {String} serviceFilter An optional service to filter by using either code or name
  * @param {Object[]} libraryServicePoints An array of library service points
  */
-exports.libraries = async (serviceFilter) => {
-  var searches = data.LibraryServices
-    .filter((service) => {
-      return (service.Type !== '' && (!serviceFilter || service.Name === serviceFilter || service.Code === serviceFilter))
-    })
-    .map((service) => {
-      return async () => {
-        var response = await serviceFunctions[service.Version ? `${service.Type}_${service.Version}` : service.Type].getLibraries(service)
-        return response
-      }
-    })
+exports.libraries = async serviceFilter => {
+  const searches = data.LibraryServices.filter(service => {
+    return (
+      service.Type !== '' &&
+      (!serviceFilter ||
+        service.Name === serviceFilter ||
+        service.Code === serviceFilter)
+    )
+  }).map(service => {
+    return async () => {
+      const resp = await getServiceFunction(service).getLibraries(service)
+      return resp
+    }
+  })
 
-  var libraryServicePoints = await async.parallel(searches)
+  const libraryServicePoints = await async.parallel(searches)
   return libraryServicePoints
 }
 
@@ -64,28 +106,31 @@ exports.libraries = async (serviceFilter) => {
  * @param {Object[]} availability The availability of the ISBN by service
  */
 exports.availability = async (isbn, serviceFilter) => {
-  var searches = data.LibraryServices
-    .filter((service) => {
-      return (service.Type !== '' && (!serviceFilter || service.Name === serviceFilter || service.Code === serviceFilter))
-    })
-    .map((service) => {
-      return async () => {
-        var response = await serviceFunctions[service.Version ? `${service.Type}_${service.Version}` : service.Type].searchByISBN(isbn, service)
-        return response
-      }
-    })
+  const searches = data.LibraryServices.filter(service => {
+    return (
+      service.Type !== '' &&
+      (!serviceFilter ||
+        service.Name === serviceFilter ||
+        service.Code === serviceFilter)
+    )
+  }).map(service => {
+    return async () => {
+      const resp = await getServiceFunction(service).searchByISBN(isbn, service)
+      return resp
+    }
+  })
 
-  var availability = await async.parallel(searches)
+  const availability = await async.parallel(searches)
   return availability
 }
 
 /**
- * Gets results from the library thing thingISBN service
+ * Gets results from the LibraryThing ISBN service
  * @param {String} isbn The ISBN to search for
  * @param {String[]} isbnsAn array of ISBNs
  */
-exports.thingISBN = async (isbn) => {
-  var thingData = await libThing.thingISBN(isbn)
+exports.thingISBN = async isbn => {
+  const thingData = await libThing.thingISBN(isbn)
   return thingData.isbns
 }
 
@@ -94,7 +139,7 @@ exports.thingISBN = async (isbn) => {
  * @param {String} query The query to search with
  * @param {Object} openLibData The search response from open library
  */
-exports.openLibrarySearch = async (query) => {
-  var openLibData = await openLibrary.search(query)
+exports.openLibrarySearch = async query => {
+  const openLibData = await openLibrary.search(query)
   return openLibData
 }

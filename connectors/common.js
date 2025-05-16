@@ -1,4 +1,3 @@
-
 /**
  * The majority of the get service call is just returning information that's in the service
  * object from data.json.  Maintain a list here of what to return.
@@ -41,34 +40,34 @@ exports.isJsonString = function (str) {
  */
 exports.isLibrary = function (str) {
   const nonLibraries = [
-    'ALL', 
-    'ANY', 
-    'ADULT BOOKS', 
+    'ALL',
+    'ANY',
+    'ADULT BOOKS',
     'ALL BRANCHES',
     'ALL HULL CITY LIBRARIES',
-    'ALL LOCATIONS', 
-    'ALL LIBRARIES', 
-    'ALL', 
-    'ANY LIBRARY', 
-    'AUDIO BOOKS', 
-    'CHILDREN\'S BOOKS', 
+    'ALL LOCATIONS',
+    'ALL LIBRARIES',
+    'ALL',
+    'ANY LIBRARY',
+    'AUDIO BOOKS',
+    'CHILDREN\'S BOOKS',
     'CHOOSE ONE',
-    'DVDS', 
-    'FICTION', 
-    'HERE', 
-    'INVALID KEY', 
-    'LARGE PRINT', 
-    'LOCAL HISTORY', 
-    'NON-FICTION', 
-    'SCHOOL LIBRARIES COLLECTIONS', 
+    'DVDS',
+    'FICTION',
+    'HERE',
+    'INVALID KEY',
+    'LARGE PRINT',
+    'LOCAL HISTORY',
+    'NON-FICTION',
+    'SCHOOL LIBRARIES COLLECTIONS',
     'SELECT AN ALTERNATIVE',
     'SELECT BRANCH',
     'SELECT DEFAULT BRANCH',
-    'SELECT LIBRARY', 
-    'VIEW ENTIRE COLLECTION', 
+    'SELECT LIBRARY',
+    'VIEW ENTIRE COLLECTION',
     'YOUNG ADULT COLLECTION'
   ]
-  return !nonLibraries.includes(str.toUpperCase());
+  return !nonLibraries.includes(str.toUpperCase())
 }
 
 /**

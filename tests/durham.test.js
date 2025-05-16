@@ -1,3 +1,7 @@
-const index = require('.');
+/* eslint-env jest */
 
-test('E06000047 - Durham', async () => await index.runTest('Durham'), 300000);
+const idx = require('.')
+
+const t = 300000
+
+test('E06000047', async () => await idx.runTest('Durham'), t)

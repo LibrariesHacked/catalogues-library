@@ -1,6 +1,6 @@
 {
   "name": "catalogues-library",
-  "version": "1.2.5",
+  "version": "1.3.0",
   "description": "A JS library for searching library catalogues",
   "main": "index.js",
   "scripts": {
@@ -20,20 +20,23 @@
     "url": "https://github.com/LibrariesHacked/catalogues-library/issues"
   },
   "homepage": "https://github.com/LibrariesHacked/catalogues-library#readme",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "webpack": "^5.99.8",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.1"
+  },
   "dependencies": {
     "@small-tech/syswide-cas": "^6.0.2",
-    "@types/tough-cookie": "^4.0.2",
-    "async": "^3.2.4",
-    "cheerio": "^1.0.0-rc.12",
-    "node-polyfill-webpack-plugin": "^2.0.1",
-    "superagent": "^10.2.0",
-    "tough-cookie": "^4.1.2",
-    "uuid": "^8.3.2",
-    "xml2js": "^0.5.0"
-  },
-  "devDependencies": {
-    "jest": "^28.1.3",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^4.10.0"
+    "@types/tough-cookie": "^4.0.5",
+    "async": "^3.2.6",
+    "cheerio": "^1.0.0",
+    "cycletls": "^1.0.27",
+    "node-polyfill-webpack-plugin": "^4.1.0",
+    "superagent": "^10.2.1",
+    "tough-cookie": "^5.1.2",
+    "user-agents": "^1.1.541",
+    "uuid": "^11.1.0",
+    "xml2js": "^0.6.2"
   }
 }
