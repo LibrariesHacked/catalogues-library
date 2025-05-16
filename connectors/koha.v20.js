@@ -1,5 +1,6 @@
 const cheerio = require('cheerio')
 const request = require('superagent')
+const UserAgent = require('user-agents')
 
 const common = require('./common')
 
@@ -7,7 +8,7 @@ const CAT_URL = 'cgi-bin/koha/opac-search.pl?format=rss2&idx=nb&q='
 const LIBS_URL =
   'cgi-bin/koha/opac-search.pl?[MULTIBRANCH]do=Search&expand=holdingbranch#holdingbranch_id'
 const HEADER = {
-  'User-Agent': common.userAgent
+  'User-Agent': new UserAgent().toString(),
 }
 
 /**

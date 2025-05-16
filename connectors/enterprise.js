@@ -1,12 +1,13 @@
 const cheerio = require('cheerio')
 const request = require('superagent')
+const UserAgent = require('user-agents')
 
 const common = require('../connectors/common')
 
 const SEARCH_URL = 'search/results?qu='
 const ITEM_URL = 'search/detailnonmodal/ent:[ILS]/one'
 const HEADER = {
-  'User-Agent': common.userAgent
+  'User-Agent': new UserAgent().toString(),
 }
 const HEADER_POST = { 'X-Requested-With': 'XMLHttpRequest' }
 

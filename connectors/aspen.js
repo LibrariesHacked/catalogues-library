@@ -3,8 +3,10 @@ const request = require('superagent')
 
 const common = require('./common')
 
+const UserAgent = require('user-agents')
+
 const HEADER = {
-  'User-Agent': common.userAgent
+  'User-Agent': new UserAgent().toString(),
 }
 
 const ADVANCED_SEARCH_URL =
