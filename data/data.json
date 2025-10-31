@@ -398,11 +398,11 @@
       "Name": "Devon",
       "Code": "E10000008",
       "Type": "arena",
-      "Version": "v7",
+      "Version": "v8",
       "ArenaName": "AUKLIBRARIESUNLIMITED",
       "Url": "https://discover.librariesunlimited.org.uk/",
-      "AdvancedUrl": "extended-search",
-      "OrganisationId": "AUKLIBRARIESUNLIMITED|2",
+      "AdvancedUrl": "extended-search1",
+      "OrganisationId": "AUKLIBRARIESUNLIMITED|1",
       "MultipleOrganisations": true
     },
     {
