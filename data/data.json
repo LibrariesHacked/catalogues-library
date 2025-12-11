@@ -400,7 +400,7 @@
       "Type": "arena",
       "Version": "v8",
       "ArenaName": "AUKLIBRARIESUNLIMITED",
-      "Url": "https://discover.librariesunlimited.org.uk/",
+      "Url": "https://discover.librariesunlimited.org.uk/en/",
       "AdvancedUrl": "extended-search1",
       "OrganisationId": "AUKLIBRARIESUNLIMITED|1",
       "MultipleOrganisations": true
@@ -1519,7 +1519,7 @@
       "Name": "Torbay",
       "Code": "E06000027",
       "Type": "arena",
-      "Version": "v7",
+      "Version": "v8",
       "ArenaName": "AUKLIBRARIESUNLIMITED",
       "Url": "https://discover.librariesunlimited.org.uk/",
       "AdvancedUrl": "extended-search",

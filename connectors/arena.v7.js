@@ -9,7 +9,7 @@ const xml2js = require('xml2js')
 const common = require('./common')
 
 const LIBRARIES_URL_PORTLET =
-  '?p_p_id=extendedSearch_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=/extendedSearch/?wicket:interface=:0:extendedSearchPanel:extendedSearchForm:organisationHierarchyPanel:organisationContainer:organisationChoice::IBehaviorListener:0:&p_p_cacheability=cacheLevelPage&random=0.08709241788681465extended-search?p_p_id=extendedSearch_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=/extendedSearch/?wicket:interface=:0:extendedSearchPanel:extendedSearchForm:organisationHierarchyPanel:organisationContainer:organisationChoice::IBehaviorListener:0:&p_p_cacheability=cacheLevelPage&random=0.08709241788681465'
+  '?p_p_id=extendedSearch_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2FextendedSearch%2F%3Fwicket%3Ainterface%3D%3A1%3AextendedSearchPanel%3AextendedSearchForm%3AorganisationHierarchyPanel%3AorganisationContainer%3AorganisationChoice%3A%3AIBehaviorListener%3A0%3A&p_p_cacheability=cacheLevelPage&random=0.09116463849406953'
 const SEARCH_URL_PORTLET =
   'search?p_p_id=searchResult_WAR_arenaportlet&p_p_lifecycle=1&p_p_state=normal&p_r_p_arena_urn:arena_facet_queries=&p_r_p_arena_urn:arena_search_type=solr&p_r_p_arena_urn:arena_search_query=[BOOKQUERY]'
 const ITEM_URL_PORTLET =
@@ -35,7 +35,7 @@ exports.getLibraries = async function (service) {
   try {
     const agent = request.agent()
     let $ = null
-    
+
     if (service.SignupUrl) {
       // This service needs to be loaded using the signup page rather
       // than the advanced search page.
@@ -52,9 +52,10 @@ exports.getLibraries = async function (service) {
     }
 
     // Get the advanced search page
-    const advancedSearchResponse = await agent.get(
-      service.Url + service.AdvancedUrl
-    )
+    const advancedSearchResponse = await agent
+      .get(service.Url + service.AdvancedUrl)
+      .set({ Connection: 'keep-alive' })
+      .timeout(20000)
 
     // The advanced search page may have libraries listed on it
     $ = cheerio.load(advancedSearchResponse.text)
@@ -67,13 +68,31 @@ exports.getLibraries = async function (service) {
     }
 
     // If not we'll need to call a portlet to get the data
+    const focusedElementId = $(
+      '.arena-extended-search-organisation-choice'
+    ).attr('id')
     const headers = {
       Accept: 'text/xml',
+      'Content-Type': 'application/x-www-form-urlencoded',
       'Wicket-Ajax': true,
-      'Wicket-FocusedElementId': 'id__extendedSearch__WAR__arenaportlet____e',
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Wicket-Focusedelementid': focusedElementId
     }
-    const url = service.Url + service.AdvancedUrl + LIBRARIES_URL_PORTLET
+    const branchChoiceQueries = {
+      p_p_id: 'extendedSearch_WAR_arenaportlet',
+      p_p_lifecycle: '2',
+      p_p_state: 'normal',
+      p_p_mode: 'view',
+      p_p_resource_id:
+        '/extendedSearch/?wicket:interface=:0:extendedSearchPanel:extendedSearchForm:organisationHierarchyPanel:organisationContainer:organisationChoice::IBehaviorListener:0:',
+      p_p_cacheability: 'cacheLevelPage',
+      random: '0.1234567890123456'
+    }
+    // The url needs to be built from the branch choice queries above
+    let url =
+      service.Url +
+      service.AdvancedUrl +
+      '?' +
+      querystring.stringify(branchChoiceQueries)
     const responseHeaderRequest = await agent
       .post(url)
       .send(

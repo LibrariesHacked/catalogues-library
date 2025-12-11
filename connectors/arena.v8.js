@@ -9,12 +9,12 @@ const xml2js = require('xml2js')
 const common = require('./common')
 
 const RESULT_URL = 'results?'
-const LIBRARIES_URL_PORTLET =
-  '?p_p_id=extendedSearch_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2FextendedSearch%2F%3Fwicket%3Ainterface%3D%3A1%3AextendedSearchPanel%3AextendedSearchForm%3AorganisationHierarchyPanel%3AorganisationContainer%3AorganisationChoice%3A%3AIBehaviorListener%3A0%3A&p_p_cacheability=cacheLevelPage&random=0.09116463849406953'
+
 const SEARCH_URL_PORTLET =
   'search?p_p_id=searchResult_WAR_arenaportlet&p_p_lifecycle=1&p_p_state=normal&p_r_p_arena_urn:arena_facet_queries=&p_r_p_arena_urn:arena_search_type=solr&p_r_p_arena_urn:arena_search_query=[BOOKQUERY]'
 const ITEM_URL_PORTLET =
   'results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=1&p_p_state=normal&p_r_p_arena_urn:arena_search_item_id=[ITEMID]&p_r_p_arena_urn:arena_facet_queries=&p_r_p_arena_urn:arena_agency_name=[ARENANAME]&p_r_p_arena_urn:arena_search_item_no=0&p_r_p_arena_urn:arena_search_type=solr'
+;('results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=1&p_p_state=normal&p_r_p_arena_urn:arena_search_item_id=0747532745&p_r_p_arena_urn:arena_facet_queries=&p_r_p_arena_urn:arena_agency_name=AUKLIBRARIESUNLIMITED&p_r_p_arena_urn:arena_search_item_no=0&p_r_p_arena_urn:arena_search_query=organisationId_index:AUKLIBRARIESUNLIMITED|1 AND number_index:9780747532743&p_r_p_arena_urn:arena_search_type=solr&p_r_p_arena_urn:arena_sort_advice=field=Relevance&direction=Descending')
 const HOLDINGS_URL_PORTLET =
   'results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2FcrDetailWicket%2F%3Fwicket%3Ainterface%3D%3A0%3ArecordPanel%3Apanel%3AholdingsPanel%3A%3AIBehaviorListener%3A0%3A&p_p_cacheability=cacheLevelPage'
 const HOLDINGSDETAIL_URL_PORTLET =
@@ -31,19 +31,17 @@ exports.getService = service => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
+  let botCookie = null
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
     const agent = request.agent()
     let $ = null
-    // if (responseLibraries.libraries.length > 0) return common.endResponse(responseLibraries)
 
     if (service.SignupUrl) {
-      // This service needs to be loaded using the signup page rather
-      // than the advanced search page.
-      const signupResponse = await agent.get(service.SignupUrl)
+      // Some installations list libraries on the signup page
+      const signupResponse = await agent.get(service.SignupUrl).timeout(20000)
       $ = cheerio.load(signupResponse.text)
-
       if ($('select[name="branches-div:choiceBranch"] option').length > 1) {
         $('select[name="branches-div:choiceBranch"] option').each(function () {
           if (common.isLibrary($(this).text()))
@@ -54,9 +52,10 @@ exports.getLibraries = async function (service) {
     }
 
     // Get the advanced search page
-    const advancedSearchResponse = await agent.get(
-      service.Url + service.AdvancedUrl
-    )
+    const advancedSearchResponse = await agent
+      .get(service.Url + service.AdvancedUrl)
+      .set({ Connection: 'keep-alive' })
+      .timeout(20000)
 
     // The advanced search page may have libraries listed on it
     $ = cheerio.load(advancedSearchResponse.text)
@@ -69,23 +68,33 @@ exports.getLibraries = async function (service) {
     }
 
     // If not we'll need to call a portlet to get the data
-    const focusedElementId = $('.arena-extended-search-organisation-choice').attr('id')
+    const focusedElementId = $(
+      '.arena-extended-search-organisation-choice'
+    ).attr('id')
     const headers = {
       Accept: 'text/xml',
+      'Content-Type': 'application/x-www-form-urlencoded',
       'Wicket-Ajax': true,
-      'Wicket-Focusedelementid': focusedElementId,
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Wicket-Focusedelementid': focusedElementId
     }
-    const url = service.Url + service.AdvancedUrl + LIBRARIES_URL_PORTLET
+    const url = service.Url + service.AdvancedUrl
+
+    const formData = querystring.stringify({
+      p_p_id: 'extendedSearch_WAR_arenaportlet',
+      p_p_lifecycle: 2,
+      p_p_state: 'normal',
+      p_p_mode: 'view',
+      p_p_resource_id:
+        '/extendedSearch/?wicket:interface=:0:extendedSearchPanel:extendedSearchForm:organisationHierarchyPanel:organisationContainer:organisationChoice::IBehaviorListener:0:',
+      p_p_cacheability: 'cacheLevelPage',
+      'organisationHierarchyPanel:organisationContainer:organisationChoice':
+        service.OrganisationId || ''
+    })
     const responseHeaderRequest = await agent
       .post(url)
-      .send(
-        querystring.stringify({
-          'organisationHierarchyPanel:organisationContainer:organisationChoice':
-            service.OrganisationId
-        })
-      )
       .set(headers)
+      .send(formData)
+      .timeout(20000)
     const js = await xml2js.parseStringPromise(responseHeaderRequest.text)
 
     // Parse the results of the request
@@ -109,53 +118,54 @@ exports.getLibraries = async function (service) {
  * @param {object} service
  */
 exports.searchByISBN = async function (isbn, service) {
+  let botCookie = null
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
   try {
     const agent = request.agent()
 
-    let bookQuery =
-      service.SearchType !== 'Keyword' ? 'number_index:' + isbn : isbn
+    // Stage 1: Call the search results
+    let query = service.SearchType !== 'Keyword' ? 'number_index:' + isbn : isbn
+    if (service.OrganisationId) {
+      query = 'organisationId_index:' + service.OrganisationId + '+AND+' + query
+    }
 
-    if (service.OrganisationId)
-      bookQuery =
-        'organisationId_index:' + service.OrganisationId + '+AND+' + bookQuery
-
-    const searchUrl = SEARCH_URL_PORTLET.replace('[BOOKQUERY]', bookQuery)
+    const searchUrl = SEARCH_URL_PORTLET.replace('[BOOKQUERY]', query)
     responseHoldings.url = service.Url + searchUrl
 
-    const searchResponse = await agent.get(responseHoldings.url).timeout(20000)
+    let searchResponse = await agent.get(responseHoldings.url).timeout(20000)
+    let cookieResponse = await handleLoadingResponse(agent, searchResponse)
+    searchResponse = cookieResponse.response
+    botCookie = cookieResponse.cookieString
 
-    // No item found
-    if (
-      !searchResponse ||
-      !searchResponse.text ||
-      (searchResponse.text &&
-        searchResponse.text.lastIndexOf('search_item_id') === -1)
-    )
+    const resultsText = searchResponse.text.replace(/\\x3d/g, '=').replace(/\\x26/g, '&')
+
+    const itemIdIndex = resultsText && resultsText.lastIndexOf('search_item_id')
+    if (!itemIdIndex || itemIdIndex === -1) {
       return common.endResponse(responseHoldings)
+    }
 
-    // Call to the item page
-    const pageText = searchResponse.text
-      .replace(/\\x3d/g, '=')
-      .replace(/\\x26/g, '&')
-    let itemId = pageText.substring(
-      pageText.lastIndexOf('search_item_id=') + 15
-    )
-    itemId = itemId.substring(0, itemId.indexOf('&'))
+    let $ = cheerio.load(resultsText)
+
+    // Stage 2: Get the item details page to retrieve holdings
+    const itemIdString = resultsText.substring(itemIdIndex + 15)
+    itemId = itemIdString.substring(0, itemIdString.indexOf('&'))
     responseHoldings.id = itemId
 
-    const itemDetailsUrl = ITEM_URL_PORTLET.replace(
+    const itemUrlPortlet = ITEM_URL_PORTLET.replace(
       '[ARENANAME]',
       service.ArenaName
     ).replace('[ITEMID]', itemId)
-    const itemUrl = service.Url + itemDetailsUrl
+    const itemUrl = service.Url + itemUrlPortlet
 
-    const itemPageResponse = await agent
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    let itemPageResponse = await agent
       .get(itemUrl)
+      .set({ cookie: botCookie })
       .set({ Connection: 'keep-alive' })
       .timeout(20000)
-    let $ = cheerio.load(itemPageResponse.text)
+
+    $ = cheerio.load(itemPageResponse.text)
 
     if ($('.arena-availability-viewbranch').length > 0) {
       // If the item holdings are available immediately on the page
@@ -190,14 +200,26 @@ exports.searchByISBN = async function (isbn, service) {
     // Get the item holdings widget
     const holdingsPanelHeader = {
       Accept: 'text/xml',
-      'Wicket-Ajax': true
+      'Wicket-Ajax': true,
+      cookie: botCookie
     }
 
     const holdingsPanelUrl = service.Url + HOLDINGS_URL_PORTLET
-
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    const holdingsPanelPayload = {
+      p_p_id: 'crDetailWicket_WAR_arenaportlet',
+      p_p_lifecycle: 2,
+      p_p_state: 'normal',
+      p_p_mode: 'view',
+      p_p_resource_id: 
+        '/crDetailWicket/?wicket:interface=:1:recordPanel:holdingsPanel::IBehaviorListener:0:',
+      p_p_cacheability: 'cacheLevelPage'
+    }
+    const holdingsPanelFormData = querystring.stringify(holdingsPanelPayload)
     const holdingsPanelPortletResponse = await agent
-      .get(holdingsPanelUrl)
+      .post(itemUrl)
       .set(holdingsPanelHeader)
+      .send(holdingsPanelFormData)
       .timeout(20000)
     const js = await xml2js.parseStringPromise(
       holdingsPanelPortletResponse.text
@@ -267,7 +289,7 @@ exports.searchByISBN = async function (isbn, service) {
       Accept: 'text/xml',
       'Content-Type': 'application/x-www-form-urlencoded',
       'Wicket-Ajax': true,
-      'Wicket-FocusedElementId': linkId
+      'Wicket-Focusedelementid': linkId
     }
 
     // Get the interface id from the link
@@ -278,6 +300,7 @@ exports.searchByISBN = async function (isbn, service) {
       p_p_resource_id.indexOf('wicket:interface=') + 18,
       p_p_resource_id.indexOf(':recordPanel')
     )
+  
     const holdingsFormData = {
       p_p_id: 'crDetailWicket_WAR_arenaportlet',
       p_p_lifecycle: 2,
@@ -288,6 +311,7 @@ exports.searchByISBN = async function (isbn, service) {
       }:holdingContainer:togglableLink::IBehaviorListener:0:`,
       p_p_cacheability: 'cacheLevelPage'
     }
+
     // Add the form data to the request body
     const formData = querystring.stringify(holdingsFormData)
 
@@ -295,6 +319,7 @@ exports.searchByISBN = async function (isbn, service) {
     const holdingsResponse = await agent
       .post(holdingsUrl)
       .set(holdingsHeaders)
+      .set({ cookie: botCookie })
       .send(formData)
       .timeout(20000)
     const holdingsJs = await xml2js.parseStringPromise(holdingsResponse.text)
@@ -318,7 +343,9 @@ exports.searchByISBN = async function (isbn, service) {
         'Wicket-Ajax': true,
         'Wicket-FocusedElementId': linkId
       }
-      availabilityRequests.push(agent.get(libUrl).set(headers).timeout(20000))
+      availabilityRequests.push(
+        agent.get(libUrl).set(headers).set({ cookie: botCookie }).timeout(20000)
+      )
     })
 
     const responses = await Promise.all(availabilityRequests)
@@ -354,4 +381,54 @@ exports.searchByISBN = async function (isbn, service) {
   }
 
   return common.endResponse(responseHoldings)
+}
+
+const isLoadingPage = response => {
+  return response && response.text && response.text.indexOf('Loading...') !== -1
+}
+
+const handleLoadingResponse = async (agent, response) => {
+  if (!response || !response.text) return response
+
+  let cookieString = null
+
+  // If loading page is detected follow the procedure to run the javascript
+  if (isLoadingPage(response)) {
+    let tries = 0
+    while (tries < 2 && response && isLoadingPage(response)) {
+      const respText = response.text
+      const leastFactorStart = respText.indexOf('function leastFactor(n) {')
+      const leastFactorEnd = respText.indexOf('return n;', leastFactorStart) + 9
+      const leastFactorString = respText.substring(
+        leastFactorStart,
+        leastFactorEnd
+      )
+      const goStart = respText.indexOf('function go() {') + 15
+      const goEnd =
+        respText.indexOf('document.location.reload(true); }', goStart) + 33
+
+      let goString = respText
+        .substring(goStart, goEnd)
+        .replace('document.location.reload(true);', '')
+        .replace('document.cookie=', '; return ')
+
+      // Embed the least factor function inside the go function
+      goString = `${leastFactorString}}\n${goString}`
+
+      // We need to dynamically create a function to execute the code returned
+      const go = Function(goString)
+
+      cookieString = go()
+
+      response = await agent
+        .get(response.request.url)
+        .set({ cookie: cookieString })
+        .timeout(20000)
+      tries += 1
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    return { response, cookieString }
+  } else {
+    return { response, cookieString }
+  }
 }
