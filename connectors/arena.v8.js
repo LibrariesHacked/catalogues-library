@@ -7,8 +7,9 @@ const request = require('superagent')
 const xml2js = require('xml2js')
 
 const common = require('./common')
+const { Cookie } = require('tough-cookie')
 
-const RESULT_URL = 'results?'
+const RESULT_URL = 'results'
 
 const SEARCH_URL_PORTLET =
   'search?p_p_id=searchResult_WAR_arenaportlet&p_p_lifecycle=1&p_p_state=normal&p_r_p_arena_urn:arena_facet_queries=&p_r_p_arena_urn:arena_search_type=solr&p_r_p_arena_urn:arena_search_query=[BOOKQUERY]'
@@ -133,12 +134,21 @@ exports.searchByISBN = async function (isbn, service) {
     const searchUrl = SEARCH_URL_PORTLET.replace('[BOOKQUERY]', query)
     responseHoldings.url = service.Url + searchUrl
 
-    let searchResponse = await agent.get(responseHoldings.url).timeout(20000)
+    let searchResponse = await agent
+      .get(responseHoldings.url)
+      .set({ Connection: 'keep-alive' })
+      .timeout(20000)
+
     let cookieResponse = await handleLoadingResponse(agent, searchResponse)
     searchResponse = cookieResponse.response
+    const sessionCookies = searchResponse.headers['set-cookie']
     botCookie = cookieResponse.cookieString
+    sessionCookies.push(botCookie + ';')
+    const cookies = sessionCookies.join('; ')
 
-    const resultsText = searchResponse.text.replace(/\\x3d/g, '=').replace(/\\x26/g, '&')
+    const resultsText = searchResponse.text
+      .replace(/\\x3d/g, '=')
+      .replace(/\\x26/g, '&')
 
     const itemIdIndex = resultsText && resultsText.lastIndexOf('search_item_id')
     if (!itemIdIndex || itemIdIndex === -1) {
@@ -158,11 +168,10 @@ exports.searchByISBN = async function (isbn, service) {
     ).replace('[ITEMID]', itemId)
     const itemUrl = service.Url + itemUrlPortlet
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000))
     let itemPageResponse = await agent
       .get(itemUrl)
-      .set({ cookie: botCookie })
-      .set({ Connection: 'keep-alive' })
+      .set({ Cookie: cookies, Connection: 'keep-alive' })
       .timeout(20000)
 
     $ = cheerio.load(itemPageResponse.text)
@@ -200,24 +209,25 @@ exports.searchByISBN = async function (isbn, service) {
     // Get the item holdings widget
     const holdingsPanelHeader = {
       Accept: 'text/xml',
+      'Content-Type': 'application/x-www-form-urlencoded',
       'Wicket-Ajax': true,
-      cookie: botCookie
+      Cookie: cookies
     }
 
-    const holdingsPanelUrl = service.Url + HOLDINGS_URL_PORTLET
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const holdingsUrl = service.Url + RESULT_URL
+    await new Promise(resolve => setTimeout(resolve, 1000))
     const holdingsPanelPayload = {
       p_p_id: 'crDetailWicket_WAR_arenaportlet',
       p_p_lifecycle: 2,
       p_p_state: 'normal',
       p_p_mode: 'view',
-      p_p_resource_id: 
-        '/crDetailWicket/?wicket:interface=:1:recordPanel:holdingsPanel::IBehaviorListener:0:',
+      p_p_resource_id:
+        '/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel::IBehaviorListener:0:',
       p_p_cacheability: 'cacheLevelPage'
     }
     const holdingsPanelFormData = querystring.stringify(holdingsPanelPayload)
     const holdingsPanelPortletResponse = await agent
-      .post(itemUrl)
+      .post(holdingsUrl)
       .set(holdingsPanelHeader)
       .send(holdingsPanelFormData)
       .timeout(20000)
@@ -300,7 +310,7 @@ exports.searchByISBN = async function (isbn, service) {
       p_p_resource_id.indexOf('wicket:interface=') + 18,
       p_p_resource_id.indexOf(':recordPanel')
     )
-  
+
     const holdingsFormData = {
       p_p_id: 'crDetailWicket_WAR_arenaportlet',
       p_p_lifecycle: 2,
@@ -314,8 +324,6 @@ exports.searchByISBN = async function (isbn, service) {
 
     // Add the form data to the request body
     const formData = querystring.stringify(holdingsFormData)
-
-    const holdingsUrl = service.Url + RESULT_URL
     const holdingsResponse = await agent
       .post(holdingsUrl)
       .set(holdingsHeaders)
@@ -425,7 +433,7 @@ const handleLoadingResponse = async (agent, response) => {
         .set({ cookie: cookieString })
         .timeout(20000)
       tries += 1
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000))
     }
     return { response, cookieString }
   } else {
