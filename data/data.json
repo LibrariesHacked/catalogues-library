@@ -106,6 +106,7 @@
       "Name": "Blackburn with Darwen",
       "Code": "E06000008",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://bwdlibraries.spydus.co.uk/"
     },
     {
@@ -125,6 +126,7 @@
       "Name": "Bolton",
       "Code": "E08000001",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://bolton.spydus.co.uk/"
     },
     {
@@ -211,6 +213,7 @@
       "Name": "Bury",
       "Code": "E08000002",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://bury.spydus.co.uk/"
     },
     {
@@ -592,6 +595,7 @@
       "Name": "Gloucestershire",
       "Code": "E10000013",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://gloucestershire.spydus.co.uk/"
     },
     {
@@ -683,9 +687,7 @@
       "Name": "Hartlepool",
       "Code": "E06000001",
       "Type": "spydus",
-      "Available": [
-        "Available"
-      ],
+      "OpacReference": "OPAC",
       "Url": "https://hartlepool.spydus.co.uk/"
     },
     {
@@ -920,6 +922,7 @@
       "Name": "Manchester",
       "Code": "E08000003",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://manchester.spydus.co.uk/"
     },
     {
@@ -1133,6 +1136,7 @@
       "Name": "Oldham",
       "Code": "E08000004",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://oldham.spydus.co.uk/"
     },
     {
@@ -1156,6 +1160,7 @@
       "Name": "Sir Benfro - Pembrokeshire",
       "Code": "W06000009",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://pembrokeshire.spydus.co.uk/"
     },
     {
@@ -1185,6 +1190,7 @@
       "Name": "Portsmouth",
       "Code": "E06000044",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://portsmouth.spydus.co.uk/"
     },
     {
@@ -1247,6 +1253,7 @@
       "Name": "Rochdale",
       "Code": "E08000005",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://rochdale.spydus.co.uk/"
     },
     {
@@ -1274,6 +1281,7 @@
       "Name": "Salford",
       "Code": "E08000006",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://salfordlibraries.spydus.co.uk/"
     },
     {
@@ -1427,6 +1435,7 @@
       "Name": "Stockport",
       "Code": "E08000007",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://stockport.spydus.co.uk/"
     },
     {
@@ -1490,6 +1499,7 @@
       "Name": "Tameside",
       "Code": "E08000008",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://tameside.spydus.co.uk/"
     },
     {
@@ -1548,6 +1558,7 @@
       "Name": "Trafford",
       "Code": "E08000009",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://trafford.spydus.co.uk/"
     },
     {
@@ -1683,6 +1694,7 @@
       "Name": "Wigan",
       "Code": "E08000010",
       "Type": "spydus",
+      "OpacReference": "OPAC",
       "Url": "https://wigan.spydus.co.uk/"
     },
     {

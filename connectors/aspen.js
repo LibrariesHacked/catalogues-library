@@ -6,7 +6,7 @@ const common = require('./common')
 const UserAgent = require('user-agents')
 
 const HEADER = {
-  'User-Agent': new UserAgent().toString(),
+  'User-Agent': new UserAgent({ deviceCategory: 'mobile' }).toString(),
 }
 
 const ADVANCED_SEARCH_URL =

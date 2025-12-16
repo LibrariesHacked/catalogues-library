@@ -14,9 +14,7 @@ exports.getService = service => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
-  const agent = service.DisableTls
-    ? request.agent().disableTLSCerts()
-    : request.agent()
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
@@ -45,9 +43,7 @@ exports.searchByISBN = async function (isbn, service) {
   responseHoldings.url =
     service.Url + 'search~S1/?searchtype=i&searcharg=' + isbn
 
-  const agent = service.DisableTls
-    ? request.agent().disableTLSCerts()
-    : request.agent()
+  const agent = request.agent()
   const libs = {}
 
   try {

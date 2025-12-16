@@ -144,6 +144,12 @@ exports.searchByISBN = async function (isbn, service) {
     const sessionCookies = searchResponse.headers['set-cookie']
     botCookie = cookieResponse.cookieString
     sessionCookies.push(botCookie + ';')
+    // Remove Secure and HttpOnly flags from cookies
+    for (let i = 0; i < sessionCookies.length; i++) {
+      sessionCookies[i] = sessionCookies[i]
+        .replace(/; Secure/gi, '')
+        .replace(/; HttpOnly/gi, '')
+    }
     const cookies = sessionCookies.join('; ')
 
     const resultsText = searchResponse.text

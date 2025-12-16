@@ -17,9 +17,7 @@ exports.getService = service => common.getService(service)
  * @param {object} service
  */
 exports.getLibraries = async function (service) {
-  const agent = service.DisableTls
-    ? request.agent().disableTLSCerts()
-    : request.agent()
+  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
@@ -58,14 +56,12 @@ exports.searchByISBN = async function (isbn, service) {
     holdingsUrl = holdingsUrl.replace('WPAC', service.OpacReference)
   }
 
-  const agent = service.DisableTls
-    ? request.agent().disableTLSCerts()
-    : request.agent()
+  const agent = request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = holdingsUrl
 
   try {
-    const itemPageRequest = await await agent.get(holdingsUrl).timeout(30000)
+    const itemPageRequest = await await agent.get(holdingsUrl).timeout(60000)
     let $ = cheerio.load(itemPageRequest.text)
     if ($('#result-content-list').length === 0)
       return common.endResponse(responseHoldings)
@@ -85,7 +81,7 @@ exports.searchByISBN = async function (isbn, service) {
       .attr('href')
     const availabilityRequest = await agent
       .get(service.Url + availabilityUrl)
-      .timeout(30000)
+      .timeout(60000)
 
     $ = cheerio.load(availabilityRequest.text)
 
