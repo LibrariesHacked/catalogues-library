@@ -2,6 +2,7 @@ const request = require('superagent')
 
 const common = require('./common')
 
+
 /**
  * Gets the object representing the service
  * @param {object} service
@@ -15,7 +16,8 @@ const getLuciLibrariesInternal = async function (service) {
   }
 
   try {
-    let resp = await agent.get(`${service.Url}${service.Home}`).timeout(20000)
+    let resp = await agent
+      .get(`${service.Url}${service.Home}`)
     const frontEndId = /\/_next\/static\/([^\/]+)\/_buildManifest.js/gm.exec(
       resp.text
     )[1]
