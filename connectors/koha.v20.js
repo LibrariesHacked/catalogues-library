@@ -1,8 +1,8 @@
-const cheerio = require('cheerio')
-const request = require('superagent')
-const UserAgent = require('user-agents')
+import * as cheerio from 'cheerio'
+import request from 'superagent'
+import UserAgent from 'user-agents'
 
-const common = require('./common')
+import * as common from './common.js'
 
 const CAT_URL = 'cgi-bin/koha/opac-search.pl?format=rss2&idx=nb&q='
 const LIBS_URL =
@@ -15,13 +15,13 @@ const HEADER = {
  * Gets the object representing the service
  * @param {object} service
  */
-exports.getService = service => common.getService(service)
+export const getService = service => common.getService(service)
 
 /**
  * Gets the libraries in the service based upon possible search and filters within the library catalogue
  * @param {object} service
  */
-exports.getLibraries = async function (service) {
+export const getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
@@ -60,7 +60,7 @@ exports.getLibraries = async function (service) {
  * @param {string} isbn
  * @param {object} service
  */
-exports.searchByISBN = async function (isbn, service) {
+export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = service.Url
 

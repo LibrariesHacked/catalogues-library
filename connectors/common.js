@@ -3,7 +3,7 @@
  * object from data.json.  Maintain a list here of what to return.
  * @param {object} service
  */
-exports.getService = function (service) {
+export function getService(service) {
   return {
     code: service.Code,
     name: service.Name,
@@ -17,7 +17,7 @@ exports.getService = function (service) {
  * @param {*} error
  * @param {*} httpMessage
  */
-exports.handleErrors = function (error, httpMessage) {
+export function handleErrors(error, httpMessage) {
   if (httpMessage && (httpMessage.statusCode !== 200 && httpMessage.statusCode !== 302)) error = 'Web request error. Status code was ' + httpMessage.statusCode
   if (error) return true
   return false
@@ -27,7 +27,7 @@ exports.handleErrors = function (error, httpMessage) {
  * Test if a string is json
  * @param {string} str
  */
-exports.isJsonString = function (str) {
+export function isJsonString(str) {
   try {
     JSON.parse(str)
   } catch (e) { return false }
@@ -38,7 +38,7 @@ exports.isJsonString = function (str) {
  * Test if a string is a library
  * @param {string} str
  */
-exports.isLibrary = function (str) {
+export function isLibrary(str) {
   const nonLibraries = [
     'ALL',
     'ANY',
@@ -74,7 +74,7 @@ exports.isLibrary = function (str) {
  * Creates a new object to store results for the get libraries request
  * @param {object} service
  */
-exports.initialiseGetLibrariesResponse = function (service) {
+export function initialiseGetLibrariesResponse(service) {
   const response = { service: service.Name, code: service.Code, libraries: [], start: new Date(), end: null }
   // Sometimes we have to use libraries that are hardcoded into the config
   if (service.Libraries) {
@@ -87,7 +87,7 @@ exports.initialiseGetLibrariesResponse = function (service) {
  * Creates a new object to store search results for the ISBN search
  * @param {object} service
  */
-exports.initialiseSearchByISBNResponse = function (service) {
+export function initialiseSearchByISBNResponse(service) {
   return { id: null, service: service.Name, code: service.Code, availability: [], start: new Date(), end: null }
 }
 
@@ -95,6 +95,6 @@ exports.initialiseSearchByISBNResponse = function (service) {
  * Assigns a final timestamp to a request
  * @param {*} service
  */
-exports.endResponse = function (request) {
+export function endResponse(request) {
   return { ...request, end: new Date() }
 }

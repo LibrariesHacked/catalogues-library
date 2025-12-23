@@ -1,5 +1,5 @@
-const request = require('superagent')
-const xml2js = require('xml2js')
+import request from 'superagent'
+import xml2js from 'xml2js'
 
 const URL = 'https://www.librarything.com/api/thingISBN/'
 
@@ -7,7 +7,7 @@ const URL = 'https://www.librarything.com/api/thingISBN/'
  * Gets a set of ISBNs relating to a single ISBN from the library thing thingISBN service
  * @param {string} isbn
  */
-exports.thingISBN = async isbn => {
+export const thingISBN = async isbn => {
   const agent = request.agent()
   const responseISBNs = { isbns: [] }
 

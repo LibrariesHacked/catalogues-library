@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-const idx = require('.')
+import * as idx from './index.js'
 
 const t = 300000
 

@@ -1,32 +1,33 @@
 // Description: Main entry point for the catalogue library service
 
-const async = require('async')
+import async from 'async'
 
-const syswidecas = require('@small-tech/syswide-cas')
+import syswidecas from '@small-tech/syswide-cas'
 // Intermediate certificate that's often incomplete in SSL chains.
 syswidecas.addCAs('./SectigoRSADomainValidationSecureServerCA.cer')
 
 // Catalogue integration connectors
-const arenav7 = require('./connectors/arena.v7')
-const arenav8 = require('./connectors/arena.v8')
-const aspen = require('./connectors/aspen')
-const durham = require('./connectors/durham')
-const enterprise = require('./connectors/enterprise')
-const iguana = require('./connectors/iguana')
-const kohav20 = require('./connectors/koha.v20')
-const kohav22 = require('./connectors/koha.v22')
-const kohav23 = require('./connectors/koha.v23')
-const luci = require('./connectors/luci')
-const prism3 = require('./connectors/prism3')
-const spydus = require('./connectors/spydus')
-const webpac = require('./connectors/webpac')
+import * as arenav7 from './connectors/arena.v7.js'
+import * as arenav8 from './connectors/arena.v8.js'
+import * as aspen from './connectors/aspen.js'
+import * as durham from './connectors/durham.js'
+import * as enterprise from './connectors/enterprise.js'
+import * as iguana from './connectors/iguana.js'
+import * as kohav20 from './connectors/koha.v20.js'
+import * as kohav22 from './connectors/koha.v22.js'
+import * as kohav23 from './connectors/koha.v23.js'
+import * as luci from './connectors/luci.js'
+import * as prism3 from './connectors/prism3.js'
+import * as spydus from './connectors/spydus.js'
+import * as webpac from './connectors/webpac.js'
 
 // Other service connectors
-const libThing = require('./connectors/librarything')
-const openLibrary = require('./connectors/openlibrary')
+import * as libThing from './connectors/librarything.js'
+import * as openLibrary from './connectors/openlibrary.js'
 
 // Our data file of library services and their catalogue integrations
-const data = require('./data/data.json')
+import data from './data/data.json' with { type: 'json' }
+
 
 const serviceFunctions = {
   arenav7,
@@ -64,7 +65,7 @@ const getLibraryServicesFromFilter = serviceFilter => {
  * @param {String} serviceFilter An optional service to filter by using either code or name
  * @param {Object[]} serviceResults An array of library services
  */
-exports.services = async serviceFilter => {
+export const services = async serviceFilter => {
   const services = getLibraryServicesFromFilter(serviceFilter).map(service => {
     return async () => {
       return getServiceFunction(service).getService(service)
@@ -80,7 +81,7 @@ exports.services = async serviceFilter => {
  * @param {String} serviceFilter An optional service to filter by using either code or name
  * @param {Object[]} libraryServicePoints An array of library service points
  */
-exports.libraries = async serviceFilter => {
+export const libraries = async serviceFilter => {
   const searches = data.LibraryServices.filter(service => {
     return (
       service.Type !== '' &&
@@ -105,7 +106,7 @@ exports.libraries = async serviceFilter => {
  * @param {String} serviceFilter An optional service to filter by using either code or name
  * @param {Object[]} availability The availability of the ISBN by service
  */
-exports.availability = async (isbn, serviceFilter) => {
+export const availability = async (isbn, serviceFilter) => {
   const searches = data.LibraryServices.filter(service => {
     return (
       service.Type !== '' &&
@@ -129,7 +130,7 @@ exports.availability = async (isbn, serviceFilter) => {
  * @param {String} isbn The ISBN to search for
  * @param {String[]} isbnsAn array of ISBNs
  */
-exports.thingISBN = async isbn => {
+export const thingISBN = async isbn => {
   const thingData = await libThing.thingISBN(isbn)
   return thingData.isbns
 }
@@ -139,7 +140,7 @@ exports.thingISBN = async isbn => {
  * @param {String} query The query to search with
  * @param {Object} openLibData The search response from open library
  */
-exports.openLibrarySearch = async query => {
+export const openLibrarySearch = async query => {
   const openLibData = await openLibrary.search(query)
   return openLibData
 }

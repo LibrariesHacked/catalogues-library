@@ -3,10 +3,17 @@
   "version": "1.4.1",
   "description": "A JS library for searching library catalogues",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "jest --runInBand",
-    "test-ci": "jest --silent",
-    "test-file": "jest --no-color 2>output.txt"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "test-ci": "NODE_OPTIONS=--experimental-vm-modules jest --silent",
+    "test-file": "NODE_OPTIONS=--experimental-vm-modules jest --no-color 2>output.txt"
+  },
+  "jest": {
+    "transform": {},
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    }
   },
   "repository": {
     "type": "git",

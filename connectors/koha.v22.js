@@ -1,7 +1,7 @@
-const cheerio = require('cheerio')
-const request = require('superagent')
+import * as cheerio from 'cheerio'
+import request from 'superagent'
 
-const common = require('./common')
+import * as common from './common.js'
 
 const CAT_URL =
   'Search/Results?lookfor=[ISBN]&searchIndex=Keyword&sort=relevance&view=rss&searchSource=local'
@@ -12,13 +12,13 @@ const LIBS_URL =
  * Gets the object representing the service
  * @param {object} service
  */
-exports.getService = service => common.getService(service)
+export const getService = service => common.getService(service)
 
 /**
  * Gets the libraries in the service based upon possible search and filters within the library catalogue
  * @param {object} service
  */
-exports.getLibraries = async function (service) {
+export const getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
@@ -49,7 +49,7 @@ exports.getLibraries = async function (service) {
  * @param {string} isbn
  * @param {object} service
  */
-exports.searchByISBN = async function (isbn, service) {
+export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = service.Url
 
