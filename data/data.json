@@ -120,6 +120,7 @@
       "Code": "W06000019",
       "Type": "spydus",
       "OpacReference": "OPAC",
+      "CatalogueReference": "COMB_WRK",
       "Url": "https://aneurin.spydus.co.uk/"
     },
     {
@@ -1203,6 +1204,7 @@
     {
       "Name": "Reading",
       "Code": "E06000038",
+      "DisableTls": true,
       "Type": "spydus",
       "Url": "https://library.reading.gov.uk/"
     },

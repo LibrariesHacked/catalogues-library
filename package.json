@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
-    "test-ci": "NODE_OPTIONS=--experimental-vm-modules jest --silent",
-    "test-file": "NODE_OPTIONS=--experimental-vm-modules jest --no-color 2>output.txt"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "test-ci": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --silent",
+    "test-file": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --no-color 2>output.txt"
   },
   "jest": {
     "transform": {},
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/LibrariesHacked/catalogues-library#readme",
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "jest": "^29.7.0"
   },
   "dependencies": {

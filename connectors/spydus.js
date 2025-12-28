@@ -17,7 +17,9 @@ export const getService = service => common.getService(service)
  * @param {object} service
  */
 export const getLibraries = async function (service) {
-  const agent = request.agent()
+  const agent = service.DisableTls
+    ? request.agent().disableTLSCerts()
+    : request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
@@ -39,6 +41,7 @@ export const getLibraries = async function (service) {
         responseLibraries.libraries.push($(option).text().trim())
     })
   } catch (e) {
+    console.log(e)
     responseLibraries.exception = e
   }
 
@@ -56,7 +59,9 @@ export const searchByISBN = async function (isbn, service) {
     holdingsUrl = holdingsUrl.replace('WPAC', service.OpacReference)
   }
 
-  const agent = request.agent()
+  const agent = service.DisableTls
+    ? request.agent().disableTLSCerts()
+    : request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = holdingsUrl
 
