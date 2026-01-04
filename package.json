@@ -31,12 +31,10 @@
   },
   "dependencies": {
     "@small-tech/syswide-cas": "^6.0.2",
-    "@types/tough-cookie": "^4.0.5",
     "async": "^3.2.6",
     "cheerio": "^1.1.2",
     "cycletls": "^1.0.27",
     "superagent": "^10.2.3",
-    "tough-cookie": "^5.1.2",
     "user-agents": "^1.1.669",
     "uuid": "^11.1.0",
     "xml2js": "^0.6.2"

@@ -41,7 +41,6 @@ export const getLibraries = async function (service) {
         responseLibraries.libraries.push($(option).text().trim())
     })
   } catch (e) {
-    console.log(e)
     responseLibraries.exception = e
   }
 
