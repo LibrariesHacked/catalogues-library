@@ -1,7 +1,5 @@
 import request from 'superagent'
 
-import CurlImpersonate from 'node-curl-impersonate'
-
 import * as common from './common.js'
 
 /**
@@ -17,17 +15,6 @@ const getLuciLibrariesInternal = async function (service) {
   }
 
   try {
-    const curlImpersonate = new CurlImpersonate(
-      'https://www.lutonlibraries.co.uk/home',
-      {
-        method: 'GET',
-        impersonate: 'chrome-116',
-        headers: {}
-      }
-    )
-    await curlImpersonate.makeRequest('https://www.lutonlibraries.co.uk/home')
-    const response = curlResponse.response;
-    console.log('Curl-Impersonate response status:', response.statusCode);
     let resp = await agent.get(`${service.Url}${service.Home}`)
     const frontEndId = /\/_next\/static\/([^\/]+)\/_buildManifest.js/gm.exec(
       resp.text
@@ -48,7 +35,6 @@ const getLuciLibrariesInternal = async function (service) {
     }
   } catch (e) {
     response.exception = e
-    console.log(e)
   }
 
   return response
