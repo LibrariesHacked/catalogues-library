@@ -281,14 +281,14 @@
       "Name": "Cheshire East",
       "Code": "E06000049",
       "Type": "koha",
-      "Version": "v20",
+      "Version": "v23",
       "Url": "https://cheslive.koha-ptfs.co.uk/"
     },
     {
       "Name": "Cheshire West and Chester",
       "Code": "E06000050",
       "Type": "koha",
-      "Version": "v20",
+      "Version": "v23",
       "Url": "https://cheslive.koha-ptfs.co.uk/"
     },
     {
@@ -306,7 +306,7 @@
       "Name": "Clackmannanshire",
       "Code": "S12000005",
       "Type": "koha",
-      "Version": "v20",
+      "Version": "v24",
       "Url": "https://clacks.koha-ptfs.co.uk/"
     },
     {
@@ -351,8 +351,7 @@
       "Name": "Cumberland",
       "Code": "E06000063",
       "Type": "koha",
-      "Version": "v20",
-      "LibsUrl": "cgi-bin/koha/opac-search.pl?do=Search&expand=holdingbranch#holdingbranch_id",
+      "Version": "v24",
       "Url": "https://cwflibraries.org.uk/"
     },
     {
@@ -643,7 +642,7 @@
       "Name": "Halton",
       "Code": "E06000006",
       "Type": "koha",
-      "Version": "v20",
+      "Version": "v24",
       "Url": "https://hpl.koha-ptfs.co.uk/"
     },
     {
@@ -826,7 +825,7 @@
       "Name": "Knowsley",
       "Code": "E08000011",
       "Type": "koha",
-      "Version": "v20",
+      "Version": "v23",
       "LibsUrl": "cgi-bin/koha/opac-search.pl?do=Search&expand=holdingbranch#holdingbranch_id",
       "Url": "https://catalogue.knowsley.gov.uk/"
     },
@@ -987,8 +986,7 @@
     {
       "Name": "Newcastle upon Tyne",
       "Code": "E08000021",
-      "Type": "koha",
-      "Version": "v23",
+      "Type": "aspen",
       "Url": "https://libraries.newcastle.gov.uk/"
     },
     {
@@ -1304,8 +1302,7 @@
     {
       "Name": "Sefton",
       "Code": "E08000014",
-      "Type": "koha",
-      "Version": "v23",
+      "Type": "aspen",
       "Url": "https://catalogue.sefton.gov.uk/"
     },
     {
@@ -1413,8 +1410,7 @@
       "Name": "St Helens",
       "Code": "E08000013",
       "Type": "koha",
-      "Version": "v20",
-      "LibsUrl": "cgi-bin/koha/opac-search.pl?do=Search&expand=holdingbranch#holdingbranch_id",
+      "Version": "v23",
       "Url": "https://sthlibraries.koha-ptfs.co.uk/"
     },
     {
@@ -1610,8 +1606,7 @@
       "Name": "Warrington",
       "Code": "E06000007",
       "Type": "koha",
-      "Version": "v20",
-      "LibsUrl": "cgi-bin/koha/opac-search.pl?do=Search&expand=holdingbranch#holdingbranch_id",
+      "Version": "v23",
       "Url": "https://libonline.livewirewarrington.co.uk/"
     },
     {
@@ -1688,7 +1683,7 @@
       "Name": "Westmorland and Furness",
       "Code": "E06000064",
       "Type": "koha",
-      "Version": "v20",
+      "Version": "v24",
       "LibsUrl": "cgi-bin/koha/opac-search.pl?do=Search&expand=holdingbranch#holdingbranch_id",
       "Url": "https://cwflibraries.org.uk/"
     },

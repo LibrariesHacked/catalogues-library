@@ -13,9 +13,8 @@ import * as aspen from './connectors/aspen.js'
 import * as durham from './connectors/durham.js'
 import * as enterprise from './connectors/enterprise.js'
 import * as iguana from './connectors/iguana.js'
-import * as kohav20 from './connectors/koha.v20.js'
-import * as kohav22 from './connectors/koha.v22.js'
 import * as kohav23 from './connectors/koha.v23.js'
+import * as kohav24 from './connectors/koha.v24.js'
 import * as luci from './connectors/luci.js'
 import * as prism3 from './connectors/prism3.js'
 import * as spydus from './connectors/spydus.js'
@@ -36,9 +35,8 @@ const serviceFunctions = {
   durham,
   enterprise,
   iguana,
-  kohav20,
-  kohav22,
   kohav23,
+  kohav24,
   luci,
   prism3,
   spydus,
