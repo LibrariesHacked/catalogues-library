@@ -33,10 +33,10 @@
     "@small-tech/syswide-cas": "^6.0.2",
     "async": "^3.2.6",
     "cheerio": "^1.1.2",
-    "cycletls": "^1.0.27",
+    "cycletls": "^2.0.5",
     "superagent": "^10.2.3",
     "user-agents": "^1.1.669",
-    "uuid": "^11.1.0",
+    "uuid": "^13.0.0",
     "xml2js": "^0.6.2"
   }
 }
