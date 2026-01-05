@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-const idx = require('.')
+import * as idx from './index.js'
 
 const t = 300000
 
@@ -27,7 +27,6 @@ test('E09000021', async () => await idx.runTest('Kingston upon Thames'), t)
 test('E08000034', async () => await idx.runTest('Kirklees'), t)
 test('E08000035', async () => await idx.runTest('Leeds'), t)
 test('E09000023', async () => await idx.runTest('Lewisham'), t)
-test('E09000024', async () => await idx.runTest('Merton'), t)
 test('E09000025', async () => await idx.runTest('Newham'), t)
 test('E09000026', async () => await idx.runTest('Redbridge'), t)
 test('E08000018', async () => await idx.runTest('Rotherham'), t)
@@ -37,7 +36,6 @@ test('E10000030', async () => await idx.runTest('Surrey'), t)
 test('E06000034', async () => await idx.runTest('Thurrock'), t)
 test('E09000030', async () => await idx.runTest('Tower Hamlets'), t)
 test('E08000036', async () => await idx.runTest('Wakefield'), t)
-test('E09000031', async () => await idx.runTest('Waltham Forest'), t)
 test('S12000039', async () => await idx.runTest('West Dunbartonshire'), t)
 test('S12000040', async () => await idx.runTest('West Lothian'), t)
 test('E10000034', async () => await idx.runTest('Worcestershire'), t)

@@ -1,12 +1,12 @@
-const request = require('superagent')
+import request from 'superagent'
 
-const common = require('./common')
+import * as common from './common.js'
 
 /**
  * Gets the object representing the service
  * @param {object} service
  */
-exports.getService = service => common.getService(service)
+export const getService = service => common.getService(service)
 
 const getLuciLibrariesInternal = async function (service) {
   const agent = request.agent()
@@ -15,7 +15,7 @@ const getLuciLibrariesInternal = async function (service) {
   }
 
   try {
-    let resp = await agent.get(`${service.Url}${service.Home}`).timeout(20000)
+    let resp = await agent.get(`${service.Url}${service.Home}`)
     const frontEndId = /\/_next\/static\/([^\/]+)\/_buildManifest.js/gm.exec(
       resp.text
     )[1]
@@ -44,7 +44,7 @@ const getLuciLibrariesInternal = async function (service) {
  * Gets the libraries in the service based upon possible search and filters within the library catalogue
  * @param {object} service
  */
-exports.getLibraries = async function (service) {
+export const getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
   const libs = await getLuciLibrariesInternal(service)
 
@@ -59,7 +59,7 @@ exports.getLibraries = async function (service) {
  * @param {string} isbn
  * @param {object} service
  */
-exports.searchByISBN = async function (isbn, service) {
+export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
   try {

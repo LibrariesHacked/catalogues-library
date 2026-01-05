@@ -1,8 +1,8 @@
 /* eslint-env expect */
 /* global expect */
 
-const index = require('../index')
-const tests = require('./tests.json')
+import * as index from '../index.js'
+import tests from './tests.json' with { type: 'json' }
 
 const librariesIgnoreList = [
   // Only has "All Locations" option
@@ -11,7 +11,7 @@ const librariesIgnoreList = [
   'North Yorkshire'
 ]
 
-exports.runTest = async service => {
+export const runTest = async service => {
   let results = null
 
   // Libraries

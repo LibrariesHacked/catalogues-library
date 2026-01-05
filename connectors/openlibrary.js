@@ -1,8 +1,8 @@
-const request = require('superagent')
+import request from 'superagent'
 
 const URL = 'https://openlibrary.org/search.json?q='
 
-exports.search = async query => {
+export const search = async query => {
   const agent = request.agent()
   const responseData = { books: [] }
 

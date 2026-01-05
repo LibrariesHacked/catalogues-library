@@ -1,13 +1,12 @@
 // HTTP Header:
 //  Liferay-Portal: Liferay Community Edition Portal 7.0.6 GA7 (Wilberforce / Build 7006 / April 17, 2018)
 
-const cheerio = require('cheerio')
-const querystring = require('querystring')
-const request = require('superagent')
-const xml2js = require('xml2js')
+import * as cheerio from 'cheerio'
+import querystring from 'querystring'
+import request from 'superagent'
+import xml2js from 'xml2js'
 
-const common = require('./common')
-const { Cookie } = require('tough-cookie')
+import * as common from './common.js'
 
 const RESULT_URL = 'results'
 
@@ -15,9 +14,6 @@ const SEARCH_URL_PORTLET =
   'search?p_p_id=searchResult_WAR_arenaportlet&p_p_lifecycle=1&p_p_state=normal&p_r_p_arena_urn:arena_facet_queries=&p_r_p_arena_urn:arena_search_type=solr&p_r_p_arena_urn:arena_search_query=[BOOKQUERY]'
 const ITEM_URL_PORTLET =
   'results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=1&p_p_state=normal&p_r_p_arena_urn:arena_search_item_id=[ITEMID]&p_r_p_arena_urn:arena_facet_queries=&p_r_p_arena_urn:arena_agency_name=[ARENANAME]&p_r_p_arena_urn:arena_search_item_no=0&p_r_p_arena_urn:arena_search_type=solr'
-;('results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=1&p_p_state=normal&p_r_p_arena_urn:arena_search_item_id=0747532745&p_r_p_arena_urn:arena_facet_queries=&p_r_p_arena_urn:arena_agency_name=AUKLIBRARIESUNLIMITED&p_r_p_arena_urn:arena_search_item_no=0&p_r_p_arena_urn:arena_search_query=organisationId_index:AUKLIBRARIESUNLIMITED|1 AND number_index:9780747532743&p_r_p_arena_urn:arena_search_type=solr&p_r_p_arena_urn:arena_sort_advice=field=Relevance&direction=Descending')
-const HOLDINGS_URL_PORTLET =
-  'results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2FcrDetailWicket%2F%3Fwicket%3Ainterface%3D%3A0%3ArecordPanel%3Apanel%3AholdingsPanel%3A%3AIBehaviorListener%3A0%3A&p_p_cacheability=cacheLevelPage'
 const HOLDINGSDETAIL_URL_PORTLET =
   'results?p_p_id=crDetailWicket_WAR_arenaportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=[RESOURCEID]&p_p_cacheability='
 
@@ -25,13 +21,13 @@ const HOLDINGSDETAIL_URL_PORTLET =
  * Gets the object representing the service
  * @param {object} service
  */
-exports.getService = service => common.getService(service)
+export const getService = service => common.getService(service)
 
 /**
  * Gets the libraries in the service based upon possible search and filters within the library catalogue
  * @param {object} service
  */
-exports.getLibraries = async function (service) {
+export const getLibraries = async function (service) {
   let botCookie = null
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
@@ -118,7 +114,7 @@ exports.getLibraries = async function (service) {
  * @param {string} isbn
  * @param {object} service
  */
-exports.searchByISBN = async function (isbn, service) {
+export const searchByISBN = async function (isbn, service) {
   let botCookie = null
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 

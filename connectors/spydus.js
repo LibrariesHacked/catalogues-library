@@ -1,7 +1,7 @@
-const cheerio = require('cheerio')
-const request = require('superagent')
+import * as cheerio from 'cheerio'
+import request from 'superagent'
 
-const common = require('../connectors/common')
+import * as common from '../connectors/common.js'
 
 const LIBS_URL = 'cgi-bin/spydus.exe/MSGTRN/WPAC/COMB'
 const SEARCH_URL = 'cgi-bin/spydus.exe/ENQ/WPAC/BIBENQ?NRECS=1&ISBN='
@@ -10,14 +10,16 @@ const SEARCH_URL = 'cgi-bin/spydus.exe/ENQ/WPAC/BIBENQ?NRECS=1&ISBN='
  * Gets the object representing the service
  * @param {object} service
  */
-exports.getService = service => common.getService(service)
+export const getService = service => common.getService(service)
 
 /**
  * Gets the libraries in the service based upon possible search and filters within the library catalogue
  * @param {object} service
  */
-exports.getLibraries = async function (service) {
-  const agent = request.agent()
+export const getLibraries = async function (service) {
+  const agent = service.DisableTls
+    ? request.agent().disableTLSCerts()
+    : request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
@@ -50,13 +52,15 @@ exports.getLibraries = async function (service) {
  * @param {string} isbn
  * @param {object} service
  */
-exports.searchByISBN = async function (isbn, service) {
+export const searchByISBN = async function (isbn, service) {
   let holdingsUrl = service.Url + SEARCH_URL + isbn
   if (service.OpacReference) {
     holdingsUrl = holdingsUrl.replace('WPAC', service.OpacReference)
   }
 
-  const agent = request.agent()
+  const agent = service.DisableTls
+    ? request.agent().disableTLSCerts()
+    : request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.url = holdingsUrl
 

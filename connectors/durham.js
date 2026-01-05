@@ -1,21 +1,21 @@
-const request = require('superagent')
-const cheerio = require('cheerio')
-const querystring = require('querystring')
-const uuid = require('uuid')
+import request from 'superagent'
+import * as cheerio from 'cheerio'
+import querystring from 'querystring'
+import { v4 as uuidv4 } from 'uuid'
 
-const common = require('../connectors/common')
+import * as common from '../connectors/common.js'
 
 /**
  * Gets the object representing the service
  * @param {object} service
  */
-exports.getService = service => common.getService(service)
+export const getService = service => common.getService(service)
 
 /**
  * Gets the libraries in the service based upon possible search and filters within the library catalogue
  * @param {object} service
  */
-exports.getLibraries = async function (service) {
+export const getLibraries = async function (service) {
   const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
@@ -44,9 +44,9 @@ exports.getLibraries = async function (service) {
  * @param {string} isbn
  * @param {object} service
  */
-exports.searchByISBN = async function (isbn, service) {
+export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
-  responseHoldings.id = uuid.v4()
+  responseHoldings.id = uuidv4()
 
   try {
     const agent = request.agent()

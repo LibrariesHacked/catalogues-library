@@ -1,7 +1,7 @@
-const request = require('superagent')
-const xml2js = require('xml2js')
+import request from 'superagent'
+import xml2js from 'xml2js'
 
-const common = require('../connectors/common')
+import * as common from '../connectors/common.js'
 
 const ITEM_SEARCH =
   'fu=BibSearch&RequestType=ResultSet_DisplayList&NumberToRetrieve=10&StartValue=1&SearchTechnique=Find&Language=eng&Profile=Iguana&ExportByTemplate=Brief&TemplateId=Iguana_Brief&FacetedSearch=Yes&MetaBorrower=&Cluster=0&Namespace=0&BestMatch=99&ASRProfile=&Sort=Relevancy&SortDirection=1&WithoutRestrictions=Yes&Associations=Also&Application=Bib&Database=[DB]&Index=Keywords&Request=[ISBN]&SessionCMS=&CspSessionId=[SID]&SearchMode=simple&SIDTKN=[SID]'
@@ -17,7 +17,7 @@ const HOME = 'www.main.cls'
  * Gets the object representing the service
  * @param {object} service
  */
-exports.getService = service => {
+export const getService = service => {
   const serviceData = common.getService(service)
   serviceData.url = service.Url + HOME
   return serviceData
@@ -27,7 +27,7 @@ exports.getService = service => {
  * Gets the libraries in the service based upon possible search and filters within the library catalogue
  * @param {object} service
  */
-exports.getLibraries = async function (service) {
+export const getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
@@ -120,7 +120,7 @@ exports.getLibraries = async function (service) {
  * @param {string} isbn
  * @param {object} service
  */
-exports.searchByISBN = async function (isbn, service) {
+export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
   try {
