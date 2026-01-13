@@ -7,8 +7,7 @@ import syswidecas from '@small-tech/syswide-cas'
 syswidecas.addCAs('./SectigoRSADomainValidationSecureServerCA.cer')
 
 // Catalogue integration connectors
-import * as arenav7 from './connectors/arena.v7.js'
-import * as arenav8 from './connectors/arena.v8.js'
+import * as arena from './connectors/arena.js'
 import * as aspen from './connectors/aspen.js'
 import * as durham from './connectors/durham.js'
 import * as enterprise from './connectors/enterprise.js'
@@ -27,10 +26,8 @@ import * as openLibrary from './connectors/openlibrary.js'
 // Our data file of library services and their catalogue integrations
 import data from './data/data.json' with { type: 'json' }
 
-
 const serviceFunctions = {
-  arenav7,
-  arenav8,
+  arena,
   aspen,
   durham,
   enterprise,
