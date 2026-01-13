@@ -141,10 +141,13 @@ export const searchByISBN = async function (isbn, service) {
     botCookie = cookieResponse.cookieString
     sessionCookies.push(botCookie + ';')
     // Remove Secure and HttpOnly flags from cookies
+    // Allow for flexible whitespace and case insensitivity
     for (let i = 0; i < sessionCookies.length; i++) {
       sessionCookies[i] = sessionCookies[i]
-        .replace(/; Secure/gi, '')
-        .replace(/; HttpOnly/gi, '')
+        .replace(/;\s*Secure/gi, '')
+        .replace(/;\s*HttpOnly/gi, '')
+        .replace(/;\s*SameSite=Lax/gi, '')
+        .replace(/;\s*SameSite=Strict/gi, '')
     }
     const cookies = sessionCookies.join('; ')
 
@@ -157,11 +160,10 @@ export const searchByISBN = async function (isbn, service) {
       return common.endResponse(responseHoldings)
     }
 
-    let $ = cheerio.load(resultsText)
-
     // Stage 2: Get the item details page to retrieve holdings
     const itemIdString = resultsText.substring(itemIdIndex + 15)
-    itemId = itemIdString.substring(0, itemIdString.indexOf('&'))
+    const itemIdEndIndex = itemIdString.indexOf('&')
+    const itemId = itemIdString.substring(0, itemIdEndIndex)
     responseHoldings.id = itemId
 
     const itemUrlPortlet = ITEM_URL_PORTLET.replace(
@@ -176,7 +178,7 @@ export const searchByISBN = async function (isbn, service) {
       .set({ Cookie: cookies, Connection: 'keep-alive' })
       .timeout(20000)
 
-    $ = cheerio.load(itemPageResponse.text)
+    let $ = cheerio.load(itemPageResponse.text)
 
     if ($('.arena-availability-viewbranch').length > 0) {
       // If the item holdings are available immediately on the page
@@ -218,6 +220,7 @@ export const searchByISBN = async function (isbn, service) {
 
     const holdingsUrl = service.Url + RESULT_URL
     await new Promise(resolve => setTimeout(resolve, 1000))
+
     const holdingsPanelPayload = {
       p_p_id: 'crDetailWicket_WAR_arenaportlet',
       p_p_lifecycle: 2,
@@ -225,8 +228,10 @@ export const searchByISBN = async function (isbn, service) {
       p_p_mode: 'view',
       p_p_resource_id:
         '/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel::IBehaviorListener:0:',
+        // /crDetailWicket/?wicket:interface=:1:recordPanel:panel:holdingsPanel::IBehaviorListener:0:
       p_p_cacheability: 'cacheLevelPage'
     }
+
     const holdingsPanelFormData = querystring.stringify(holdingsPanelPayload)
     const holdingsPanelPortletResponse = await agent
       .post(holdingsUrl)
@@ -394,7 +399,9 @@ export const searchByISBN = async function (isbn, service) {
 }
 
 const isLoadingPage = response => {
-  return response && response.text && response.text.indexOf('Loading...') !== -1
+  return (
+    response && response.text && response.text.indexOf('leastFactor(n)') !== -1
+  )
 }
 
 const handleLoadingResponse = async (agent, response) => {

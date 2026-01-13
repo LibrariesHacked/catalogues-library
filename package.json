@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
-    "test-ci": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --silent",
-    "test-file": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --no-color 2>output.txt"
+    "test": "cross-env NODE_OPTIONS=\"${NODE_OPTIONS} --experimental-vm-modules\" jest --runInBand",
+    "test-ci": "cross-env NODE_OPTIONS=\"${NODE_OPTIONS} --experimental-vm-modules\" jest --silent",
+    "test-file": "cross-env NODE_OPTIONS=\"${NODE_OPTIONS} --experimental-vm-modules\" jest --no-color 2>output.txt"
   },
   "jest": {
     "transform": {},
@@ -34,7 +34,7 @@
     "async": "^3.2.6",
     "cheerio": "^1.1.2",
     "cycletls": "^2.0.5",
-    "superagent": "^10.2.3",
+    "superagent": "^10.3.0",
     "user-agents": "^1.1.669",
     "uuid": "^13.0.0",
     "xml2js": "^0.6.2"

@@ -596,7 +596,6 @@
       "Code": "",
       "Type": "arena",
       "Version": "v8",
-      "Id": "220001",
       "OrganisationName": "Guernsey",
       "OrganisationId": "AUKGUERNSEY|1",
       "ArenaName": "AUKGUERNSEY",
@@ -1624,6 +1623,7 @@
       "ArenaName": "AUK000256",
       "Url": "https://www.librarycatalogue.northamptonshire.gov.uk/",
       "AdvancedUrl": "extended-search",
+      "SearchType": "Keyword",
       "OrganisationId": "AUK000256|1"
     },
     {
