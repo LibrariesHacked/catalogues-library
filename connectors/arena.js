@@ -325,7 +325,7 @@ export const searchByISBN = async function (isbn, service) {
       p_p_lifecycle: 2,
       p_p_state: 'normal',
       p_p_mode: 'view',
-      p_p_resource_id: `/crDetailWicket/?wicket:interface=:${interfaceId}:recordPanel:panel:holdingsPanel:content:holdingsView:${
+      p_p_resource_id: `/crDetailWicket/?wicket:interface=:${interfaceId}:${service.RecordPanel || 'recordPanel:panel:holdingsPanel'}:content:holdingsView:${
         currentOrg + 1
       }:holdingContainer:togglableLink::IBehaviorListener:0:`,
       p_p_cacheability: 'cacheLevelPage'
@@ -348,20 +348,25 @@ export const searchByISBN = async function (isbn, service) {
     const availabilityRequests = []
     libsData.each(function (i, cont) {
       const linkId = $(cont).find('a')[0].attribs.id
-      const resourceId = `/crDetailWicket/?wicket:interface=:${interfaceId}:recordPanel:panel:holdingsPanel:content:holdingsView:${
+      const resourceId = `/crDetailWicket/?wicket:interface=:${interfaceId}:${service.RecordPanel || 'recordPanel:panel:holdingsPanel'}:content:holdingsView:${
         currentOrg + 1
       }:childContainer:childView:${i}:holdingPanel:holdingContainer:togglableLink::IBehaviorListener:0:`
-      const libUrl =
-        service.Url +
-        HOLDINGSDETAIL_URL_PORTLET.replace('[RESOURCEID]', resourceId)
+      const libHoldingsFormData = {
+        p_p_id: 'crDetailWicket_WAR_arenaportlet',
+        p_p_lifecycle: 2,
+        p_p_state: 'normal',
+        p_p_mode: 'view',
+        p_p_resource_id: resourceId,
+        p_p_cacheability: 'cacheLevelPage'
+      }
       const headers = {
         Accept: 'text/xml',
         'Wicket-Ajax': true,
-        'Wicket-FocusedElementId': linkId,
+        'Wicket-focusedelementid': linkId,
         Cookie: cookies
       }
       availabilityRequests.push(
-        agent.get(libUrl).set(headers).timeout(20000)
+        agent.post(holdingsUrl).set(headers).send(querystring.stringify(libHoldingsFormData)).timeout(20000)
       )
     })
 
@@ -369,7 +374,7 @@ export const searchByISBN = async function (isbn, service) {
 
     responses.forEach(async response => {
       const availabilityJs = await xml2js.parseStringPromise(response.text)
-      if (availabilityJs && availabilityJs['ajax-response']) {
+      if (availabilityJs && availabilityJs['ajax-response'] && availabilityJs['ajax-response'].component) {
         $ = cheerio.load(availabilityJs['ajax-response'].component[0]._)
         const totalAvailable = $(
           '.arena-holding-nof-total span.arena-value'

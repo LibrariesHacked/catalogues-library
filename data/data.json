@@ -366,7 +366,8 @@
       "ArenaName": "AUKEMLIBS",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|1",
-      "Url": "https://derby.arena.axiell.com/"
+      "Url": "https://derby.arena.axiell.com/",
+      "RecordPanel": "recordPanel:holdingsPanel"
     },
     {
       "Name": "Derbyshire",
@@ -839,7 +840,8 @@
       "ArenaName": "AUKEMLIBS",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|5",
-      "Url": "https://leicestershire.arena.axiell.com/"
+      "Url": "https://leicestershire.arena.axiell.com/",
+      "RecordPanel": "recordPanel:holdingsPanel"
     },
     {
       "Name": "Lewisham",
@@ -987,7 +989,7 @@
       "AdvancedUrl": "advanced-search",
       "OrganisationId": "AUK000252|1",
       "OrganisationName": "NELC Libraries",
-      "HoldingsPanel": "/crDetailWicket/?wicket:interface=:0:recordPanel:panel:holdingsPanel::IBehaviorListener:0:"
+      "RecordPanel": "recordPanel:holdingsPanel"
     },
     {
       "Name": "North Lanarkshire",
@@ -1214,7 +1216,8 @@
       "ArenaName": "AUKEMLIBS",
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|7",
-      "Url": "https://rutland.arena.axiell.com/"
+      "Url": "https://rutland.arena.axiell.com/",
+      "RecordPanel": "recordPanel:holdingsPanel"
     },
     {
       "Name": "Salford",
