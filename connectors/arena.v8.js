@@ -227,8 +227,9 @@ export const searchByISBN = async function (isbn, service) {
       p_p_state: 'normal',
       p_p_mode: 'view',
       p_p_resource_id:
+        service.HoldingsPanel ||
         '/crDetailWicket/?wicket:interface=:0:recordPanel:holdingsPanel::IBehaviorListener:0:',
-        // /crDetailWicket/?wicket:interface=:1:recordPanel:panel:holdingsPanel::IBehaviorListener:0:
+
       p_p_cacheability: 'cacheLevelPage'
     }
 
@@ -306,7 +307,8 @@ export const searchByISBN = async function (isbn, service) {
       Accept: 'text/xml',
       'Content-Type': 'application/x-www-form-urlencoded',
       'Wicket-Ajax': true,
-      'Wicket-Focusedelementid': linkId
+      'Wicket-Focusedelementid': linkId,
+      Cookie: cookies
     }
 
     // Get the interface id from the link
@@ -334,7 +336,6 @@ export const searchByISBN = async function (isbn, service) {
     const holdingsResponse = await agent
       .post(holdingsUrl)
       .set(holdingsHeaders)
-      .set({ cookie: botCookie })
       .send(formData)
       .timeout(20000)
     const holdingsJs = await xml2js.parseStringPromise(holdingsResponse.text)
@@ -347,7 +348,7 @@ export const searchByISBN = async function (isbn, service) {
     const availabilityRequests = []
     libsData.each(function (i, cont) {
       const linkId = $(cont).find('a')[0].attribs.id
-      resourceId = `/crDetailWicket/?wicket:interface=:${interfaceId}:recordPanel:panel:holdingsPanel:content:holdingsView:${
+      const resourceId = `/crDetailWicket/?wicket:interface=:${interfaceId}:recordPanel:panel:holdingsPanel:content:holdingsView:${
         currentOrg + 1
       }:childContainer:childView:${i}:holdingPanel:holdingContainer:togglableLink::IBehaviorListener:0:`
       const libUrl =
@@ -356,10 +357,11 @@ export const searchByISBN = async function (isbn, service) {
       const headers = {
         Accept: 'text/xml',
         'Wicket-Ajax': true,
-        'Wicket-FocusedElementId': linkId
+        'Wicket-FocusedElementId': linkId,
+        Cookie: cookies
       }
       availabilityRequests.push(
-        agent.get(libUrl).set(headers).set({ cookie: botCookie }).timeout(20000)
+        agent.get(libUrl).set(headers).timeout(20000)
       )
     })
 

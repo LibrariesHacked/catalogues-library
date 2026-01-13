@@ -1007,7 +1007,8 @@
       "Url": "https://www.lincsinspirelibraries.com/web/arena/",
       "AdvancedUrl": "advanced-search",
       "OrganisationId": "AUK000252|1",
-      "OrganisationName": "NELC Libraries"
+      "OrganisationName": "NELC Libraries",
+      "HoldingsPanel": "/crDetailWicket/?wicket:interface=:0:recordPanel:panel:holdingsPanel::IBehaviorListener:0:"
     },
     {
       "Name": "North Lanarkshire",
@@ -1077,7 +1078,8 @@
       "AdvancedUrl": "extended-search",
       "OrganisationId": "AUKEMLIBS|6",
       "SearchType": "Keyword",
-      "Url": "https://catalogue.nottinghamcitylibraries.co.uk/"
+      "Url": "https://catalogue.nottinghamcitylibraries.co.uk/",
+      "HoldingsPanel": "/crDetailWicket/?wicket:interface=:0:recordPanel:panel:holdingsPanel::IBehaviorListener:0:"
     },
     {
       "Name": "Nottinghamshire",
@@ -1089,7 +1091,8 @@
       "OrganisationId": "AUKEMLIBS|4",
       "OrganisationName": "Inspire",
       "SearchType": "Keyword",
-      "Url": "https://nottslibraries.inspireculture.org.uk/"
+      "Url": "https://nottslibraries.inspireculture.org.uk/",
+      "HoldingsPanel": "/crDetailWicket/?wicket:interface=:0:recordPanel:panel:holdingsPanel::IBehaviorListener:0:"
     },
     {
       "Name": "Northern Ireland",
