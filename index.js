@@ -148,9 +148,10 @@ export const thingISBN = async isbn => {
 /**
  * Gets results from open libraries free text search
  * @param {String} query The query to search with
+ * @param {String} type The type of search to perform (default is 'q')
  * @param {Object} openLibData The search response from open library
  */
-export const openLibrarySearch = async query => {
-  const openLibData = await openLibrary.search(query)
+export const openLibrarySearch = async (query, type = 'q') => {
+  const openLibData = await openLibrary.search(query, type)
   return openLibData
 }
