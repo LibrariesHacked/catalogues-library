@@ -63,11 +63,16 @@ const getLibraryServicesFromFilter = serviceFilter => {
 export const services = async serviceFilter => {
   const services = getLibraryServicesFromFilter(serviceFilter).map(service => {
     return async () => {
-      return getServiceFunction(service).getService(service)
+      try {
+        return await getServiceFunction(service).getService(service)
+      } catch (e) {
+        console.error(`Error fetching service for ${service.Name}:`, e.message)
+        return { service: service.Name, error: true }
+      }
     }
   })
 
-  const serviceResults = await async.parallel(services)
+  const serviceResults = await async.parallelLimit(services, 5)
   return serviceResults
 }
 
@@ -86,12 +91,17 @@ export const libraries = async serviceFilter => {
     )
   }).map(service => {
     return async () => {
-      const resp = await getServiceFunction(service).getLibraries(service)
-      return resp
+      try {
+        const resp = await getServiceFunction(service).getLibraries(service)
+        return resp
+      } catch (e) {
+        console.error(`Error fetching libraries for ${service.Name}:`, e.message)
+        return { service: service.Name, error: true, libraries: [] }
+      }
     }
   })
 
-  const libraryServicePoints = await async.parallel(searches)
+  const libraryServicePoints = await async.parallelLimit(searches, 5)
   return libraryServicePoints
 }
 
@@ -111,12 +121,17 @@ export const availability = async (isbn, serviceFilter) => {
     )
   }).map(service => {
     return async () => {
-      const resp = await getServiceFunction(service).searchByISBN(isbn, service)
-      return resp
+      try {
+        const resp = await getServiceFunction(service).searchByISBN(isbn, service)
+        return resp
+      } catch (e) {
+        console.error(`Error fetching availability for ${service.Name}:`, e.message)
+        return { service: service.Name, error: true, availability: [] }
+      }
     }
   })
 
-  const availability = await async.parallel(searches)
+  const availability = await async.parallelLimit(searches, 5)
   return availability
 }
 
@@ -133,9 +148,10 @@ export const thingISBN = async isbn => {
 /**
  * Gets results from open libraries free text search
  * @param {String} query The query to search with
+ * @param {String} type The type of search to perform (default is 'q')
  * @param {Object} openLibData The search response from open library
  */
-export const openLibrarySearch = async query => {
-  const openLibData = await openLibrary.search(query)
+export const openLibrarySearch = async (query, type = 'q') => {
+  const openLibData = await openLibrary.search(query, type)
   return openLibData
 }
