@@ -1,10 +1,10 @@
-# UK public library catalogues JS library
+# Public library catalogues search library
 
-A Node JS library for searching UK public library catalogues. This was designed to be used in projects that need to search multiple library catalogues.
+This is a Node.JS library for searching UK public library catalogues. This was designed to be used in projects that may need to automate searches on multiple library catalogues.
 
 ## Description
 
-In the UK there are about 200 public library services, each with their own Library Management System, and associated Online Public Access Catalogue (OPAC). Some services do share systems.
+In the UK there are about 200 public library services, mostly with their own Library Management System, and associated Online Public Access Catalogue (OPAC). Some services do share systems.
 
 Despite so many, there are relatively few types of library systems, and fewer suppliers. This project aims to model the interactions with each type of web catalogue in order to automate common processes. Such as searching for a book.
 
