@@ -43,6 +43,7 @@ The project implements the following methods
 | Services     | Returns stored data about library services (authorities).             |
 | Libraries    | Returns branch/location information, taken from the online catalogue. |
 | Availability | Returns availability of a particular book.                            |
+| CurrentLoans | Returns the current loans for a borrower account.                     |
 
 ### Services
 
@@ -67,6 +68,14 @@ Returns data showing the number of available/unavailable copies of the relevant 
 | Method                             | Description                                                                                                                  |
 | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | .availability(isbn, serviceFilter) | Retrieves availability of a particular title by passing in ISBN. The service filter filters by name or code and is optional. |
+
+### CurrentLoans
+
+Returns a borrower's current loans for each filtered library service.
+
+| Method                                          | Description                                                                                                                          |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| .currentLoans(userId, password, serviceFilter) | Retrieves current loans for a borrower account. The service filter filters by name or code and is optional. Unsupported connectors return an empty loans array with `supported: false`. |
 
 ## Licence
 

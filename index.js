@@ -136,6 +136,47 @@ export const availability = async (isbn, serviceFilter) => {
 }
 
 /**
+ * Gets current loans for library services using borrower credentials
+ * @param {String} userId The borrower identifier for the library service
+ * @param {String} password The borrower password for the library service
+ * @param {String} serviceFilter An optional service to filter by using either code or name
+ * @param {Object[]} loans The loans by service
+ */
+export const currentLoans = async (userId, password, serviceFilter) => {
+  const searches = data.LibraryServices.filter(service => {
+    return (
+      service.Type !== '' &&
+      (!serviceFilter ||
+        service.Name === serviceFilter ||
+        service.Code === serviceFilter)
+    )
+  }).map(service => {
+    return async () => {
+      try {
+        const resp = await getServiceFunction(service).getCurrentLoans(
+          userId,
+          password,
+          service
+        )
+        return resp
+      } catch (e) {
+        console.error(`Error fetching current loans for ${service.Name}:`, e.message)
+        return {
+          service: service.Name,
+          code: service.Code,
+          error: true,
+          loans: [],
+          supported: false
+        }
+      }
+    }
+  })
+
+  const loans = await async.parallelLimit(searches, 5)
+  return loans
+}
+
+/**
  * Gets results from the LibraryThing ISBN service
  * @param {String} isbn The ISBN to search for
  * @param {String[]} isbnsAn array of ISBNs

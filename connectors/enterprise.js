@@ -136,6 +136,16 @@ export const searchByISBN = async function (isbn, service) {
   return common.endResponse(responseHoldings)
 }
 
+/**
+ * Retrieves the current loans for a borrower
+ * @param {string} userId
+ * @param {string} password
+ * @param {object} service
+ */
+export const getCurrentLoans = async function (userId, password, service) {
+  return common.unsupportedGetCurrentLoans(service)
+}
+
 const processItemPage = async (agent, itemId, itemPage, service) => {
   let availabilityJson = null
   const availability = []

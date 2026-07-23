@@ -92,6 +92,31 @@ export function initialiseSearchByISBNResponse(service) {
 }
 
 /**
+ * Creates a new object to store current loan results
+ * @param {object} service
+ */
+export function initialiseGetCurrentLoansResponse(service) {
+  return {
+    service: service.Name,
+    code: service.Code,
+    loans: [],
+    supported: false,
+    start: new Date(),
+    end: null
+  }
+}
+
+/**
+ * Default current loans implementation for connectors that do not yet support borrower authentication
+ * @param {object} service
+ */
+export function unsupportedGetCurrentLoans(service) {
+  const responseLoans = initialiseGetCurrentLoansResponse(service)
+  responseLoans.message = 'Current loans are not implemented for this catalogue integration.'
+  return endResponse(responseLoans)
+}
+
+/**
  * Assigns a final timestamp to a request
  * @param {*} service
  */
