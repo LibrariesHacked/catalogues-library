@@ -1,9 +1,5 @@
-import request from 'superagent'
-import * as cheerio from 'cheerio'
-import querystring from 'querystring'
-import { v4 as uuidv4 } from 'uuid'
-
-import * as common from '../connectors/common.js'
+import * as common from '../helpers/common.js'
+import * as durham from '../helpers/durham.js'
 
 /**
  * Gets the object representing the service
@@ -16,22 +12,16 @@ export const getService = service => common.getService(service)
  * @param {object} service
  */
 export const getLibraries = async function (service) {
-  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
-    await agent.get(service.Url).timeout(20000)
-    await agent
-      .post(
-        service.Url +
-          'pgLogin.aspx?CheckJavascript=1&AspxAutoDetectCookieSupport=1'
-      )
-      .timeout(20000)
-    const libraries = await agent.get(service.Url + 'pgLib.aspx').timeout(20000)
-    const $ = cheerio.load(libraries.text)
-    $('ol.list-unstyled li a').each((i, tag) =>
-      responseLibraries.libraries.push($(tag).text())
-    )
+    // Step 1: Start ASP.NET session and login bootstrap required by catalogue pages.
+    const agent = durham.createAgent()
+    await durham.startSession(agent, service)
+
+    // Step 2: Request and parse branch links from the libraries page.
+    const librariesPage = await durham.fetchLibrariesPage(agent, service)
+    responseLibraries.libraries = durham.librariesFromPage(librariesPage.text)
   } catch (e) {
     responseLibraries.exception = e
   }
@@ -46,99 +36,40 @@ export const getLibraries = async function (service) {
  */
 export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
-  responseHoldings.id = uuidv4()
+  responseHoldings.id = durham.randomRequestId()
 
   try {
-    const agent = request.agent()
+    // Step 1: Bootstrap session and load initial keyword-search page state.
+    const agent = durham.createAgent()
+    await durham.startSession(agent, service)
+    const cataloguePage = await durham.openKeywordSearchPage(agent, service)
 
-    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    // Step 2: Submit ISBN search form and verify at least one title result exists.
+    const resultPage = await durham.submitKeywordSearch(
+      agent,
+      service,
+      durham.librariesForm(cataloguePage.text, isbn)
+    )
+    if (!durham.hasResultTitle(resultPage.text)) { return common.endResponse(responseHoldings) }
 
-    await agent.get(service.Url).timeout(20000)
-    await agent
-      .post(service.Url + 'pgLogin.aspx?CheckJavascript=1')
-      .timeout(20000)
-    const cataloguePage = await agent
-      .post(service.Url + 'pgCatKeywordSearch.aspx')
-      .timeout(20000)
-    let $ = cheerio.load(cataloguePage.text)
+    const resultPageUrl = durham.resultPageUrlFromResponse(resultPage)
 
-    let aspNetForm = {
-      __VIEWSTATE: $('input[name=__VIEWSTATE]').val(),
-      __VIEWSTATEGENERATOR: $('input[name=__VIEWSTATEGENERATOR]').val(),
-      __EVENTVALIDATION: $('input[name=__EVENTVALIDATION]').val(),
-      ctl00$ctl00$cph1$cph2$cbBooks: 'on',
-      ctl00$ctl00$cph1$cph2$Keywords: isbn,
-      ctl00$ctl00$cph1$cph2$btSearch: 'Search'
-    }
+    // Step 3: Open first item details page and then request libraries availability view.
+    const itemPage = await durham.openFirstItemPage(
+      agent,
+      resultPageUrl,
+      durham.resultForm(resultPage.text)
+    )
+    const detailsPageUrl = durham.itemPageUrl(itemPage, resultPageUrl)
 
-    const resultPage = await agent
-      .post(service.Url + 'pgCatKeywordSearch.aspx')
-      .send(querystring.stringify(aspNetForm))
-      .set(headers)
-      .timeout(20000)
-    $ = cheerio.load(resultPage.text)
-    const resultPageUrl = resultPage.redirects[0]
+    const availabilityPage = await durham.openAvailabilityPage(
+      agent,
+      detailsPageUrl,
+      durham.availabilityForm(itemPage.text)
+    )
 
-    if ($('#cph1_cph2_lvResults_lnkbtnTitle_0').length === 0)
-      return common.endResponse(responseHoldings)
-    aspNetForm = {
-      __EVENTARGUMENT: '',
-      __EVENTTARGET: 'ctl00$ctl00$cph1$cph2$lvResults$ctrl0$lnkbtnTitle',
-      __LASTFOCUS: '',
-      __VIEWSTATE: $('input[name=__VIEWSTATE]').val(),
-      __VIEWSTATEENCRYPTED: '',
-      __VIEWSTATEGENERATOR: $('input[name=__VIEWSTATEGENERATOR]').val(),
-      ctl00$ctl00$cph1$cph2$lvResults$DataPagerEx2$ctl00$ctl00: 10
-    }
-
-    const itemPage = await agent
-      .post(resultPageUrl)
-      .send(querystring.stringify(aspNetForm))
-      .set(headers)
-      .timeout(20000)
-    $ = cheerio.load(itemPage.text)
-
-    const itemPageUrl =
-      itemPage.redirects.length > 0 ? itemPage.redirects[0] : resultPageUrl
-
-    aspNetForm = {
-      __EVENTARGUMENT: '',
-      __EVENTTARGET: '',
-      __EVENTVALIDATION: $('input[name=__EVENTVALIDATION]').val(),
-      __LASTFOCUS: '',
-      __VIEWSTATE: $('input[name=__VIEWSTATE]').val(),
-      __VIEWSTATEENCRYPTED: '',
-      __VIEWSTATEGENERATOR: $('input[name=__VIEWSTATEGENERATOR]').val(),
-      ctl00$ctl00$cph1$cph2$lvResults$DataPagerEx2$ctl00$ctl00: 10,
-      ctl00$ctl00$cph1$ucItem$lvTitle$ctrl0$btLibraryList: 'Libraries'
-    }
-
-    const availabilityPage = await agent
-      .post(itemPageUrl)
-      .send(querystring.stringify(aspNetForm))
-      .set(headers)
-      .timeout(20000)
-    $ = cheerio.load(availabilityPage.text)
-
-    const libs = {}
-    $('#cph1_ucItem_lvTitle2_lvLocation_0_itemPlaceholderContainer_0 table tr')
-      .slice(1)
-      .each(function () {
-        const name = $(this).find('td').eq(0).text().trim()
-        const status = $(this).find('td').eq(1).text().trim()
-        if (!libs[name]) {
-          libs[name] = { available: 0, unavailable: 0 }
-        }
-        status !== 'Yes' ? libs[name].available++ : libs[name].unavailable++
-      })
-    for (const l in libs)
-      responseHoldings.availability.push({
-        library: l,
-        available: libs[l].available,
-        unavailable: libs[l].unavailable
-      })
+    // Step 4: Parse and assign per-library availability totals.
+    responseHoldings.availability = durham.availabilityFromPage(availabilityPage.text)
   } catch (e) {
     responseHoldings.exception = e
   }

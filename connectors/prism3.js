@@ -1,14 +1,5 @@
-import request from 'superagent'
-import * as cheerio from 'cheerio'
-
-import * as common from '../connectors/common.js'
-
-const AVAILABLE_STATUSES = [
-  'http://schema.org/InStock',
-  'http://schema.org/InStoreOnly'
-]
-const HEADER = { 'Content-Type': 'text/xml; charset=utf-8' }
-const DEEP_LINK = 'items?query='
+import * as common from '../helpers/common.js'
+import * as prism3 from '../helpers/prism3.js'
 
 /**
  * Gets the object representing the service
@@ -24,17 +15,12 @@ export const getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
-    const agent = request.agent()
+    // Step 1: Inspect Prism3 advanced-search location selector.
+    const prismLocationOptions = await prism3.getLibraries(service)
 
-    const advancedSearchPageRequest = await agent
-      .get(service.Url + 'advancedsearch?target=catalogue')
-      .timeout(60000)
-    const $ = cheerio.load(advancedSearchPageRequest.text)
-
-    $('#locdd option').each((idx, option) => {
-      if (common.isLibrary($(option).text().trim()))
-        responseLibraries.libraries.push($(option).text().trim())
-    })
+    // Step 2: Normalise Prism3 locations into shared library output.
+    responseLibraries.libraries = prismLocationOptions.libraries || []
+    if (prismLocationOptions.exception) { responseLibraries.exception = prismLocationOptions.exception }
   } catch (e) {
     responseLibraries.exception = e
   }
@@ -49,83 +35,16 @@ export const getLibraries = async function (service) {
  */
 export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
-  responseHoldings.url = service.Url + DEEP_LINK + isbn
 
   try {
-    const agent = request.agent()
+    // Step 1: Run Prism3 item search and branch tally workflow.
+    const prismItemAvailability = await prism3.searchByISBN(isbn, service)
 
-    let $ = null
-    const searchRequest = await agent
-      .get(service.Url + 'items.json?query=' + isbn)
-      .set(HEADER)
-      .timeout(30000)
-    if (searchRequest.body.length === 0)
-      return common.endResponse(responseHoldings)
-
-    let itemUrl = ''
-
-    for (const k of Object.keys(searchRequest.body)) {
-      let eBook = true
-
-      if (k.indexOf('/items/') > 0) {
-        itemUrl = k
-
-        for (const key of Object.keys(searchRequest.body[k])) {
-          const item = searchRequest.body[k][key]
-
-          switch (key) {
-            case 'http://purl.org/dc/elements/1.1/format':
-              item.forEach(format => {
-                // One record can contain multiple formats. If *any* aren't
-                // an eBook, we should get the item details.
-                if (format.value !== 'eBook') {
-                  eBook = false
-                }
-              })
-              break
-            case 'http://purl.org/dc/terms/identifier':
-              responseHoldings.id = item[0].value
-              break
-          }
-        }
-
-        if (itemUrl && eBook) {
-          itemUrl = ''
-          // Try the next record, just in case..
-        } else {
-          // We've found what we needed - leave the "for" loop.
-          break
-        }
-      }
-    }
-
-    if (itemUrl !== '') {
-      const itemRequest = await agent.get(itemUrl).timeout()
-      $ = cheerio.load(itemRequest.text)
-    } else {
-      return common.endResponse(responseHoldings)
-    }
-
-    $('#availability ul.options')
-      .find('li')
-      .each((idx, li) => {
-        const libr = {
-          library: $(li).find('h3 span span').text().trim(),
-          available: 0,
-          unavailable: 0
-        }
-        $(li)
-          .find('div.jsHidden table tbody tr')
-          .each((i, tr) => {
-            const status = $(tr)
-              .find("link[itemprop = 'availability']")
-              .attr('href')
-            AVAILABLE_STATUSES.includes(status)
-              ? libr.available++
-              : libr.unavailable++
-          })
-        responseHoldings.availability.push(libr)
-      })
+    // Step 2: Map Prism3 availability into common holdings response fields.
+    responseHoldings.id = prismItemAvailability.id
+    responseHoldings.url = prismItemAvailability.url
+    responseHoldings.availability = prismItemAvailability.availability || []
+    if (prismItemAvailability.exception) { responseHoldings.exception = prismItemAvailability.exception }
   } catch (e) {
     responseHoldings.exception = e
   }

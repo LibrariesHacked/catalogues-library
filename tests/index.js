@@ -1,6 +1,3 @@
-/* eslint-env expect */
-/* global expect */
-
 import * as index from '../index.js'
 import tests from './tests.json' with { type: 'json' }
 

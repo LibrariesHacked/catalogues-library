@@ -174,7 +174,8 @@
       "Name": "Brighton and Hove",
       "Code": "E06000043",
       "Type": "spydus",
-      "Url": "https://brighton-hove.spydus.co.uk/"
+      "Url": "https://brighton-hove.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Bristol City",
@@ -198,7 +199,8 @@
       "Name": "Buckinghamshire",
       "Code": "E06000060",
       "Type": "spydus",
-      "Url": "https://buckinghamshire.spydus.co.uk/"
+      "Url": "https://buckinghamshire.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Bury",
@@ -224,13 +226,15 @@
       "Name": "Cambridgeshire",
       "Code": "E10000003",
       "Type": "spydus",
-      "Url": "https://cambridgeshire.spydus.co.uk/"
+      "Url": "https://cambridgeshire.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Camden",
       "Code": "E09000007",
       "Type": "spydus",
-      "Url": "https://camden.spydus.co.uk/"
+      "Url": "https://camden.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Caerdydd - Cardiff",
@@ -680,7 +684,8 @@
       "Name": "Hertfordshire",
       "Code": "E10000015",
       "Type": "spydus",
-      "Url": "https://herts.spydus.co.uk/"
+      "Url": "https://herts.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Highland",
@@ -764,7 +769,8 @@
       "Name": "Kent",
       "Code": "E10000016",
       "Type": "spydus",
-      "Url": "https://kent.spydus.co.uk/"
+      "Url": "https://kent.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Kingston upon Thames",
@@ -890,7 +896,8 @@
       "Name": "Medway",
       "Code": "E06000035",
       "Type": "spydus",
-      "Url": "https://medway.spydus.co.uk/"
+      "Url": "https://medway.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Merthyr Tudful - Merthyr Tydfil",
@@ -922,7 +929,8 @@
       "Name": "Milton Keynes",
       "Code": "E06000042",
       "Type": "spydus",
-      "Url": "https://miltonkeynes.spydus.co.uk/"
+      "Url": "https://miltonkeynes.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Sir Fynwy - Monmouthshire",
@@ -1119,7 +1127,8 @@
       "Name": "Peterborough",
       "Code": "E06000031",
       "Type": "spydus",
-      "Url": "https://peterborough.spydus.co.uk/"
+      "Url": "https://peterborough.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Plymouth",
@@ -1149,7 +1158,8 @@
       "Code": "E06000038",
       "DisableTls": true,
       "Type": "spydus",
-      "Url": "https://library.reading.gov.uk/"
+      "Url": "https://library.reading.gov.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Redbridge",
@@ -1190,7 +1200,8 @@
       "Name": "Richmond upon Thames",
       "Code": "E09000027",
       "Type": "spydus",
-      "Url": "https://richmond.spydus.co.uk/"
+      "Url": "https://richmond.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Rochdale",
@@ -1277,7 +1288,8 @@
       "Name": "Slough",
       "Code": "E06000039",
       "Type": "spydus",
-      "Url": "https://slough.spydus.co.uk/"
+      "Url": "https://slough.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Solihull",
@@ -1328,19 +1340,22 @@
       "Name": "Southampton",
       "Code": "E06000045",
       "Type": "spydus",
-      "Url": "https://southampton.spydus.co.uk/"
+      "Url": "https://southampton.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Southend on Sea",
       "Code": "E06000033",
       "Type": "spydus",
-      "Url": "https://southend.spydus.co.uk/"
+      "Url": "https://southend.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Southwark",
       "Code": "E09000028",
       "Type": "spydus",
-      "Url": "https://southwark.spydus.co.uk/"
+      "Url": "https://southwark.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "St Helens",
@@ -1389,7 +1404,8 @@
       "Name": "Suffolk",
       "Code": "E10000029",
       "Type": "spydus",
-      "Url": "https://suffolk.spydus.co.uk/"
+      "Url": "https://suffolk.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Sunderland",
@@ -1555,7 +1571,8 @@
       "Name": "West Berkshire",
       "Code": "E06000037",
       "Type": "spydus",
-      "Url": "https://westberks.spydus.co.uk/"
+      "Url": "https://westberks.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "West Dunbartonshire",
@@ -1634,7 +1651,8 @@
       "Name": "Windsor & Maidenhead",
       "Code": "E06000040",
       "Type": "spydus",
-      "Url": "https://rbwm.spydus.co.uk/"
+      "Url": "https://rbwm.spydus.co.uk/",
+      "OpacReference": "OPAC"
     },
     {
       "Name": "Wirral",

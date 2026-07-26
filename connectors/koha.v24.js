@@ -1,15 +1,5 @@
-import * as cheerio from 'cheerio'
-import request from 'superagent'
-import UserAgent from 'user-agents'
-
-import * as common from './common.js'
-
-const CAT_URL = 'cgi-bin/koha/opac-search.pl?format=rss2&idx=nb&q='
-const LIBS_URL =
-  'cgi-bin/koha/opac-search.pl?[MULTIBRANCH]do=Search&expand=holdingbranch#holdingbranch_id'
-const HEADER = {
-  'User-Agent': new UserAgent().toString(),
-}
+import * as common from '../helpers/common.js'
+import * as koha from '../helpers/koha.js'
 
 /**
  * Gets the object representing the service
@@ -25,29 +15,12 @@ export const getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
-    const agent = request.agent()
-    const url =
-      service.Url +
-      LIBS_URL.replace(
-        '[MULTIBRANCH]',
-        service.MultiBranchLimit
-          ? 'multibranchlimit=' + service.MultiBranchLimit + '&'
-          : ''
-      )
+    // Step 1: Request Koha v24 advanced-search page with branch filter values.
+    const agent = koha.createAgent()
+    const librariesPage = await koha.fetchLibrariesPage(agent, service)
 
-    const libraryPageRequest = await agent.get(url).set(HEADER).timeout(60000)
-    const $ = cheerio.load(libraryPageRequest.text)
-
-    $('#branchloop option').each((idx, option) => {
-      if (common.isLibrary($(option).text()))
-        responseLibraries.libraries.push($(option).text().trim())
-    })
-    $('li#holdingbranch_id ul li span.facet-label').each((idx, label) => {
-      responseLibraries.libraries.push($(label).text().trim())
-    })
-    $('li#homebranch_id ul li span.facet-label').each((idx, label) => {
-      responseLibraries.libraries.push($(label).text().trim())
-    })
+    // Step 2: Parse branch options and facet labels into library list.
+    responseLibraries.libraries = koha.librariesFromPage(librariesPage.text)
   } catch (e) {
     responseLibraries.exception = e
   }
@@ -65,46 +38,20 @@ export const searchByISBN = async function (isbn, service) {
   responseHoldings.url = service.Url
 
   try {
-    const agent = request.agent()
+    // Step 1: Query Koha v24 RSS search feed by ISBN and resolve first bib link.
+    const agent = koha.createAgent()
+    const searchFeed = await koha.fetchSearchFeed(agent, service, isbn)
+    const firstResult = koha.firstBibLink(searchFeed.text)
+    responseHoldings.url = firstResult.deepLink
 
-    const searchPageRequest = await agent
-      .get(service.Url + CAT_URL + isbn)
-      .set(HEADER)
-      .timeout(30000)
-    let $ = cheerio.load(searchPageRequest.text, {
-      normalizeWhitespace: true,
-      xmlMode: true
-    })
-    responseHoldings.url = $('link').first().text()
+    if (!firstResult.bibLink) return common.endResponse(responseHoldings)
 
-    const bibLink = $('guid').text()
-    if (!bibLink) return common.endResponse(responseHoldings)
+    responseHoldings.id = koha.bibIdFromLink(firstResult.bibLink)
+    responseHoldings.url = firstResult.bibLink
 
-    responseHoldings.id = bibLink.substring(bibLink.lastIndexOf('=') + 1)
-    responseHoldings.url = bibLink
-
-    const itemPageRequest = await agent
-      .get(bibLink + '&viewallitems=1')
-      .set(HEADER)
-      .timeout(30000)
-    $ = cheerio.load(itemPageRequest.text)
-
-    const libs = {}
-    $('#holdingst tbody, .holdingst tbody')
-      .find('tr')
-      .each((idx, table) => {
-        const lib = $(table).find('td.location span span').first().text().trim()
-        if (!libs[lib]) libs[lib] = { available: 0, unavailable: 0 }
-        $(table).find('td.status span').text().trim() === 'Available'
-          ? libs[lib].available++
-          : libs[lib].unavailable++
-      })
-    for (const l in libs)
-      responseHoldings.availability.push({
-        library: l,
-        available: libs[l].available,
-        unavailable: libs[l].unavailable
-      })
+    // Step 2: Request full items table and aggregate availability by branch.
+    const bibItemsPage = await koha.fetchBibItemsPage(agent, firstResult.bibLink)
+    responseHoldings.availability = koha.availabilityFromBibItemsPage(bibItemsPage.text)
   } catch (e) {
     responseHoldings.exception = e
   }

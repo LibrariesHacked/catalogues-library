@@ -1,10 +1,5 @@
-import * as cheerio from 'cheerio'
-import request from 'superagent'
-
-import * as common from '../connectors/common.js'
-
-const LIBS_URL = 'cgi-bin/spydus.exe/MSGTRN/WPAC/COMB'
-const SEARCH_URL = 'cgi-bin/spydus.exe/ENQ/WPAC/BIBENQ?NRECS=1&ISBN='
+import * as common from '../helpers/common.js'
+import * as spydus from '../helpers/spydus.js'
 
 /**
  * Gets the object representing the service
@@ -17,29 +12,15 @@ export const getService = service => common.getService(service)
  * @param {object} service
  */
 export const getLibraries = async function (service) {
-  const agent = service.DisableTls
-    ? request.agent().disableTLSCerts()
-    : request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
-    let libsUrl = service.Url + LIBS_URL
-    if (service.OpacReference) {
-      libsUrl = libsUrl.replace('WPAC', service.OpacReference)
-    }
-    if (service.CatalogueReference) {
-      libsUrl = libsUrl.replace('COMB', service.CatalogueReference)
-    }
-    const libsPageRequest = await agent
-      .get(libsUrl)
-      .set({ Cookie: 'ALLOWCOOKIES_443=1' })
-      .timeout(60000)
+    // Step 1: Request Spydus catalogue page used to populate location selector.
+    const agent = spydus.createAgent(service)
+    const librariesPage = await spydus.fetchLibrariesPage(agent, service)
 
-    const $ = cheerio.load(libsPageRequest.text)
-    $('#LOC option').each(function (idx, option) {
-      if (common.isLibrary($(option).text().trim()))
-        responseLibraries.libraries.push($(option).text().trim())
-    })
+    // Step 2: Parse location options into a plain library-name list.
+    responseLibraries.libraries = spydus.parseLibraries(librariesPage.text)
   } catch (e) {
     responseLibraries.exception = e
   }
@@ -53,59 +34,33 @@ export const getLibraries = async function (service) {
  * @param {object} service
  */
 export const searchByISBN = async function (isbn, service) {
-  let holdingsUrl = service.Url + SEARCH_URL + isbn
-  if (service.OpacReference) {
-    holdingsUrl = holdingsUrl.replace('WPAC', service.OpacReference)
-  }
-
-  const agent = service.DisableTls
-    ? request.agent().disableTLSCerts()
-    : request.agent()
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
-  responseHoldings.url = holdingsUrl
 
   try {
-    const itemPageRequest = await await agent.get(holdingsUrl).timeout(60000)
-    let $ = cheerio.load(itemPageRequest.text)
-    if ($('#result-content-list').length === 0)
-      return common.endResponse(responseHoldings)
+    // Step 1: Submit Spydus ISBN search and ensure there are card results.
+    const agent = spydus.createAgent(service)
+    const holdingsUrl = spydus.searchUrl(service, isbn)
+    const searchResultsPage = await spydus.fetchSearchResultsPage(agent, service, isbn)
+    responseHoldings.url = holdingsUrl
 
-    responseHoldings.id = $('.card.card-list').first().find('a').attr('name')
+    if (!spydus.hasSearchResults(searchResultsPage.text)) { return common.endResponse(responseHoldings) }
 
-    if (!responseHoldings.id) {
-      responseHoldings.id = $('.card.card-list')
-        .first()
-        .find('input.form-check-input')
-        .attr('value')
-    }
+    // Step 2: Resolve record id and follow availability details link.
+    responseHoldings.id = spydus.firstResultId(searchResultsPage.text)
+    const availabilityUrl = spydus.availabilityLink(searchResultsPage.text)
+    if (!availabilityUrl) return common.endResponse(responseHoldings)
 
-    const availabilityUrl = $('.card-text.availability')
-      .first()
-      .find('a')
-      .attr('href')
-    const availabilityRequest = await agent
-      .get(service.Url + availabilityUrl)
-      .timeout(60000)
+    const absoluteAvailabilityUrl = spydus.absoluteAvailabilityUrl(
+      service,
+      availabilityUrl
+    )
 
-    $ = cheerio.load(availabilityRequest.text)
-
-    const libs = {}
-    $('table tr')
-      .slice(1)
-      .each(function (i, tr) {
-        const name = $(tr).find('td').eq(0).text().trim()
-        const status = $(tr).find('td').eq(3).text().trim()
-        if (!libs[name]) libs[name] = { available: 0, unavailable: 0 }
-        status === 'Available'
-          ? libs[name].available++
-          : libs[name].unavailable++
-      })
-    for (const l in libs)
-      responseHoldings.availability.push({
-        library: l,
-        available: libs[l].available,
-        unavailable: libs[l].unavailable
-      })
+    // Step 3: Parse branch-level availability table from details page.
+    const availabilityPage = await spydus.fetchAvailabilityPage(
+      agent,
+      absoluteAvailabilityUrl
+    )
+    responseHoldings.availability = spydus.availabilityFromTable(availabilityPage.text)
   } catch (e) {
     responseHoldings.exception = e
   }

@@ -1,6 +1,5 @@
-import request from 'superagent'
-
-import * as common from './common.js'
+import * as common from '../helpers/common.js'
+import * as luci from '../helpers/luci.js'
 
 /**
  * Gets the object representing the service
@@ -8,48 +7,26 @@ import * as common from './common.js'
  */
 export const getService = service => common.getService(service)
 
-const getLuciLibrariesInternal = async function (service) {
-  const agent = request.agent()
-  const response = {
-    libraries: []
-  }
-
-  try {
-    let resp = await agent.get(`${service.Url}${service.Home}`)
-    const frontEndId = /\/_next\/static\/([^\/]+)\/_buildManifest.js/gm.exec(
-      resp.text
-    )[1]
-
-    resp = await agent
-      .get(`${service.Url}_next/data/${frontEndId}/user/register.json`)
-      .timeout(20000)
-    const libraries = resp.body.pageProps.patronFields.find(
-      x => x.code === 'patron_homeLocation'
-    ).optionList
-
-    for (const library of libraries) {
-      response.libraries.push({
-        name: library.value.trim(),
-        code: library.key.trim()
-      })
-    }
-  } catch (e) {
-    response.exception = e
-  }
-
-  return response
-}
-
 /**
  * Gets the libraries in the service based upon possible search and filters within the library catalogue
  * @param {object} service
  */
 export const getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
-  const libs = await getLuciLibrariesInternal(service)
 
-  responseLibraries.exception = libs.exception
-  responseLibraries.libraries = libs.libraries.map(x => x.name)
+  try {
+    // Step 1: Request Luci home page and resolve current front-end build identifier.
+    const agent = luci.createAgent()
+    const homePage = await luci.fetchHomePage(agent, service)
+    const frontEndId = luci.frontEndIdFromHome(homePage.text)
+
+    // Step 2: Load registration payload and map patron home-location options.
+    const registrationData = await luci.fetchRegistrationData(agent, service, frontEndId)
+    const locations = luci.librariesFromRegistrationData(registrationData.body)
+    responseLibraries.libraries = locations.map(x => x.name)
+  } catch (e) {
+    responseLibraries.exception = e
+  }
 
   return common.endResponse(responseLibraries)
 }
@@ -63,56 +40,29 @@ export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
   try {
-    const agent = request.agent()
-    let resp = await agent.get(`${service.Url}${service.Home}`).timeout(20000)
+    // Step 1: Resolve Luci app identifier from home page.
+    const agent = luci.createAgent()
+    const homePage = await luci.fetchHomePage(agent, service)
+    const appId = luci.appIdFromHome(homePage.text)
 
-    const appId = /\?appid=([a-f0-9\-]+)/gm.exec(resp.text)[1]
-
-    resp = await agent
-      .post(`${service.Url}api/manifestations/searchresult`)
-      .send({
-        searchTerm: isbn,
-        searchTarget: '',
-        searchField: '',
-        sortField: 'any',
-        searchLimit: '196',
-        offset: 0,
-        count: 40
-      })
-      .set('Content-Type', 'application/json')
-      .set('solus-app-id', appId)
-      .timeout(20000)
-
-    const result = resp.body.records.find(x => x.isbnList.includes(isbn))
-
-    if (!result || result.eContent) {
-      return common.endResponse(responseHoldings)
-    }
+    // Step 2: Search manifestations by ISBN and pick the matching physical record.
+    const manifestations = await luci.searchManifestations(agent, service, appId, isbn)
+    const result = luci.findManifestationByIsbn(manifestations.body.records, isbn)
+    if (!result || result.eContent) return common.endResponse(responseHoldings)
 
     responseHoldings.id = result.recordID
     responseHoldings.url = `${service.Url}manifestations/${result.recordID}`
 
-    resp = await agent
-      .get(`${service.Url}api/record?id=${result.recordID}&source=ILSWS`)
-      .set('solus-app-id', appId)
-      .timeout(20000)
-
-    let libraries = resp.body.data.copies.map(x => x.location.locationName)
-
-    // Get unique library values.
-    libraries = libraries.filter((v, i, s) => s.indexOf(v) === i)
-
-    for (const library of libraries) {
-      responseHoldings.availability.push({
-        library,
-        available: resp.body.data.copies.filter(
-          x => x.location.locationName === library && x.available
-        ).length,
-        unavailable: resp.body.data.copies.filter(
-          x => x.location.locationName === library && !x.available
-        ).length
-      })
-    }
+    // Step 3: Load record copy details and aggregate availability per library.
+    const recordDetails = await luci.fetchRecordDetails(
+      agent,
+      service,
+      appId,
+      result.recordID
+    )
+    responseHoldings.availability = luci.availabilityFromCopies(
+      recordDetails.body.data.copies
+    )
   } catch (e) {
     responseHoldings.exception = e
   }

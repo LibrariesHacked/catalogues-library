@@ -1,7 +1,5 @@
-import * as cheerio from 'cheerio'
-import request from 'superagent'
-
-import * as common from '../connectors/common.js'
+import * as common from '../helpers/common.js'
+import * as webpac from '../helpers/webpac.js'
 
 /**
  * Gets the object representing the service
@@ -14,18 +12,15 @@ export const getService = service => common.getService(service)
  * @param {object} service
  */
 export const getLibraries = async function (service) {
-  const agent = request.agent()
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
   try {
-    const advancedSearchPageRequest = await agent
-      .get(service.Url + 'search/X')
-      .timeout(60000)
-    const $ = cheerio.load(advancedSearchPageRequest.text)
-    $('select[Name=searchscope] option').each((idx, option) => {
-      if (common.isLibrary($(option).text().trim()))
-        responseLibraries.libraries.push($(option).text().trim())
-    })
+    // Step 1: Request WebPAC advanced search page containing scope options.
+    const agent = webpac.createAgent()
+    const librariesPage = await webpac.fetchLibrariesPage(agent, service)
+
+    // Step 2: Parse search-scope options into library names.
+    responseLibraries.libraries = webpac.librariesFromPage(librariesPage.text)
   } catch (e) {
     responseLibraries.exception = e
   }
@@ -40,36 +35,17 @@ export const getLibraries = async function (service) {
  */
 export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
-  responseHoldings.url =
-    service.Url + 'search~S1/?searchtype=i&searcharg=' + isbn
-
-  const agent = request.agent()
-  const libs = {}
+  responseHoldings.url = webpac.holdingsSearchUrl(service, isbn)
 
   try {
-    const responseHoldingsRequest = await agent
-      .get(responseHoldings.url)
-      .timeout(60000)
-    const $ = cheerio.load(responseHoldingsRequest.text)
+    // Step 1: Execute WebPAC ISBN search request and parse first bib record.
+    const agent = webpac.createAgent()
+    const holdingsPage = await webpac.fetchHoldingsSearchPage(agent, service, isbn)
 
-    const id = $('#recordnum')
-    responseHoldings.id = id.attr('href').replace('/record=', '')
+    responseHoldings.id = webpac.getItemId(holdingsPage.text)
 
-    $('table.bibItems tr.bibItemsEntry').each(function (idx, tr) {
-      const name = $(tr).find('td').eq(0).text().trim()
-      const status = $(tr).find('td').eq(3).text().trim()
-      if (!libs[name]) libs[name] = { available: 0, unavailable: 0 }
-      status === 'AVAILABLE' || status === 'FOR LOAN'
-        ? libs[name].available++
-        : libs[name].unavailable++
-    })
-
-    for (const l in libs)
-      responseHoldings.availability.push({
-        library: l,
-        available: libs[l].available,
-        unavailable: libs[l].unavailable
-      })
+    // Step 2: Aggregate bibItems table statuses by library.
+    responseHoldings.availability = webpac.getLibrariesAvailability(holdingsPage.text)
   } catch (e) {
     responseHoldings.exception = e
   }

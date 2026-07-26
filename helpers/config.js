@@ -1,0 +1,11 @@
+export const TIMEOUTS = {
+  SHORT: 1000,
+  MEDIUM: 2000,
+  DEFAULT: 20000,
+  LONG: 30000,
+  EXTRA_LONG: 60000
+}
+
+export const RETRY_DELAY_MS = 1000
+
+export const SPYDUS_COOKIE = 'ALLOWCOOKIES_443=1'
