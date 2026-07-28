@@ -20,12 +20,12 @@ export const getLibraries = async function (service) {
 
   try {
     // Step 1: Initialise Iguana session and resolve SID from cookie.
-    const agent = iguana.createAgent()
-    const sid = await iguana.getSid(service)
+    const serviceType = iguana.createAgent(service.Type)
+    const sid = await iguana.getSid(serviceType, service)
 
     // Step 2: Submit branch-discovery search request and parse XML payload.
     const searchRequest = await iguana.postSearch(
-      agent,
+      serviceType,
       service,
       iguana.librariesSearchBody({ service, sid })
     )
@@ -35,7 +35,7 @@ export const getLibraries = async function (service) {
     if (service.Faceted) {
       const resultId = searchJs.searchRetrieveResponse.resultSetId[0]
       const facetRequest = await iguana.postSearch(
-        agent,
+        serviceType,
         service,
         iguana.facetBody({ resultId, sid })
       )
@@ -65,10 +65,10 @@ export const searchByISBN = async function (isbn, service) {
 
   try {
     // Step 1: Initialise Iguana session and execute ISBN search request.
-    const agent = iguana.createAgent()
-    const sid = await iguana.getSid(service)
+    const serviceType = iguana.createAgent(service.Type)
+    const sid = await iguana.getSid(serviceType, service)
     const searchRequest = await iguana.postSearch(
-      agent,
+      serviceType,
       service,
       iguana.searchBody({ service, isbn, sid })
     )

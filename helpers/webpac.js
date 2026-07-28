@@ -1,8 +1,8 @@
 import * as cheerio from 'cheerio'
-import request from 'superagent'
 
 import * as common from './common.js'
-import { TIMEOUTS } from './config.js'
+import { TIMEOUTS, RATE_LIMITS } from './config.js'
+import { agentManager } from './agent-manager.js'
 
 export { TIMEOUTS } from './config.js'
 
@@ -11,12 +11,19 @@ export const librariesSearchUrl = service => service.Url + 'search/X'
 export const holdingsSearchUrl = (service, isbn) =>
   service.Url + 'search~S1/?searchtype=i&searcharg=' + isbn
 
-export const createAgent = () => request.agent()
+export const createAgent = (serviceType = 'webpac') => {
+  if (RATE_LIMITS[serviceType]) {
+    agentManager.configureRateLimit(serviceType, RATE_LIMITS[serviceType])
+  }
+  return serviceType
+}
 
 export const parseHtml = html => cheerio.load(html)
 
-export const fetchLibrariesPage = async (agent, service) => {
-  return agent.get(librariesSearchUrl(service)).timeout(TIMEOUTS.EXTRA_LONG)
+export const fetchLibrariesPage = async (serviceType, service) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent.get(librariesSearchUrl(service)).timeout(TIMEOUTS.EXTRA_LONG)
+  })
 }
 
 export const librariesFromPage = html => {
@@ -30,8 +37,10 @@ export const librariesFromPage = html => {
   return libraries
 }
 
-export const fetchHoldingsSearchPage = async (agent, service, isbn) => {
-  return agent.get(holdingsSearchUrl(service, isbn)).timeout(TIMEOUTS.EXTRA_LONG)
+export const fetchHoldingsSearchPage = async (serviceType, service, isbn) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent.get(holdingsSearchUrl(service, isbn)).timeout(TIMEOUTS.EXTRA_LONG)
+  })
 }
 
 export const getLibraries = async service => {

@@ -1,18 +1,15 @@
 import * as cheerio from 'cheerio'
-import request from 'superagent'
 import UserAgent from 'user-agents'
 
 import * as common from './common.js'
-import { TIMEOUTS } from './config.js'
+import { TIMEOUTS, RATE_LIMITS } from './config.js'
+import { agentManager } from './agent-manager.js'
 
 export { TIMEOUTS } from './config.js'
 
 export const CAT_URL = 'cgi-bin/koha/opac-search.pl?format=rss2&idx=nb&q='
 export const LIBS_URL =
   'cgi-bin/koha/opac-search.pl?[MULTIBRANCH]do=Search&expand=holdingbranch#holdingbranch_id'
-export const HEADER = {
-  'User-Agent': new UserAgent().toString()
-}
 
 export const librariesUrl = service =>
   service.Url +
@@ -23,13 +20,20 @@ export const librariesUrl = service =>
       : ''
   )
 
-export const createAgent = () => request.agent()
+export const createAgent = (serviceType = 'koha') => {
+  if (RATE_LIMITS[serviceType]) {
+    agentManager.configureRateLimit(serviceType, RATE_LIMITS[serviceType])
+  }
+  return serviceType
+}
 
-export const fetchLibrariesPage = async (agent, service) => {
-  return agent
-    .get(librariesUrl(service))
-    .set(HEADER)
-    .timeout(TIMEOUTS.EXTRA_LONG)
+export const fetchLibrariesPage = async (serviceType, service) => {
+  return agentManager.executeRequest(serviceType, async (agent, userAgent) => {
+    return agent
+      .get(librariesUrl(service))
+      .set('User-Agent', userAgent)
+      .timeout(TIMEOUTS.EXTRA_LONG)
+  })
 }
 
 export const librariesFromPage = html => {
@@ -49,11 +53,13 @@ export const librariesFromPage = html => {
   return libraries
 }
 
-export const fetchSearchFeed = async (agent, service, isbn) => {
-  return agent
-    .get(service.Url + CAT_URL + isbn)
-    .set(HEADER)
-    .timeout(TIMEOUTS.LONG)
+export const fetchSearchFeed = async (serviceType, service, isbn) => {
+  return agentManager.executeRequest(serviceType, async (agent, userAgent) => {
+    return agent
+      .get(service.Url + CAT_URL + isbn)
+      .set('User-Agent', userAgent)
+      .timeout(TIMEOUTS.LONG)
+  })
 }
 
 export const firstBibLink = searchXml => {
@@ -70,11 +76,13 @@ export const firstBibLink = searchXml => {
 
 export const bibIdFromLink = bibLink => bibLink.substring(bibLink.lastIndexOf('=') + 1)
 
-export const fetchBibItemsPage = async (agent, bibLink) => {
-  return agent
-    .get(bibLink + '&viewallitems=1')
-    .set(HEADER)
-    .timeout(TIMEOUTS.LONG)
+export const fetchBibItemsPage = async (serviceType, bibLink) => {
+  return agentManager.executeRequest(serviceType, async (agent, userAgent) => {
+    return agent
+      .get(bibLink + '&viewallitems=1')
+      .set('User-Agent', userAgent)
+      .timeout(TIMEOUTS.LONG)
+  })
 }
 
 export const availabilityFromBibItemsPage = html => {

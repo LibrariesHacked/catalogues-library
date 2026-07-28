@@ -1,8 +1,8 @@
 import * as cheerio from 'cheerio'
-import request from 'superagent'
 
 import * as common from './common.js'
-import { TIMEOUTS } from './config.js'
+import { TIMEOUTS, RATE_LIMITS } from './config.js'
+import { agentManager } from './agent-manager.js'
 
 import UserAgent from 'user-agents'
 
@@ -21,24 +21,38 @@ export const SEARCH_RESULTS_URL =
 export const copiesUrl = (service, itemId) =>
   `${service.Url}GroupedWork/${itemId}/AJAX?method=getCopyDetails&format=Book&recordId=${itemId}`
 
-export const createAgent = () => request.agent()
-
-export const fetchAdvancedSearchPage = async (agent, service) => {
-  return agent
-    .get(`${service.Url}${ADVANCED_SEARCH_URL}`)
-    .set(HEADER)
-    .timeout(TIMEOUTS.DEFAULT)
+export const createAgent = (serviceType = 'aspen') => {
+  if (RATE_LIMITS[serviceType]) {
+    agentManager.configureRateLimit(serviceType, RATE_LIMITS[serviceType])
+  }
+  return serviceType
 }
 
-export const fetchSearchResultsPage = async (agent, service, isbn) => {
-  return agent
-    .get(`${service.Url}${SEARCH_RESULTS_URL.replace('[ISBN]', isbn)}`)
-    .set(HEADER)
-    .timeout(TIMEOUTS.DEFAULT)
+export const fetchAdvancedSearchPage = async (serviceType, service) => {
+  return agentManager.executeRequest(serviceType, async (agent, userAgent) => {
+    return agent
+      .get(`${service.Url}${ADVANCED_SEARCH_URL}`)
+      .set('User-Agent', userAgent)
+      .timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
-export const fetchCopiesPage = async (agent, service, itemId) => {
-  return agent.get(copiesUrl(service, itemId)).set(HEADER).timeout(TIMEOUTS.DEFAULT)
+export const fetchSearchResultsPage = async (serviceType, service, isbn) => {
+  return agentManager.executeRequest(serviceType, async (agent, userAgent) => {
+    return agent
+      .get(`${service.Url}${SEARCH_RESULTS_URL.replace('[ISBN]', isbn)}`)
+      .set('User-Agent', userAgent)
+      .timeout(TIMEOUTS.DEFAULT)
+  })
+}
+
+export const fetchCopiesPage = async (serviceType, service, itemId) => {
+  return agentManager.executeRequest(serviceType, async (agent, userAgent) => {
+    return agent
+      .get(copiesUrl(service, itemId))
+      .set('User-Agent', userAgent)
+      .timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
 export const librariesFromAdvancedSearchPage = html => {

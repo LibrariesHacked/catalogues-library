@@ -16,11 +16,11 @@ export const getLibraries = async function (service) {
 
   try {
     // Step 1: Start ASP.NET session and login bootstrap required by catalogue pages.
-    const agent = durham.createAgent()
-    await durham.startSession(agent, service)
+    const serviceType = durham.createAgent(service.Type)
+    await durham.startSession(serviceType, service)
 
     // Step 2: Request and parse branch links from the libraries page.
-    const librariesPage = await durham.fetchLibrariesPage(agent, service)
+    const librariesPage = await durham.fetchLibrariesPage(serviceType, service)
     responseLibraries.libraries = durham.librariesFromPage(librariesPage.text)
   } catch (e) {
     responseLibraries.exception = e
@@ -40,13 +40,13 @@ export const searchByISBN = async function (isbn, service) {
 
   try {
     // Step 1: Bootstrap session and load initial keyword-search page state.
-    const agent = durham.createAgent()
-    await durham.startSession(agent, service)
-    const cataloguePage = await durham.openKeywordSearchPage(agent, service)
+    const serviceType = durham.createAgent(service.Type)
+    await durham.startSession(serviceType, service)
+    const cataloguePage = await durham.openKeywordSearchPage(serviceType, service)
 
     // Step 2: Submit ISBN search form and verify at least one title result exists.
     const resultPage = await durham.submitKeywordSearch(
-      agent,
+      serviceType,
       service,
       durham.librariesForm(cataloguePage.text, isbn)
     )
@@ -56,14 +56,14 @@ export const searchByISBN = async function (isbn, service) {
 
     // Step 3: Open first item details page and then request libraries availability view.
     const itemPage = await durham.openFirstItemPage(
-      agent,
+      serviceType,
       resultPageUrl,
       durham.resultForm(resultPage.text)
     )
     const detailsPageUrl = durham.itemPageUrl(itemPage, resultPageUrl)
 
     const availabilityPage = await durham.openAvailabilityPage(
-      agent,
+      serviceType,
       detailsPageUrl,
       durham.availabilityForm(itemPage.text)
     )

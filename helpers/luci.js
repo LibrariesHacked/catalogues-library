@@ -1,23 +1,31 @@
-import request from 'superagent'
-
 import * as common from './common.js'
-import { TIMEOUTS } from './config.js'
+import { TIMEOUTS, RATE_LIMITS } from './config.js'
+import { agentManager } from './agent-manager.js'
 
 export { TIMEOUTS } from './config.js'
 
-export const createAgent = () => request.agent()
+export const createAgent = (serviceType = 'luci') => {
+  if (RATE_LIMITS[serviceType]) {
+    agentManager.configureRateLimit(serviceType, RATE_LIMITS[serviceType])
+  }
+  return serviceType
+}
 
-export const fetchHomePage = async (agent, service) => {
-  return agent.get(`${service.Url}${service.Home}`).timeout(TIMEOUTS.DEFAULT)
+export const fetchHomePage = async (serviceType, service) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent.get(`${service.Url}${service.Home}`).timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
 export const frontEndIdFromHome = html =>
   /_next\/static\/([^/]+)\/_buildManifest.js/gm.exec(html)[1]
 
-export const fetchRegistrationData = async (agent, service, frontEndId) => {
-  return agent
-    .get(`${service.Url}_next/data/${frontEndId}/user/register.json`)
-    .timeout(TIMEOUTS.DEFAULT)
+export const fetchRegistrationData = async (serviceType, service, frontEndId) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent
+      .get(`${service.Url}_next/data/${frontEndId}/user/register.json`)
+      .timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
 export const librariesFromRegistrationData = registrationBody => {
@@ -37,15 +45,15 @@ export const librariesFromRegistrationData = registrationBody => {
 }
 
 export const getLuciLibrariesInternal = async function (service) {
-  const agent = createAgent()
+  const serviceType = createAgent(service.Type)
   const response = {
     libraries: []
   }
 
   try {
-    const homePage = await fetchHomePage(agent, service)
+    const homePage = await fetchHomePage(serviceType, service)
     const frontEndId = frontEndIdFromHome(homePage.text)
-    const registrationData = await fetchRegistrationData(agent, service, frontEndId)
+    const registrationData = await fetchRegistrationData(serviceType, service, frontEndId)
     response.libraries = librariesFromRegistrationData(registrationData.body)
   } catch (e) {
     response.exception = e
@@ -56,32 +64,36 @@ export const getLuciLibrariesInternal = async function (service) {
 
 export const appIdFromHome = html => /\?appid=([a-f0-9-]+)/gm.exec(html)[1]
 
-export const searchManifestations = async (agent, service, appId, isbn) => {
-  return agent
-    .post(`${service.Url}api/manifestations/searchresult`)
-    .send({
-      searchTerm: isbn,
-      searchTarget: '',
-      searchField: '',
-      sortField: 'any',
-      searchLimit: '196',
-      offset: 0,
-      count: 40
-    })
-    .set('Content-Type', 'application/json')
-    .set('solus-app-id', appId)
-    .timeout(TIMEOUTS.DEFAULT)
+export const searchManifestations = async (serviceType, service, appId, isbn) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent
+      .post(`${service.Url}api/manifestations/searchresult`)
+      .send({
+        searchTerm: isbn,
+        searchTarget: '',
+        searchField: '',
+        sortField: 'any',
+        searchLimit: '196',
+        offset: 0,
+        count: 40
+      })
+      .set('Content-Type', 'application/json')
+      .set('solus-app-id', appId)
+      .timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
 export const findManifestationByIsbn = (records, isbn) => {
   return records.find(x => x.isbnList.includes(isbn))
 }
 
-export const fetchRecordDetails = async (agent, service, appId, recordId) => {
-  return agent
-    .get(`${service.Url}api/record?id=${recordId}&source=ILSWS`)
-    .set('solus-app-id', appId)
-    .timeout(TIMEOUTS.DEFAULT)
+export const fetchRecordDetails = async (serviceType, service, appId, recordId) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent
+      .get(`${service.Url}api/record?id=${recordId}&source=ILSWS`)
+      .set('solus-app-id', appId)
+      .timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
 export const availabilityFromCopies = copies => {
@@ -119,11 +131,11 @@ export const searchByISBN = async (isbn, service) => {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
 
   try {
-    const agent = createAgent()
-    let resp = await fetchHomePage(agent, service)
+    const serviceType = createAgent(service.Type)
+    let resp = await fetchHomePage(serviceType, service)
     const appId = appIdFromHome(resp.text)
 
-    resp = await searchManifestations(agent, service, appId, isbn)
+    resp = await searchManifestations(serviceType, service, appId, isbn)
     const result = findManifestationByIsbn(resp.body.records, isbn)
 
     if (!result || result.eContent) return common.endResponse(responseHoldings)
@@ -131,7 +143,7 @@ export const searchByISBN = async (isbn, service) => {
     responseHoldings.id = result.recordID
     responseHoldings.url = `${service.Url}manifestations/${result.recordID}`
 
-    resp = await fetchRecordDetails(agent, service, appId, result.recordID)
+    resp = await fetchRecordDetails(serviceType, service, appId, result.recordID)
     responseHoldings.availability = availabilityFromCopies(resp.body.data.copies)
   } catch (e) {
     responseHoldings.exception = e

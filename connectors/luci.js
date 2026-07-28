@@ -16,12 +16,12 @@ export const getLibraries = async function (service) {
 
   try {
     // Step 1: Request Luci home page and resolve current front-end build identifier.
-    const agent = luci.createAgent()
-    const homePage = await luci.fetchHomePage(agent, service)
+    const serviceType = luci.createAgent(service.Type)
+    const homePage = await luci.fetchHomePage(serviceType, service)
     const frontEndId = luci.frontEndIdFromHome(homePage.text)
 
     // Step 2: Load registration payload and map patron home-location options.
-    const registrationData = await luci.fetchRegistrationData(agent, service, frontEndId)
+    const registrationData = await luci.fetchRegistrationData(serviceType, service, frontEndId)
     const locations = luci.librariesFromRegistrationData(registrationData.body)
     responseLibraries.libraries = locations.map(x => x.name)
   } catch (e) {
@@ -41,12 +41,12 @@ export const searchByISBN = async function (isbn, service) {
 
   try {
     // Step 1: Resolve Luci app identifier from home page.
-    const agent = luci.createAgent()
-    const homePage = await luci.fetchHomePage(agent, service)
+    const serviceType = luci.createAgent(service.Type)
+    const homePage = await luci.fetchHomePage(serviceType, service)
     const appId = luci.appIdFromHome(homePage.text)
 
     // Step 2: Search manifestations by ISBN and pick the matching physical record.
-    const manifestations = await luci.searchManifestations(agent, service, appId, isbn)
+    const manifestations = await luci.searchManifestations(serviceType, service, appId, isbn)
     const result = luci.findManifestationByIsbn(manifestations.body.records, isbn)
     if (!result || result.eContent) return common.endResponse(responseHoldings)
 
@@ -55,7 +55,7 @@ export const searchByISBN = async function (isbn, service) {
 
     // Step 3: Load record copy details and aggregate availability per library.
     const recordDetails = await luci.fetchRecordDetails(
-      agent,
+      serviceType,
       service,
       appId,
       result.recordID

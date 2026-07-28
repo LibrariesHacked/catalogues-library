@@ -16,8 +16,8 @@ export const getLibraries = async function (service) {
 
   try {
     // Step 1: Request Koha advanced-search page with branch filter values.
-    const agent = koha.createAgent()
-    const librariesPage = await koha.fetchLibrariesPage(agent, service)
+    const serviceType = koha.createAgent(service.Type)
+    const librariesPage = await koha.fetchLibrariesPage(serviceType, service)
 
     // Step 2: Parse branch options and facet labels into library list.
     responseLibraries.libraries = koha.librariesFromPage(librariesPage.text)
@@ -39,8 +39,8 @@ export const searchByISBN = async function (isbn, service) {
 
   try {
     // Step 1: Query Koha RSS search feed by ISBN and resolve first bib link.
-    const agent = koha.createAgent()
-    const searchFeed = await koha.fetchSearchFeed(agent, service, isbn)
+    const serviceType = koha.createAgent(service.Type)
+    const searchFeed = await koha.fetchSearchFeed(serviceType, service, isbn)
     const firstResult = koha.firstBibLink(searchFeed.text)
     responseHoldings.url = firstResult.deepLink
 
@@ -50,7 +50,7 @@ export const searchByISBN = async function (isbn, service) {
     responseHoldings.url = firstResult.bibLink
 
     // Step 2: Request full items table and aggregate availability by branch.
-    const bibItemsPage = await koha.fetchBibItemsPage(agent, firstResult.bibLink)
+    const bibItemsPage = await koha.fetchBibItemsPage(serviceType, firstResult.bibLink)
     responseHoldings.availability = koha.availabilityFromBibItemsPage(bibItemsPage.text)
   } catch (e) {
     responseHoldings.exception = e

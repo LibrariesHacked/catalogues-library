@@ -1,45 +1,48 @@
 import * as cheerio from 'cheerio'
-import request from 'superagent'
 import UserAgent from 'user-agents'
 
 import * as common from './common.js'
-import { TIMEOUTS } from './config.js'
+import { TIMEOUTS, RATE_LIMITS } from './config.js'
+import { agentManager } from './agent-manager.js'
 
 export { TIMEOUTS } from './config.js'
 
 export const ITEM_URL = 'search/detailnonmodal/ent:[ILS]/one'
 export const SEARCH_URL = 'search/results?qu='
-export const HEADER = {
-  'User-Agent': new UserAgent().toString()
-}
 export const HEADER_POST = { 'X-Requested-With': 'XMLHttpRequest' }
 
+const SERVICE_TYPE = 'enterprise'
+
 export const getLibraries = async service => {
-  const agent = request.agent()
+  if (RATE_LIMITS[SERVICE_TYPE]) {
+    agentManager.configureRateLimit(SERVICE_TYPE, RATE_LIMITS[SERVICE_TYPE])
+  }
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
 
-  let $ = null
   try {
-    const advancedPage = await agent
-      .get(service.Url + 'search/advanced')
-      .timeout(TIMEOUTS.LONG)
-    $ = cheerio.load(advancedPage.text)
+    const result = await agentManager.executeRequest(SERVICE_TYPE, async (agent, userAgent) => {
+      const advancedPage = await agent
+        .get(service.Url + 'search/advanced')
+        .set('User-Agent', userAgent)
+        .timeout(TIMEOUTS.LONG)
+      return advancedPage.text
+    })
+
+    const $ = cheerio.load(result)
+    $('#libraryDropDown option').each((idx, lib) => {
+      const name = $(lib).text().trim()
+      if (
+        common.isLibrary(name) &&
+        ((service.LibraryNameFilter &&
+          name.indexOf(service.LibraryNameFilter) !== -1) ||
+          !service.LibraryNameFilter)
+      ) {
+        responseLibraries.libraries.push(name)
+      }
+    })
   } catch (e) {
     responseLibraries.exception = e
-    return common.endResponse(responseLibraries)
   }
-
-  $('#libraryDropDown option').each((idx, lib) => {
-    const name = $(lib).text().trim()
-    if (
-      common.isLibrary(name) &&
-      ((service.LibraryNameFilter &&
-        name.indexOf(service.LibraryNameFilter) !== -1) ||
-        !service.LibraryNameFilter)
-    ) {
-      responseLibraries.libraries.push(name)
-    }
-  })
 
   return common.endResponse(responseLibraries)
 }

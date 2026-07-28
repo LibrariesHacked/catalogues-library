@@ -16,8 +16,8 @@ export const getLibraries = async function (service) {
 
   try {
     // Step 1: Request Aspen advanced-search page that contains location options.
-    const agent = aspen.createAgent()
-    const advancedSearchPage = await aspen.fetchAdvancedSearchPage(agent, service)
+    const serviceType = aspen.createAgent(service.Type)
+    const advancedSearchPage = await aspen.fetchAdvancedSearchPage(serviceType, service)
 
     // Step 2: Parse library names from the advanced-search option values.
     responseLibraries.libraries = aspen.librariesFromAdvancedSearchPage(advancedSearchPage.text)
@@ -38,8 +38,8 @@ export const searchByISBN = async function (isbn, service) {
 
   try {
     // Step 1: Submit Aspen keyword search scoped by the ISBN.
-    const agent = aspen.createAgent()
-    const searchResultsPage = await aspen.fetchSearchResultsPage(agent, service, isbn)
+    const serviceType = aspen.createAgent(service.Type)
+    const searchResultsPage = await aspen.fetchSearchResultsPage(serviceType, service, isbn)
 
     // Step 2: Resolve the first grouped-work identifier from the search results.
     const firstItem = aspen.firstItemFromSearchResults(searchResultsPage.text, service)
@@ -49,7 +49,7 @@ export const searchByISBN = async function (isbn, service) {
     responseHoldings.url = firstItem.url
 
     // Step 3: Request copy-details payload and map per-branch availability.
-    const copiesPage = await aspen.fetchCopiesPage(agent, service, firstItem.id)
+    const copiesPage = await aspen.fetchCopiesPage(serviceType, service, firstItem.id)
     responseHoldings.availability = aspen.availabilityFromCopiesPage(copiesPage.text)
   } catch (e) {
     responseHoldings.exception = e

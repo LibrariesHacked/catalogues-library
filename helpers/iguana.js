@@ -1,8 +1,8 @@
-import request from 'superagent'
 import xml2js from 'xml2js'
 
 import * as common from './common.js'
-import { TIMEOUTS } from './config.js'
+import { TIMEOUTS, RATE_LIMITS } from './config.js'
+import { agentManager } from './agent-manager.js'
 
 export { TIMEOUTS } from './config.js'
 
@@ -21,7 +21,12 @@ export const HOME = 'www.main.cls'
 
 export const serviceUrl = service => service.Url + HOME
 
-export const createAgent = () => request.agent()
+export const createAgent = (serviceType = 'iguana') => {
+  if (RATE_LIMITS[serviceType]) {
+    agentManager.configureRateLimit(serviceType, RATE_LIMITS[serviceType])
+  }
+  return serviceType
+}
 
 export const searchEndpointUrl = service => service.Url + 'Proxy.SearchRequest.cls'
 
@@ -45,20 +50,23 @@ export const sidFromCookie = sessionCookie => {
   return sessionCookie.substring(iguanaCookieIndex + 20, iguanaCookieIndex + 30)
 }
 
-export const getSid = async service => {
-  const agent = createAgent()
-  const homePageRequest = await agent.get(serviceUrl(service))
-  const sessionCookie = homePageRequest.headers['set-cookie'][0]
-  return sidFromCookie(sessionCookie)
+export const getSid = async (serviceType, service) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    const homePageRequest = await agent.get(serviceUrl(service))
+    const sessionCookie = homePageRequest.headers['set-cookie'][0]
+    return sidFromCookie(sessionCookie)
+  })
 }
 
-export const postSearch = async (agent, service, body) => {
-  return agent
-    .post(searchEndpointUrl(service))
-    .send(body)
-    .set({ ...HEADER, Referer: serviceUrl(service) })
-    .timeout(TIMEOUTS.DEFAULT)
-    .buffer()
+export const postSearch = async (serviceType, service, body) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent
+      .post(searchEndpointUrl(service))
+      .send(body)
+      .set({ ...HEADER, Referer: serviceUrl(service) })
+      .timeout(TIMEOUTS.DEFAULT)
+      .buffer()
+  })
 }
 
 export const parseXml = async xmlText => xml2js.parseStringPromise(xmlText)

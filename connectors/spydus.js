@@ -16,8 +16,8 @@ export const getLibraries = async function (service) {
 
   try {
     // Step 1: Request Spydus catalogue page used to populate location selector.
-    const agent = spydus.createAgent(service)
-    const librariesPage = await spydus.fetchLibrariesPage(agent, service)
+    const serviceType = spydus.createAgent(service.Type)
+    const librariesPage = await spydus.fetchLibrariesPage(serviceType, service)
 
     // Step 2: Parse location options into a plain library-name list.
     responseLibraries.libraries = spydus.parseLibraries(librariesPage.text)
@@ -38,9 +38,9 @@ export const searchByISBN = async function (isbn, service) {
 
   try {
     // Step 1: Submit Spydus ISBN search and ensure there are card results.
-    const agent = spydus.createAgent(service)
+    const serviceType = spydus.createAgent(service.Type)
     const holdingsUrl = spydus.searchUrl(service, isbn)
-    const searchResultsPage = await spydus.fetchSearchResultsPage(agent, service, isbn)
+    const searchResultsPage = await spydus.fetchSearchResultsPage(serviceType, service, isbn)
     responseHoldings.url = holdingsUrl
 
     if (!spydus.hasSearchResults(searchResultsPage.text)) { return common.endResponse(responseHoldings) }
@@ -57,7 +57,7 @@ export const searchByISBN = async function (isbn, service) {
 
     // Step 3: Parse branch-level availability table from details page.
     const availabilityPage = await spydus.fetchAvailabilityPage(
-      agent,
+      serviceType,
       absoluteAvailabilityUrl
     )
     responseHoldings.availability = spydus.availabilityFromTable(availabilityPage.text)

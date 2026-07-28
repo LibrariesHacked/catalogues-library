@@ -1,10 +1,10 @@
 import * as cheerio from 'cheerio'
 import querystring from 'querystring'
-import request from 'superagent'
 import { v4 as uuidv4 } from 'uuid'
 
 import * as common from './common.js'
-import { TIMEOUTS } from './config.js'
+import { TIMEOUTS, RATE_LIMITS } from './config.js'
+import { agentManager } from './agent-manager.js'
 
 export { TIMEOUTS } from './config.js'
 
@@ -17,19 +17,28 @@ export const keywordSearchUrl = service => service.Url + 'pgCatKeywordSearch.asp
 
 export const FORM_HEADERS = { 'Content-Type': 'application/x-www-form-urlencoded' }
 
-export const createAgent = () => request.agent()
+export const createAgent = (serviceType = 'durham') => {
+  if (RATE_LIMITS[serviceType]) {
+    agentManager.configureRateLimit(serviceType, RATE_LIMITS[serviceType])
+  }
+  return serviceType
+}
 
 export const parsePage = html => cheerio.load(html)
 
 export const randomRequestId = () => uuidv4()
 
-export const startSession = async (agent, service) => {
-  await agent.get(service.Url).timeout(TIMEOUTS.DEFAULT)
-  await agent.post(loginUrl(service)).timeout(TIMEOUTS.DEFAULT)
+export const startSession = async (serviceType, service) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    await agent.get(service.Url).timeout(TIMEOUTS.DEFAULT)
+    await agent.post(loginUrl(service)).timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
-export const fetchLibrariesPage = async (agent, service) => {
-  return agent.get(librariesUrl(service)).timeout(TIMEOUTS.DEFAULT)
+export const fetchLibrariesPage = async (serviceType, service) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent.get(librariesUrl(service)).timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
 export const librariesFromPage = html => {
@@ -40,16 +49,20 @@ export const librariesFromPage = html => {
   return libraries
 }
 
-export const openKeywordSearchPage = async (agent, service) => {
-  return agent.post(keywordSearchUrl(service)).timeout(TIMEOUTS.DEFAULT)
+export const openKeywordSearchPage = async (serviceType, service) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent.post(keywordSearchUrl(service)).timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
-export const submitKeywordSearch = async (agent, service, form) => {
-  return agent
-    .post(keywordSearchUrl(service))
-    .send(querystring.stringify(form))
-    .set(FORM_HEADERS)
-    .timeout(TIMEOUTS.DEFAULT)
+export const submitKeywordSearch = async (serviceType, service, form) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent
+      .post(keywordSearchUrl(service))
+      .send(querystring.stringify(form))
+      .set(FORM_HEADERS)
+      .timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
 export const hasResultTitle = html =>
@@ -57,23 +70,27 @@ export const hasResultTitle = html =>
 
 export const resultPageUrlFromResponse = response => response.redirects[0]
 
-export const openFirstItemPage = async (agent, resultPageUrl, form) => {
-  return agent
-    .post(resultPageUrl)
-    .send(querystring.stringify(form))
-    .set(FORM_HEADERS)
-    .timeout(TIMEOUTS.DEFAULT)
+export const openFirstItemPage = async (serviceType, resultPageUrl, form) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent
+      .post(resultPageUrl)
+      .send(querystring.stringify(form))
+      .set(FORM_HEADERS)
+      .timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
 export const itemPageUrl = (itemPageResponse, fallbackUrl) =>
   itemPageResponse.redirects.length > 0 ? itemPageResponse.redirects[0] : fallbackUrl
 
-export const openAvailabilityPage = async (agent, pageUrl, form) => {
-  return agent
-    .post(pageUrl)
-    .send(querystring.stringify(form))
-    .set(FORM_HEADERS)
-    .timeout(TIMEOUTS.DEFAULT)
+export const openAvailabilityPage = async (serviceType, pageUrl, form) => {
+  return agentManager.executeRequest(serviceType, async (agent) => {
+    return agent
+      .post(pageUrl)
+      .send(querystring.stringify(form))
+      .set(FORM_HEADERS)
+      .timeout(TIMEOUTS.DEFAULT)
+  })
 }
 
 export const availabilityFromPage = html => {

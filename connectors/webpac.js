@@ -16,8 +16,8 @@ export const getLibraries = async function (service) {
 
   try {
     // Step 1: Request WebPAC advanced search page containing scope options.
-    const agent = webpac.createAgent()
-    const librariesPage = await webpac.fetchLibrariesPage(agent, service)
+    const serviceType = webpac.createAgent(service.Type)
+    const librariesPage = await webpac.fetchLibrariesPage(serviceType, service)
 
     // Step 2: Parse search-scope options into library names.
     responseLibraries.libraries = webpac.librariesFromPage(librariesPage.text)
@@ -39,8 +39,8 @@ export const searchByISBN = async function (isbn, service) {
 
   try {
     // Step 1: Execute WebPAC ISBN search request and parse first bib record.
-    const agent = webpac.createAgent()
-    const holdingsPage = await webpac.fetchHoldingsSearchPage(agent, service, isbn)
+    const serviceType = webpac.createAgent(service.Type)
+    const holdingsPage = await webpac.fetchHoldingsSearchPage(serviceType, service, isbn)
 
     responseHoldings.id = webpac.getItemId(holdingsPage.text)
 
