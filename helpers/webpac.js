@@ -18,8 +18,6 @@ export const createAgent = (serviceType = 'webpac') => {
   return serviceType
 }
 
-export const parseHtml = html => cheerio.load(html)
-
 export const fetchLibrariesPage = async (serviceType, service) => {
   return agentManager.executeRequest(serviceType, async (agent) => {
     return agent.get(librariesSearchUrl(service)).timeout(TIMEOUTS.EXTRA_LONG)
@@ -41,20 +39,6 @@ export const fetchHoldingsSearchPage = async (serviceType, service, isbn) => {
   return agentManager.executeRequest(serviceType, async (agent) => {
     return agent.get(holdingsSearchUrl(service, isbn)).timeout(TIMEOUTS.EXTRA_LONG)
   })
-}
-
-export const getLibraries = async service => {
-  const agent = createAgent()
-  const responseLibraries = common.initialiseGetLibrariesResponse(service)
-
-  try {
-    const advancedSearchPageRequest = await fetchLibrariesPage(agent, service)
-    responseLibraries.libraries = librariesFromPage(advancedSearchPageRequest.text)
-  } catch (e) {
-    responseLibraries.exception = e
-  }
-
-  return common.endResponse(responseLibraries)
 }
 
 export const getItemId = html => {
@@ -85,21 +69,4 @@ export const getLibrariesAvailability = html => {
   }
 
   return availability
-}
-
-export const searchByISBN = async (isbn, service) => {
-  const responseHoldings = common.initialiseSearchByISBNResponse(service)
-  responseHoldings.url = holdingsSearchUrl(service, isbn)
-  const agent = createAgent()
-
-  try {
-    const responseHoldingsRequest = await fetchHoldingsSearchPage(agent, service, isbn)
-    const $ = cheerio.load(responseHoldingsRequest.text)
-    responseHoldings.id = getItemId($)
-    responseHoldings.availability = getLibrariesAvailability($)
-  } catch (e) {
-    responseHoldings.exception = e
-  }
-
-  return common.endResponse(responseHoldings)
 }

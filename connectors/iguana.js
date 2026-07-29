@@ -1,5 +1,7 @@
 import * as common from '../helpers/common.js'
 import * as iguana from '../helpers/iguana.js'
+import { v4 as uuidv4 } from 'uuid'
+import { agentManager } from '../helpers/agent-manager.js'
 
 /**
  * Gets the object representing the service
@@ -17,15 +19,17 @@ export const getService = service => {
  */
 export const getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
+  const sessionId = uuidv4()
 
   try {
-    // Step 1: Initialise Iguana session and resolve SID from cookie.
-    const serviceType = iguana.createAgent(service.Type)
-    const sid = await iguana.getSid(serviceType, service)
+    // Step 1: Create session, initialise Iguana session and resolve SID from cookie.
+    iguana.createAgent(service.Type)
+    agentManager.createSessionAgent(sessionId, service.Type)
+    const sid = await iguana.getSid(sessionId, service)
 
     // Step 2: Submit branch-discovery search request and parse XML payload.
     const searchRequest = await iguana.postSearch(
-      serviceType,
+      sessionId,
       service,
       iguana.librariesSearchBody({ service, sid })
     )
@@ -35,7 +39,7 @@ export const getLibraries = async function (service) {
     if (service.Faceted) {
       const resultId = searchJs.searchRetrieveResponse.resultSetId[0]
       const facetRequest = await iguana.postSearch(
-        serviceType,
+        sessionId,
         service,
         iguana.facetBody({ resultId, sid })
       )
@@ -50,6 +54,8 @@ export const getLibraries = async function (service) {
     }
   } catch (e) {
     responseLibraries.exception = e
+  } finally {
+    agentManager.closeSession(sessionId)
   }
 
   return common.endResponse(responseLibraries)
@@ -62,13 +68,15 @@ export const getLibraries = async function (service) {
  */
 export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
+  const sessionId = uuidv4()
 
   try {
-    // Step 1: Initialise Iguana session and execute ISBN search request.
-    const serviceType = iguana.createAgent(service.Type)
-    const sid = await iguana.getSid(serviceType, service)
+    // Step 1: Create session, initialise Iguana session and execute ISBN search request.
+    iguana.createAgent(service.Type)
+    agentManager.createSessionAgent(sessionId, service.Type)
+    const sid = await iguana.getSid(sessionId, service)
     const searchRequest = await iguana.postSearch(
-      serviceType,
+      sessionId,
       service,
       iguana.searchBody({ service, isbn, sid })
     )
@@ -80,6 +88,8 @@ export const searchByISBN = async function (isbn, service) {
     responseHoldings.availability = iguana.availabilityFromRecord(record)
   } catch (e) {
     responseHoldings.exception = e
+  } finally {
+    agentManager.closeSession(sessionId)
   }
 
   return common.endResponse(responseHoldings)

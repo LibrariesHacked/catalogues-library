@@ -103,6 +103,7 @@ class AgentPool {
 export class AgentManager {
   constructor () {
     this.pools = new Map()
+    this.sessionAgents = new Map() // Maps sessionId to agent instance for session persistence
   }
 
   /**
@@ -123,6 +124,99 @@ export class AgentManager {
     const agent = pool.getNextAgent()
     const userAgent = pool.getNextUserAgent()
     return { agent, userAgent, pool }
+  }
+
+  /**
+   * Create a persistent session agent that maintains cookies across requests
+   * Use this for operations that require login/session state
+   * @param {string} sessionId - Unique identifier for this session
+   * @param {string} serviceKey - Service identifier
+   * @returns {string} sessionId to be used in executeSessionRequest calls
+   */
+  createSessionAgent (sessionId, serviceKey) {
+    if (!this.sessionAgents.has(sessionId)) {
+      // Create a dedicated agent just for this session
+      const sessionAgent = request.agent()
+      const sessionUserAgent = new UserAgent({ deviceCategory: 'desktop' }).toString()
+      this.sessionAgents.set(sessionId, {
+        agent: sessionAgent,
+        serviceKey: serviceKey,
+        userAgent: sessionUserAgent,
+        createdAt: Date.now()
+      })
+    }
+    return sessionId
+  }
+
+  /**
+   * Execute request using a session-bound agent (maintains cookies/login)
+   * @param {string} sessionId - Session ID from createSessionAgent
+   * @param {Function} requestFn - Async function that executes the request
+   * @param {Object} options - Configuration options
+   */
+  async executeSessionRequest (sessionId, requestFn, options = {}) {
+    const {
+      maxRetries = RETRY_CONFIG.MAX_RETRIES,
+      initialDelay = RETRY_CONFIG.INITIAL_DELAY_MS,
+      maxDelay = RETRY_CONFIG.MAX_DELAY_MS,
+      backoffMultiplier = RETRY_CONFIG.BACKOFF_MULTIPLIER,
+      retryStatusCodes = RETRY_CONFIG.RETRY_STATUS_CODES
+    } = options
+
+    if (!this.sessionAgents.has(sessionId)) {
+      throw new Error(`Session ${sessionId} not found. Call createSessionAgent first.`)
+    }
+
+    const sessionData = this.sessionAgents.get(sessionId)
+    const { agent, serviceKey } = sessionData
+    const userAgent = sessionData.userAgent || new UserAgent({ deviceCategory: 'desktop' }).toString()
+
+    const pool = this.getPool(serviceKey)
+    if (pool.isOpen()) {
+      const error = new Error(`Service ${serviceKey} is temporarily blocked (circuit breaker open)`)
+      error.code = 'CIRCUIT_BREAKER_OPEN'
+      throw error
+    }
+
+    await limiter.acquire(serviceKey)
+
+    let lastError
+    let delay = initialDelay
+
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        const result = await requestFn(agent, userAgent)
+        pool.recordSuccess()
+        return result
+      } catch (error) {
+        lastError = error
+
+        const shouldRetry = attempt < maxRetries &&
+          (retryStatusCodes.includes(error.status) ||
+            error.code === 'ECONNRESET' ||
+            error.code === 'ETIMEDOUT' ||
+            error.code === 'ENOTFOUND')
+
+        if (!shouldRetry) {
+          pool.recordFailure()
+          throw error
+        }
+
+        await new Promise(resolve => setTimeout(resolve, delay))
+        delay = Math.min(delay * backoffMultiplier, maxDelay)
+      }
+    }
+
+    pool.recordFailure()
+    throw lastError
+  }
+
+  /**
+   * Clean up session agent
+   * @param {string} sessionId - Session ID to clean up
+   */
+  closeSession (sessionId) {
+    this.sessionAgents.delete(sessionId)
   }
 
   /**

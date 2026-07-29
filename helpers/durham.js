@@ -24,20 +24,18 @@ export const createAgent = (serviceType = 'durham') => {
   return serviceType
 }
 
-export const parsePage = html => cheerio.load(html)
-
 export const randomRequestId = () => uuidv4()
 
-export const startSession = async (serviceType, service) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
-    await agent.get(service.Url).timeout(TIMEOUTS.DEFAULT)
-    await agent.post(loginUrl(service)).timeout(TIMEOUTS.DEFAULT)
+export const startSession = async (sessionId, service) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent, userAgent) => {
+    await agent.get(service.Url).set('User-Agent', userAgent).timeout(TIMEOUTS.DEFAULT)
+    await agent.post(loginUrl(service)).set('User-Agent', userAgent).timeout(TIMEOUTS.DEFAULT)
   })
 }
 
-export const fetchLibrariesPage = async (serviceType, service) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
-    return agent.get(librariesUrl(service)).timeout(TIMEOUTS.DEFAULT)
+export const fetchLibrariesPage = async (sessionId, service) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent, userAgent) => {
+    return agent.get(librariesUrl(service)).set('User-Agent', userAgent).timeout(TIMEOUTS.DEFAULT)
   })
 }
 
@@ -49,18 +47,19 @@ export const librariesFromPage = html => {
   return libraries
 }
 
-export const openKeywordSearchPage = async (serviceType, service) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
-    return agent.post(keywordSearchUrl(service)).timeout(TIMEOUTS.DEFAULT)
+export const openKeywordSearchPage = async (sessionId, service) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent, userAgent) => {
+    return agent.post(keywordSearchUrl(service)).set('User-Agent', userAgent).timeout(TIMEOUTS.DEFAULT)
   })
 }
 
-export const submitKeywordSearch = async (serviceType, service, form) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
+export const submitKeywordSearch = async (sessionId, service, form) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent, userAgent) => {
     return agent
       .post(keywordSearchUrl(service))
       .send(querystring.stringify(form))
       .set(FORM_HEADERS)
+      .set('User-Agent', userAgent)
       .timeout(TIMEOUTS.DEFAULT)
   })
 }
@@ -70,12 +69,13 @@ export const hasResultTitle = html =>
 
 export const resultPageUrlFromResponse = response => response.redirects[0]
 
-export const openFirstItemPage = async (serviceType, resultPageUrl, form) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
+export const openFirstItemPage = async (sessionId, resultPageUrl, form) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent, userAgent) => {
     return agent
       .post(resultPageUrl)
       .send(querystring.stringify(form))
       .set(FORM_HEADERS)
+      .set('User-Agent', userAgent)
       .timeout(TIMEOUTS.DEFAULT)
   })
 }
@@ -83,12 +83,13 @@ export const openFirstItemPage = async (serviceType, resultPageUrl, form) => {
 export const itemPageUrl = (itemPageResponse, fallbackUrl) =>
   itemPageResponse.redirects.length > 0 ? itemPageResponse.redirects[0] : fallbackUrl
 
-export const openAvailabilityPage = async (serviceType, pageUrl, form) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
+export const openAvailabilityPage = async (sessionId, pageUrl, form) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent, userAgent) => {
     return agent
       .post(pageUrl)
       .send(querystring.stringify(form))
       .set(FORM_HEADERS)
+      .set('User-Agent', userAgent)
       .timeout(TIMEOUTS.DEFAULT)
   })
 }
@@ -138,6 +139,7 @@ export const resultForm = html => {
     __VIEWSTATE: $('input[name=__VIEWSTATE]').val(),
     __VIEWSTATEENCRYPTED: '',
     __VIEWSTATEGENERATOR: $('input[name=__VIEWSTATEGENERATOR]').val(),
+    __EVENTVALIDATION: $('input[name=__EVENTVALIDATION]').val(),
     ctl00$ctl00$cph1$cph2$lvResults$DataPagerEx2$ctl00$ctl00: 10
   }
 }
@@ -153,56 +155,6 @@ export const availabilityForm = html => {
     __VIEWSTATEENCRYPTED: '',
     __VIEWSTATEGENERATOR: $('input[name=__VIEWSTATEGENERATOR]').val(),
     ctl00$ctl00$cph1$cph2$lvResults$DataPagerEx2$ctl00$ctl00: 10,
-    ctl00$ctl00$ucItem$lvTitle$ctrl0$btLibraryList: 'Libraries'
+    ctl00$ctl00$cph1$ucItem$lvTitle$ctrl0$btLibraryList: 'Libraries'
   }
-}
-
-export const getLibraries = async service => {
-  const agent = createAgent()
-  const responseLibraries = common.initialiseGetLibrariesResponse(service)
-
-  try {
-    await startSession(agent, service)
-    const librariesPage = await fetchLibrariesPage(agent, service)
-    responseLibraries.libraries = librariesFromPage(librariesPage.text)
-  } catch (e) {
-    responseLibraries.exception = e
-  }
-
-  return common.endResponse(responseLibraries)
-}
-
-export const searchByISBN = async (isbn, service) => {
-  const responseHoldings = common.initialiseSearchByISBNResponse(service)
-  responseHoldings.id = uuidv4()
-
-  try {
-    const agent = createAgent()
-
-    await startSession(agent, service)
-    const cataloguePage = await openKeywordSearchPage(agent, service)
-    let $ = cheerio.load(cataloguePage.text)
-
-    const resultPage = await submitKeywordSearch(agent, service, librariesForm({ $, isbn }))
-    if (!hasResultTitle(resultPage.text)) { return common.endResponse(responseHoldings) }
-
-    $ = cheerio.load(resultPage.text)
-    const resultPageUrl = resultPageUrlFromResponse(resultPage)
-
-    const itemPage = await openFirstItemPage(agent, resultPageUrl, resultForm($))
-    $ = cheerio.load(itemPage.text)
-
-    const detailsPageUrl = itemPageUrl(itemPage, resultPageUrl)
-
-    const availabilityPage = await openAvailabilityPage(
-      agent,
-      detailsPageUrl,
-      availabilityForm($)
-    )
-    responseHoldings.availability = availabilityFromPage(availabilityPage.text)
-  } catch (e) {
-    responseHoldings.exception = e
-  }
-
-  return common.endResponse(responseHoldings)
 }

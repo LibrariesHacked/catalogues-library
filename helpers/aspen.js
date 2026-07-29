@@ -1,6 +1,5 @@
 import * as cheerio from 'cheerio'
 
-import * as common from './common.js'
 import { TIMEOUTS, RATE_LIMITS } from './config.js'
 import { agentManager } from './agent-manager.js'
 
@@ -28,8 +27,8 @@ export const createAgent = (serviceType = 'aspen') => {
   return serviceType
 }
 
-export const fetchAdvancedSearchPage = async (serviceType, service) => {
-  return agentManager.executeRequest(serviceType, async (agent, userAgent) => {
+export const fetchAdvancedSearchPage = async (sessionId, service) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent, userAgent) => {
     return agent
       .get(`${service.Url}${ADVANCED_SEARCH_URL}`)
       .set('User-Agent', userAgent)
@@ -37,8 +36,8 @@ export const fetchAdvancedSearchPage = async (serviceType, service) => {
   })
 }
 
-export const fetchSearchResultsPage = async (serviceType, service, isbn) => {
-  return agentManager.executeRequest(serviceType, async (agent, userAgent) => {
+export const fetchSearchResultsPage = async (sessionId, service, isbn) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent, userAgent) => {
     return agent
       .get(`${service.Url}${SEARCH_RESULTS_URL.replace('[ISBN]', isbn)}`)
       .set('User-Agent', userAgent)
@@ -46,8 +45,8 @@ export const fetchSearchResultsPage = async (serviceType, service, isbn) => {
   })
 }
 
-export const fetchCopiesPage = async (serviceType, service, itemId) => {
-  return agentManager.executeRequest(serviceType, async (agent, userAgent) => {
+export const fetchCopiesPage = async (sessionId, service, itemId) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent, userAgent) => {
     return agent
       .get(copiesUrl(service, itemId))
       .set('User-Agent', userAgent)
@@ -97,40 +96,4 @@ export const availabilityFromCopiesPage = copiesJsonText => {
   })
 
   return availability
-}
-
-export const getLibraries = async service => {
-  const responseLibraries = common.initialiseGetLibrariesResponse(service)
-
-  try {
-    const agent = createAgent()
-    const advancedSearchPage = await fetchAdvancedSearchPage(agent, service)
-    responseLibraries.libraries = librariesFromAdvancedSearchPage(advancedSearchPage.text)
-  } catch (e) {
-    responseLibraries.exception = e
-  }
-
-  return common.endResponse(responseLibraries)
-}
-
-export const searchByISBN = async (isbn, service) => {
-  const responseHoldings = common.initialiseSearchByISBNResponse(service)
-
-  try {
-    const agent = createAgent()
-    const searchResultsPage = await fetchSearchResultsPage(agent, service, isbn)
-    const firstItem = firstItemFromSearchResults(searchResultsPage.text, service)
-
-    if (!firstItem) return common.endResponse(responseHoldings)
-
-    responseHoldings.id = firstItem.id
-    responseHoldings.url = firstItem.url
-
-    const copiesPage = await fetchCopiesPage(agent, service, firstItem.id)
-    responseHoldings.availability = availabilityFromCopiesPage(copiesPage.text)
-  } catch (e) {
-    responseHoldings.exception = e
-  }
-
-  return common.endResponse(responseHoldings)
 }

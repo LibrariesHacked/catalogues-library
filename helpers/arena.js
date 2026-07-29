@@ -173,18 +173,6 @@ export const branchAvailability = html => {
   return availability
 }
 
-export const childAvailabilities = html => {
-  const $ = cheerio.load(html)
-  const availability = []
-
-  $('.arena-holding-child-container').each(function (idx, cont) {
-    const item = childAvailability($(cont))
-    if (item) availability.push(item)
-  })
-
-  return availability
-}
-
 export const currentHoldingLink = (html, serviceName) => {
   const $ = cheerio.load(html)
   let currentOrg = null
@@ -247,9 +235,6 @@ export const childContainerRows = html =>
 
 export const childContainerLinkId = containerHtml =>
   (containerHtml.match(/<a[^>]*id="([^"]+)"/) || [])[1] || null
-
-export const recordPanelResId = ({ interfaceId, currentOrg, service }) =>
-  `/crDetailWicket/?wicket:interface=:${interfaceId}:${service.RecordPanel || 'recordPanel:panel:holdingsPanel'}:content:holdingsView:${currentOrg + 1}:holdingContainer:togglableLink::IBehaviorListener:0:`
 
 export const childPanelResId = ({ interfaceId, currentOrg, service, idx }) =>
   `/crDetailWicket/?wicket:interface=:${interfaceId}:${service.RecordPanel || 'recordPanel:panel:holdingsPanel'}:content:holdingsView:${currentOrg + 1}:childContainer:childView:${idx}:holdingPanel:holdingContainer:togglableLink::IBehaviorListener:0:`

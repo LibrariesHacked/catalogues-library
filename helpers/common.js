@@ -13,17 +13,6 @@ export function getService (service) {
 }
 
 /**
- * Used for error handling and checking HTTP status
- * @param {*} error
- * @param {*} httpMessage
- */
-export function handleErrors (error, httpMessage) {
-  if (httpMessage && (httpMessage.statusCode !== 200 && httpMessage.statusCode !== 302)) error = 'Web request error. Status code was ' + httpMessage.statusCode
-  if (error) return true
-  return false
-}
-
-/**
  * Test if a string is json
  * @param {string} str
  */

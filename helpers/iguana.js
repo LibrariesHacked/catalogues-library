@@ -1,6 +1,5 @@
 import xml2js from 'xml2js'
 
-import * as common from './common.js'
 import { TIMEOUTS, RATE_LIMITS } from './config.js'
 import { agentManager } from './agent-manager.js'
 
@@ -50,16 +49,16 @@ export const sidFromCookie = sessionCookie => {
   return sessionCookie.substring(iguanaCookieIndex + 20, iguanaCookieIndex + 30)
 }
 
-export const getSid = async (serviceType, service) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
+export const getSid = async (sessionId, service) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent) => {
     const homePageRequest = await agent.get(serviceUrl(service))
     const sessionCookie = homePageRequest.headers['set-cookie'][0]
     return sidFromCookie(sessionCookie)
   })
 }
 
-export const postSearch = async (serviceType, service, body) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
+export const postSearch = async (sessionId, service, body) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent) => {
     return agent
       .post(searchEndpointUrl(service))
       .send(body)
@@ -155,55 +154,4 @@ export const availabilityFromRecord = record => {
   )
 
   return availability
-}
-
-export const getLibraries = async service => {
-  const responseLibraries = common.initialiseGetLibrariesResponse(service)
-
-  try {
-    const agent = createAgent()
-    const sid = await getSid(service)
-    const searchPageRequest = await postSearch(
-      agent,
-      service,
-      librariesSearchBody({ service, sid })
-    )
-    const searchJs = await parseXml(searchPageRequest.text)
-
-    if (service.Faceted) {
-      const resultId = searchJs.searchRetrieveResponse.resultSetId[0]
-      const facetRequest = await postSearch(agent, service, facetBody({ resultId, sid }))
-      const facetJs = await parseXml(facetRequest.text)
-      responseLibraries.libraries = facetLibrariesFromSearch(searchJs, facetJs, service)
-    } else {
-      responseLibraries.libraries = shelfmarkLibrariesFromSearch(searchJs)
-    }
-  } catch (e) {
-    responseLibraries.exception = e
-  }
-
-  return common.endResponse(responseLibraries)
-}
-
-export const searchByISBN = async (isbn, service) => {
-  const responseHoldings = common.initialiseSearchByISBNResponse(service)
-
-  try {
-    const agent = createAgent()
-    const sid = await getSid(service)
-
-    const searchPageRequest = await postSearch(
-      agent,
-      service,
-      searchBody({ service, isbn, sid })
-    )
-    const searchJs = await parseXml(searchPageRequest.text)
-    const record = firstResultRecord(searchJs)
-    responseHoldings.id = recordId(record)
-    responseHoldings.availability = availabilityFromRecord(record)
-  } catch (e) {
-    responseHoldings.exception = e
-  }
-
-  return common.endResponse(responseHoldings)
 }

@@ -1,5 +1,7 @@
 import * as common from '../helpers/common.js'
 import * as durham from '../helpers/durham.js'
+import { v4 as uuidv4 } from 'uuid'
+import { agentManager } from '../helpers/agent-manager.js'
 
 /**
  * Gets the object representing the service
@@ -13,17 +15,21 @@ export const getService = service => common.getService(service)
  */
 export const getLibraries = async function (service) {
   const responseLibraries = common.initialiseGetLibrariesResponse(service)
+  const sessionId = uuidv4()
 
   try {
-    // Step 1: Start ASP.NET session and login bootstrap required by catalogue pages.
-    const serviceType = durham.createAgent(service.Type)
-    await durham.startSession(serviceType, service)
+    // Step 1: Create session and bootstrap login required by catalogue pages.
+    durham.createAgent(service.Type)
+    agentManager.createSessionAgent(sessionId, service.Type)
+    await durham.startSession(sessionId, service)
 
     // Step 2: Request and parse branch links from the libraries page.
-    const librariesPage = await durham.fetchLibrariesPage(serviceType, service)
+    const librariesPage = await durham.fetchLibrariesPage(sessionId, service)
     responseLibraries.libraries = durham.librariesFromPage(librariesPage.text)
   } catch (e) {
     responseLibraries.exception = e
+  } finally {
+    agentManager.closeSession(sessionId)
   }
 
   return common.endResponse(responseLibraries)
@@ -37,16 +43,18 @@ export const getLibraries = async function (service) {
 export const searchByISBN = async function (isbn, service) {
   const responseHoldings = common.initialiseSearchByISBNResponse(service)
   responseHoldings.id = durham.randomRequestId()
+  const sessionId = uuidv4()
 
   try {
-    // Step 1: Bootstrap session and load initial keyword-search page state.
-    const serviceType = durham.createAgent(service.Type)
-    await durham.startSession(serviceType, service)
-    const cataloguePage = await durham.openKeywordSearchPage(serviceType, service)
+    // Step 1: Create session, bootstrap login, and load initial keyword-search page state.
+    durham.createAgent(service.Type)
+    agentManager.createSessionAgent(sessionId, service.Type)
+    await durham.startSession(sessionId, service)
+    const cataloguePage = await durham.openKeywordSearchPage(sessionId, service)
 
     // Step 2: Submit ISBN search form and verify at least one title result exists.
     const resultPage = await durham.submitKeywordSearch(
-      serviceType,
+      sessionId,
       service,
       durham.librariesForm(cataloguePage.text, isbn)
     )
@@ -56,15 +64,15 @@ export const searchByISBN = async function (isbn, service) {
 
     // Step 3: Open first item details page and then request libraries availability view.
     const itemPage = await durham.openFirstItemPage(
-      serviceType,
+      sessionId,
       resultPageUrl,
       durham.resultForm(resultPage.text)
     )
-    const detailsPageUrl = durham.itemPageUrl(itemPage, resultPageUrl)
+    const itemPageUrl = durham.itemPageUrl(itemPage, resultPageUrl)
 
     const availabilityPage = await durham.openAvailabilityPage(
-      serviceType,
-      detailsPageUrl,
+      sessionId,
+      itemPageUrl,
       durham.availabilityForm(itemPage.text)
     )
 
@@ -72,6 +80,8 @@ export const searchByISBN = async function (isbn, service) {
     responseHoldings.availability = durham.availabilityFromPage(availabilityPage.text)
   } catch (e) {
     responseHoldings.exception = e
+  } finally {
+    agentManager.closeSession(sessionId)
   }
 
   return common.endResponse(responseHoldings)

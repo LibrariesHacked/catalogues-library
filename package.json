@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "cross-env NODE_OPTIONS=\"${NODE_OPTIONS} --experimental-vm-modules\" jest --runInBand",
+    "test-quick": "cross-env NODE_OPTIONS=\"${NODE_OPTIONS} --experimental-vm-modules\" jest --runInBand quick.test.js",
     "test-ci": "cross-env NODE_OPTIONS=\"${NODE_OPTIONS} --experimental-vm-modules\" jest --silent",
     "test-file": "cross-env NODE_OPTIONS=\"${NODE_OPTIONS} --experimental-vm-modules\" jest --no-color 2>output.txt"
   },

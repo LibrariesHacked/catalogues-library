@@ -1,4 +1,3 @@
-import * as common from './common.js'
 import { TIMEOUTS, RATE_LIMITS } from './config.js'
 import { agentManager } from './agent-manager.js'
 
@@ -11,8 +10,8 @@ export const createAgent = (serviceType = 'luci') => {
   return serviceType
 }
 
-export const fetchHomePage = async (serviceType, service) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
+export const fetchHomePage = async (sessionId, service) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent) => {
     return agent.get(`${service.Url}${service.Home}`).timeout(TIMEOUTS.DEFAULT)
   })
 }
@@ -20,8 +19,8 @@ export const fetchHomePage = async (serviceType, service) => {
 export const frontEndIdFromHome = html =>
   /_next\/static\/([^/]+)\/_buildManifest.js/gm.exec(html)[1]
 
-export const fetchRegistrationData = async (serviceType, service, frontEndId) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
+export const fetchRegistrationData = async (sessionId, service, frontEndId) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent) => {
     return agent
       .get(`${service.Url}_next/data/${frontEndId}/user/register.json`)
       .timeout(TIMEOUTS.DEFAULT)
@@ -44,28 +43,10 @@ export const librariesFromRegistrationData = registrationBody => {
   return libraries
 }
 
-export const getLuciLibrariesInternal = async function (service) {
-  const serviceType = createAgent(service.Type)
-  const response = {
-    libraries: []
-  }
-
-  try {
-    const homePage = await fetchHomePage(serviceType, service)
-    const frontEndId = frontEndIdFromHome(homePage.text)
-    const registrationData = await fetchRegistrationData(serviceType, service, frontEndId)
-    response.libraries = librariesFromRegistrationData(registrationData.body)
-  } catch (e) {
-    response.exception = e
-  }
-
-  return response
-}
-
 export const appIdFromHome = html => /\?appid=([a-f0-9-]+)/gm.exec(html)[1]
 
-export const searchManifestations = async (serviceType, service, appId, isbn) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
+export const searchManifestations = async (sessionId, service, appId, isbn) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent) => {
     return agent
       .post(`${service.Url}api/manifestations/searchresult`)
       .send({
@@ -87,8 +68,8 @@ export const findManifestationByIsbn = (records, isbn) => {
   return records.find(x => x.isbnList.includes(isbn))
 }
 
-export const fetchRecordDetails = async (serviceType, service, appId, recordId) => {
-  return agentManager.executeRequest(serviceType, async (agent) => {
+export const fetchRecordDetails = async (sessionId, service, appId, recordId) => {
+  return agentManager.executeSessionRequest(sessionId, async (agent) => {
     return agent
       .get(`${service.Url}api/record?id=${recordId}&source=ILSWS`)
       .set('solus-app-id', appId)
@@ -114,40 +95,4 @@ export const availabilityFromCopies = copies => {
   }
 
   return availability
-}
-
-export const getLibraries = async service => {
-  const responseLibraries = common.initialiseGetLibrariesResponse(service)
-  const libs = await getLuciLibrariesInternal(service)
-
-  responseLibraries.exception = libs.exception
-  responseLibraries.libraries = libs.libraries.map(x => x.name)
-  return common.endResponse(responseLibraries)
-}
-
-export const getServiceUrl = service => service.Url + service.Home
-
-export const searchByISBN = async (isbn, service) => {
-  const responseHoldings = common.initialiseSearchByISBNResponse(service)
-
-  try {
-    const serviceType = createAgent(service.Type)
-    let resp = await fetchHomePage(serviceType, service)
-    const appId = appIdFromHome(resp.text)
-
-    resp = await searchManifestations(serviceType, service, appId, isbn)
-    const result = findManifestationByIsbn(resp.body.records, isbn)
-
-    if (!result || result.eContent) return common.endResponse(responseHoldings)
-
-    responseHoldings.id = result.recordID
-    responseHoldings.url = `${service.Url}manifestations/${result.recordID}`
-
-    resp = await fetchRecordDetails(serviceType, service, appId, result.recordID)
-    responseHoldings.availability = availabilityFromCopies(resp.body.data.copies)
-  } catch (e) {
-    responseHoldings.exception = e
-  }
-
-  return common.endResponse(responseHoldings)
 }
